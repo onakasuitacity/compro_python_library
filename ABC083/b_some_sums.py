@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abs/tasks/abc083_b
+# https://atcoder.jp/contests/abc083/tasks/abc083_b
 N,A,B = map(int,input().split())
 count = 0
 
