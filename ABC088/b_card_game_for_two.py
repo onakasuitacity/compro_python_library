@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abs/tasks/abc088_b
+# https://atcoder.jp/contests/abc088/tasks/abc088_b
 N = int(input())
 nums = sorted(map(int,input().split()),reverse=True)
 count = 0
