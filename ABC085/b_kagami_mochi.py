@@ -1,12 +1,7 @@
-# https://atcoder.jp/contests/abs/tasks/abc088_b
+# https://atcoder.jp/contests/abs/tasks/abc085_b
 N = int(input())
-nums = sorted(map(int,input().split()),reverse=True)
-count = 0
-
+nums = set()
 for i in range(N):
-    if i%2==0:
-        count += nums[i]
-    else:
-        count -= nums[i]
-        
-print(count)
+    nums.add(input())
+
+print(len(nums))
