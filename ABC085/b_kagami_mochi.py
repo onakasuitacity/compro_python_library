@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abs/tasks/abc085_b
+# https://atcoder.jp/contests/abc085/tasks/abc085_b
 N = int(input())
 nums = set()
 for i in range(N):
