@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abs/tasks
+# https://atcoder.jp/contests/abs/tasks/arc065_a
 import re
 S = input()[::-1]
 flag = True
