@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abs/tasks/abc087_b
+# https://atcoder.jp/contests/abc087/tasks/abc087_b
 import itertools
 
 A = int(input())
