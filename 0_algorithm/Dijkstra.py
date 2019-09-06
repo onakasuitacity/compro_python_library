@@ -28,11 +28,7 @@ prev=[None for _ in V]
 Q=set(V)
 while(Q):
     # Qの中で距離が最小のものを取得
-    d_min = min(d[q] for q in Q)
-    for q in Q:
-        if d[q]==d_min:
-            i=q
-            break
+    i = min((d[q],q) for q in Q)[1]
     Q.remove(i)
     # iの出力辺の先を探索
     for j in range(n):
