@@ -24,7 +24,7 @@ d=[float("inf") if i!=s else 0 for i in V]
 # previous node
 prev=[None for _ in V]
 
-### algorithm
+### iterate
 Q=set(V)
 while(Q):
     # Qの中で距離が最小のものを取得
