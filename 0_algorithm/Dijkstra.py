@@ -14,7 +14,7 @@ A = [
 ]
 m=7 #使わない
 # start
-s=
+s=0
 
 ### initialize
 # distance
