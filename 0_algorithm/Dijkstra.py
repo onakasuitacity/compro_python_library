@@ -31,6 +31,7 @@ while(Q):
         if d[q]==d_min:
             i=q
             break
+    Q.remove(i)
     # iの出力辺の先を探索
     for j in range(n):
         if A[i][j]==0: continue
