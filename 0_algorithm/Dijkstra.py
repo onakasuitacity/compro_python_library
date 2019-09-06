@@ -25,8 +25,13 @@ Q=set(V)
 
 ### algorithm
 while(Q):
-    i = d.index(min(d[i] for i in Q)) # Qの中で距離が最小のものを取得
-    Q.remove(i)
+    # Qの中で距離が最小のものを取得
+    d_min = min(d[q] for q in Q)
+    for q in Q:
+        if d[q]==d_min:
+            i=q
+            break
+    # iの出力辺の先を探索
     for j in range(n):
         if A[i][j]==0: continue
         elif d[j]>d[i]+A[i][j]:
