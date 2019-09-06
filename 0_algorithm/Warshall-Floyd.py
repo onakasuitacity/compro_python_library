@@ -15,7 +15,7 @@ A = [
 ]
 m=7 #使わない
 
-### algorithm
+### iterate
 from itertools import product
 for k,i,j in product(range(n),range(n),range(n)):
     A[i][j]=min(A[i][j],A[i][k]+A[k][j])
