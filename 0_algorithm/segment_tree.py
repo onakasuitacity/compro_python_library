@@ -20,13 +20,16 @@ class Segtree(object):
     def get_tree(self):
         return self.__seg
 
+    def func(self,a,b):
+        return self.__f(a,b)
+
     def update(k,v):
         "A[k]=v"
         k+=self.__num-1
         self.__seg[k]=v
         while k+1: # k=0の処理が終わったら-1になってる
             k=(k-1)//2 # kの親のnodeは(k-1)//2
-            self.__seg[k]=self.__f(self.__seg[k*2+1],self.__seg[k*2+2])
+            self.__seg[k]=self.func(self.__seg[k*2+1],self.__seg[k*2+2])
 
     def query(self,p,q): # reduce(f,A[p:q])
         if q<=p: return self.__u
@@ -35,12 +38,12 @@ class Segtree(object):
         res=self.__u
         while q-p>1:
             if p&1==0:
-                res=self.__f(res,self.__seg[p])
+                res=self.func(res,self.__seg[p])
             if q&1==1:
-                res=self.__f(res,self.__seg[q])
+                res=self.func(res,self.__seg[q])
                 q-=1
             p=p//2
             q=(q-1)//2
-        if p==q: res=self.__f(res,self.__seg[p])
-        else: res=self.__f(self.__f(res,self.__seg[p]),self.__seg[q])
+        if p==q: res=self.func(res,self.__seg[p])
+        else: res=self.func(self.func(res,self.__seg[p]),self.__seg[q])
         return res
