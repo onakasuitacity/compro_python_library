@@ -31,21 +31,21 @@ root.left.right.left.left = Node('G')
 ### traverse
 # Preorder (A,B,C,D,E,G,F,H)
 def preorder(node):
-    if node==None: return
+    if node is None: return
     print(node,end=',')
     preorder(node.left)
     preorder(node.right)
 
 # Inorder (C,B,G,E,D,F,A,H)
 def inorder(node):
-    if node==None: return
+    if node is None: return
     inorder(node.left)
     print(node,end=',')
     inorder(node.right)
 
 # Postorder (C,G,E,F,D,B,H,A)
 def postorder(node):
-    if node==None: return
+    if node is None: return
     postorder(node.left)
     postorder(node.right)
     print(node,end=',')
