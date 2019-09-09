@@ -2,12 +2,12 @@
 
 class Node(object):
     def __init__(self,label):
-        self.label=str(label)
+        self.label=label
         self.left=None
         self.right=None
 
     def __repr__(self):
-        return self.label
+        return str(self.label)
 
 ### build tree
 #       A
