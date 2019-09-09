@@ -1,5 +1,4 @@
 # https://engineeringnote.hateblo.jp/entry/python/algorithm-and-data-structures/binary_search_tree
-
 class Node(object):
     def __init__(self,key):
         self.key=key
