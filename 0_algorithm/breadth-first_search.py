@@ -2,8 +2,15 @@ from collections import deque
 
 # given
 N=5
-G=list(range(N))
+V=list(range(N))
 E=[{1,2,3},{0},{0},{0,4},{3}]
+
+###
+# 1   2
+#  \ /
+#   0   4
+#    \ /
+#     3
 
 # parameter
 root=0
