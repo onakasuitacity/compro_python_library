@@ -60,6 +60,8 @@ class BIT(object):
         n=2**((self.__len-1).bit_length()-1)
         res=0
         while(n):
+            if res+n-1>self.__len-1:
+                n//=2
             if w<self.tree[res+n-1]:
                 n//=2
             else:
