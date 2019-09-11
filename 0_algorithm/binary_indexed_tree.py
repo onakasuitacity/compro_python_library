@@ -43,6 +43,9 @@ class BIT(object):
         n=2**((self.__len-1).bit_length()-1)
         res=0
         while(n):
+            if res+n-1>self.__len-1: # index over(2べきじゃないときに起こる)
+                n//=2
+                continue
             if w<=self.tree[res+n-1]: # 左にいく
                 n//=2
             else: # 右にいく
@@ -57,6 +60,9 @@ class BIT(object):
         n=2**((self.__len-1).bit_length()-1)
         res=0
         while(n):
+            if res+n-1>self.__len-1:
+                n//=2
+                continue
             if w<self.tree[res+n-1]:
                 n//=2
             else:
