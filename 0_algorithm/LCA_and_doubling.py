@@ -2,7 +2,7 @@
 # https://tjkendev.github.io/procon-library/python/graph/lca-doubling.html
 
 class LCA(object):
-    def __init__(self,edges,root): # both adjacence matrix and adjacence list are acceptable as edges
+    def __init__(self,edges,root): # edges : adjacence list
         self.edges=edges
         self.root=root
         self.n=len(edges) # n=|V|
@@ -15,7 +15,7 @@ class LCA(object):
         self.doubling()
 
     def dfs(self,u):
-        for v in E[u]:
+        for v in self.edges[u]:
             if self.depth[v]==float("inf"): # 訪れていない＝深さがINF(rootから連結な部分しか探索しない)
                 self.depth[v]=self.depth[u]+1
                 self.parent[v][0]=u
