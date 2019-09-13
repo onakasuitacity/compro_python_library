@@ -27,7 +27,7 @@ d[s]=0
 import heapq
 Q=[]
 heapq.heapify(Q)
-heapq.heappush(Q,(0,s)) # (cost,v)
+heapq.heappush(Q,(0,s)) # (dist,v)
 
 while(Q):
     dist,v=heapq.heappop(Q)
