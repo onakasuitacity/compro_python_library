@@ -45,9 +45,6 @@ class LCA(object):
             if pu!=pv:
                 u,v=pu,pv
         return self.parent[u][0]
-
-    def depth(self,v):
-        return self.depth[v]
                 
 #%%
 # given data
