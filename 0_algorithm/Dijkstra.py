@@ -1,4 +1,4 @@
-# Dijkstra's algorithm
+# Dijkstra's algorithm O(V^2)
 
 ### input
 # node
