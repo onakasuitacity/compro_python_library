@@ -32,7 +32,7 @@ class BellmanFord(object):
                 if (update is False): # 更新されない＝終わり
                     return
                 elif (update is True) and (k==self.__n-1): # 負の閉路検出
-                    self.__dist=[float("inf")]*self.__n
+                    self.__dist=[-float("inf")]*self.__n
 
 # input
 V=list(range(5))
