@@ -15,8 +15,8 @@ class LCA:
         self.edges = edges
         self.n = len(edges) # n=|V|
         self.logn = (self.n-1).bit_length() # logn=ceil(log2(n))
-        self.depths = [-1] * self.n
-        self.parents = [[-1] * self.n for _ in range(self.logn)]
+        self.depths = [-1]*self.n
+        self.parents = [[-1]*self.n for _ in range(self.logn)]
         # construct
         self.__dfs(-1,root,0)
         self.__doubling()
