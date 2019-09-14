@@ -1,8 +1,34 @@
 # Dijkstra's algorithm with heap tree O(ElogV)
 # https://takeg.hatenadiary.jp/entry/2019/06/03/130418
 
-# constant
-INF=float("inf")
+class Dijkstra(object):
+    """
+    construct: O(ElogV)
+    """
+    
+    def __init__(self,edges,start=0):
+        """
+        :param list of list of list of int edges:
+        :param int start=0:
+        """
+        self.__dist=[float("inf")]*len(edges)
+        self.__dist[start]=0
+        self.__calculate(edges,start)
+
+    @property
+    def dist(self):
+        return self.__dist
+    
+    def __calculate(self,edges,start):
+        import heapq
+        Q=[(0,start)] # (dist,vertex)
+        while(Q):
+            dist,v=heapq.heappop(Q)
+            if self.dist[v]<dist: continue # 候補として挙がったd,vだが、他に短いのがある
+            for u,cost in edges[v]:
+                if self.dist[u]>self.dist[v]+cost:
+                    self.__dist[u]=self.dist[v]+cost
+                    heapq.heappush(Q,(self.dist[u],u))
 
 # input
 V=list(range(5))
@@ -13,28 +39,5 @@ E=[
 [[4,30]],
 []
 ]
-n=len(V)
-m=7 # 使わない
-
-# start
-s=0
-
-# initialize
-d=[INF]*n
-d[s]=0
-
-# iterate
-import heapq
-Q=[]
-heapq.heapify(Q)
-heapq.heappush(Q,(0,s)) # (dist,v)
-
-while(Q):
-    dist,v=heapq.heappop(Q)
-    if d[v]<dist: continue # 候補として挙がったdist,vだが、他で短いのがある
-    for i,cost in E[v]:
-        if d[i]>d[v]+cost:
-            d[i]=d[v]+cost
-            heapq.heappush(Q,(d[i],i))
-
-print(d) # [0,50,70,65,85]
+dij=Dijkstra(E,0)
+print(dij.dist) # [0,50,70,65,85]
