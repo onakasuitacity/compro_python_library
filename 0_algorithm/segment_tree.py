@@ -1,7 +1,16 @@
 # https://juppy.hatenablog.com/entry/2019/05/02/%E8%9F%BB%E6%9C%AC_python_%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E6%9C%A8_%E7%AB%B6%E6%8A%80%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0_Atcoder
 class SegTree(object):
+    """
+    construct: O(N)
+    query: O(logN)
+    """
     from operator import add
     def __init__(self,A,f=add,u=0):
+        """
+        :param list of int(float) A:
+        :param commutative function f:
+        :param unit of f u:
+        """
         n=2**((len(A)-1).bit_length())
         N=2*n-1
         self.__num=n
