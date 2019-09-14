@@ -1,49 +1,61 @@
 # Dijkstra's algorithm O(V^2)
+# https://qiita.com/shizuma/items/e08a76ab26073b21c207
 
-### input
-# node
-V=[0,1,2,3,4]
-n=len(V)
-# adjacency matrix
-A = [
-[0,50,80,0,0],
-[0,0,20,15,0],
-[0,0,0,10,15],
-[0,0,0,0,30],
-[0,0,0,0,0]
+class Dijkstra(object):
+    """
+    construct: O(V^2)
+    """
+    
+    def __init__(self,edges,start=0):
+        """
+        :param list of list of list of int edges:
+        :param int start=0:
+        """
+        self.__V=list(range(len(edges)))
+        self.__dist=[float("inf")]*len(edges)
+        self.__dist[start]=0
+        self.__prev=[None]*len(edges)
+        self.__calculate(edges,start)
+
+    @property
+    def dist(self):
+        return self.__dist
+
+    @property
+    def prev(self):
+        return self.__prev
+    
+    def __calculate(self,edges,start):
+        Q=set(self.__V)
+        while(Q):
+            # Qの中で距離が最小のものを取得
+            v = min((self.dist[v],v) for v in Q)[1]
+            Q.remove(v)
+            # iの出力辺の先を探索
+            for u,cost in edges[v]:
+                if self.dist[u]>self.dist[v]+cost:
+                    self.__dist[u]=self.dist[v]+cost
+                    self.__prev[u]=v
+                    
+# input
+V=list(range(5))
+E=[
+[[1,50],[2,80]],
+[[2,20],[3,15]],
+[[3,10],[4,15]],
+[[4,30]],
+[]
 ]
-m=7 # 使わない
+start=0
 
-### parameter
-# start
-s=0
-
-### initialize
-# distance
-d=[float("inf") if i!=s else 0 for i in V]
-# previous node
-prev=[None for _ in V]
-
-### iterate
-Q=set(V)
-while(Q):
-    # Qの中で距離が最小のものを取得
-    i = min((d[q],q) for q in Q)[1]
-    Q.remove(i)
-    # iの出力辺の先を探索
-    for j in range(n):
-        if A[i][j]==0: continue
-        elif d[j]>d[i]+A[i][j]:
-            d[j]=d[i]+A[i][j]
-            prev[j]=i
-
-### output
+# output
+dij=Dijkstra(E,start)
 for i in V:
     print("FROM {} TO {}".format(s,i))
-    print("distance : {}".format(d[i]))
+    print("distance : {}".format(dij.dist[i]))
     p=i
     path=[i]
-    while(prev[p]):
-        p=prev[p]
+    while(dij.prev[p]):
+        p=dij.prev[p]
         path.append(p)
     print("path : {}".format(path[::-1]),end="\n\n")
