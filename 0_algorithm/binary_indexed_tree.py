@@ -1,7 +1,15 @@
 # http://hos.ac/slides/20140319_bit.pdf
 class BIT(object):
+    """
+    construct: O(N)
+    query: O(logN)
+    """
     from operator import add
     def __init__(self,A,f=add):
+        """
+        :param list of int(float) A:
+        :param monoid operator f:
+        """
         N=len(A)
         self.__len=N
         self.__f=f
