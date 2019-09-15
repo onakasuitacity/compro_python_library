@@ -9,9 +9,6 @@ def trial_division(n):
     if n==1: return factor
     else: return factor+[n]
 
-n,k=map(int,input().split())
-primes=trial_division(n)
-
 # n進数
 def nsin(x, n):
     if(int(x/n)):
