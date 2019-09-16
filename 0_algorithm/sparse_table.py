@@ -1,4 +1,4 @@
-#%% Sparse Table
+#%% Sparse Table O(NlogN)
 # http://tookunn.hatenablog.com/entry/2016/07/13/211148
 
 class SparseTable(object):
