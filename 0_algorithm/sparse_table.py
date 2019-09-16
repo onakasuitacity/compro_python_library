@@ -68,6 +68,10 @@ class SparseTable(object):
 #%% input
 A=[2,5,3,9,8,2,10,1,7,2,1,6]
 table=SparseTable(A)
-l,r=7,10
+n=len(A)
+from itertools import product
+for l,r in product(range(n),repeat=2):
+    if r-l<=0: continue 
+    print(l,r,table.max(l,r),table.min(l,r))
 print(table.max(l,r))
 print(table.min(l,r))
