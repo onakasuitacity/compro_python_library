@@ -27,7 +27,7 @@ class UnionFind(object):
         if self.__rank[i]>self.__rank[j]: # rankが大きいほうが親になる
             self.__par[j]=i
         elif self.__rank[i]<self.__rank[j]:
-            self.__par[j]=i
+            self.__par[i]=j
         else: # rankが同じときはどっちでもよい
             self.__par[j]=i
             self.__rank[i]+=1
