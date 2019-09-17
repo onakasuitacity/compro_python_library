@@ -10,6 +10,7 @@ class UnionFind(object):
         """
         self.__par=list(range(n))
         self.__rank=[0]*n
+        self.__size=[1]*n
 
     def __root(self,k):
         if self.__par[k]==k: return k
@@ -17,25 +18,20 @@ class UnionFind(object):
             self.__par[k]=self.__root(self.__par[k])
             return self.__par[k]
 
-    def same(self,i,j):
+    def is_same(self,i,j):
         return self.__root(i)==self.__root(j)
 
     def unite(self,i,j):
         i=self.__root(i)
         j=self.__root(j)
         if i==j: return
-        if self.__rank[i]>self.__rank[j]: # rankが大きいほうが親になる
+        if self.__rank[i]>self.__rank[j]:
             self.__par[j]=i
-        elif self.__rank[i]<self.__rank[j]:
+            self.__size[i]+=self.__size[j]
+        else:
             self.__par[i]=j
-        else: # rankが同じときはどっちでもよい
-            self.__par[j]=i
-            self.__rank[i]+=1
+            self.__size[j]+=self.__size[i]
+            if self.__rank[i]==self.__rank[j]: self.__rank[j]+=1
 
-#%%
-union=UnionFind(6)
-union.unite(0,2)
-union.unite(1,3)
-union.unite(1,5)
-print(union.same(3,5))
-print(union.same(2,4))
+    def size(self,k):
+        return self.__size[self.__root(k)]
