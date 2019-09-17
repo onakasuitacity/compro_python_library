@@ -2,7 +2,7 @@
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
     """
-    query: O(logN)
+    query: O(logN) (amortize)
     """
     def __init__(self,n):
         """
