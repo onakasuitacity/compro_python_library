@@ -3,19 +3,14 @@ import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
 MOD=10**9+7
-# input=sys.stdin.readline
+input=sys.stdin.readline
 def resolve():
     n,k=map(int,input().split())
     A=[list(map(int,input().split())) for _ in range(n)]
-    flag=True
-    from itertools import product
-    for Z in product(range(k),repeat=n):
-        xor=0
-        Z=list(Z)
-        for i in range(n):
-            xor^=A[i][Z[i]]
-        if xor==0:
-            flag=False
-            break
-    print("Nothing" if flag else "Found")
+    def dfs(num,xor):
+        if num==n-1: return xor==0
+        for i in range(k):
+            if dfs(num+1,xor^A[num][i]): return True
+        return False
+    print("Found" if dfs(-1,0) else "Nothing")
 resolve()
