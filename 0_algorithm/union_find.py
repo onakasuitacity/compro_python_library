@@ -35,3 +35,12 @@ class UnionFind(object):
 
     def size(self,k):
         return self.__size[self.__root(k)]
+
+#%%
+tree=UnionFind(6)
+tree.unite(0,2)
+tree.unite(1,3)
+tree.unite(1,5)
+print(tree.is_same(3,5)) # True
+print(tree.is_same(2,4)) # False
+print(tree.size(3)) # 3
