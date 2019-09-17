@@ -2,7 +2,6 @@
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
     """
-    construct: O(N)
     query: O(logN)
     """
     def __init__(self,n):
