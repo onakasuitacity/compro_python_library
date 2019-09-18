@@ -16,24 +16,21 @@ def nsin(x, n):
     return str(x)
 
 # Eratosthenes Sieve (O(nloglogn))
-def is_prime(n):
-    if n<=1: return False
-    A = [i for i in range(2, n+1)]
-    P = []
-    lim = n**.5
-    while True:
-        prime = A[0]
-        if prime > lim: break
-        P.append(prime)
-        i = 0
-        while i < len(A): # for loopを使わないのは、popでindexがズレるため
-            if A[i] % prime == 0:
-                A.pop(i)
-                continue
-            i += 1
-    for a in A:
-        P.append(a)
-    return n in P
+def prime(n,is_prime=True):
+    """
+    n: positive integer
+    if is_prime: return n is prime
+    else: return list of prime <= n 
+    """
+    if n<=1: return False if is_prime else []
+    S=[1]*(n+1)
+    S[0]=0; S[1]=0
+    for i in range(2,n):
+        if S[i]==0: continue
+        for j in range(2*i,n+1,i):
+            S[j]=0
+    if is_prime: return bool(S[n])
+    else: return [p for p in range(n+1) if S[p]]
 
 # aのZ/mZでのinverse
 # https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
