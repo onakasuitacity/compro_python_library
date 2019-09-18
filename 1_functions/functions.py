@@ -55,7 +55,7 @@ def powerset(iterable):
 # Exponential (O(logp))
 def power(b,p,f):
     """
-    b: base
+    b: int (base)
     p: positive int (multiplier)
     f: multiple function
     return: f^p(b)
