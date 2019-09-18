@@ -1,14 +1,3 @@
-# prime factorization
-def trial_division(n):
-    factor=[]
-    sqrt=int(n**.5)+1 # sqrt=ceil(sqrt(n))
-    for num in range(2,sqrt):
-        while n % num == 0:
-            n //= num
-            factor.append(num)
-    if n==1: return factor
-    else: return factor+[n]
-
 # n進数
 def nsin(x, n):
     if(int(x/n)):
@@ -31,6 +20,17 @@ def prime(n,is_prime=True):
             S[j]=0
     if is_prime: return bool(S[n])
     else: return [p for p in range(n+1) if S[p]]
+
+# prime factorization
+def trial_division(n):
+    factor=[]
+    sqrt=int(n**.5)+1 # sqrt=ceil(sqrt(n))
+    for num in range(2,sqrt):
+        while n % num == 0:
+            n //= num
+            factor.append(num)
+    if n==1: return factor
+    else: return factor+[n]
 
 # aのZ/mZでのinverse
 # https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
