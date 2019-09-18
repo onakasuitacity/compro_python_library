@@ -63,7 +63,7 @@ def power(b,p,f):
     if not isinstance(p,int): raise ValueError("multiplier must be int")
     elif p<=0: raise ValueError("multiplier must be positive.")
     elif p==1: return b
-    logp=(p-1).bit_length()
+    logp=p.bit_length()
     S=[0]*logp
     S[0]=b
     res='$'
