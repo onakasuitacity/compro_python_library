@@ -13,7 +13,7 @@ def bisect(l,r,f,left=True):
     while(True):
         if r-l<=1: # terminate
             if (not left)^f(l): return l if left else l+1
-            else: return h if left else l+1
+            else: return r if left else r+1
         h=(l+r)//2
         if (not left)^f(h): l=h
         else: r=h
