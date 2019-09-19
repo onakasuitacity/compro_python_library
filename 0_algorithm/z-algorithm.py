@@ -27,4 +27,5 @@ def Z(s):
             R-=1
     return z
 
+# input
 print(Z("abaaabaabb")) # [10,0,1,1,4,0,1,2,0,0]
