@@ -9,7 +9,7 @@ def bisect(l,r,f,discrete=True,left=True):
     return d such as those above
     """
     assert r>l
-    eps=1 if discrete else 10**-10
+    eps=1 if discrete else 10**-12
     if (not left)^f(r): return r if left else r+1
     elif left^f(l): return l-1 if left else l
     while(r-l>eps):
