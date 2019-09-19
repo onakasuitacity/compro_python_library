@@ -1,0 +1,16 @@
+# https://atcoder.jp/contests/abc065/tasks/arc076_a
+import sys
+sys.setrecursionlimit(2147483647)
+INF=float("inf")
+MOD=10**9+7
+input=lambda :sys.stdin.readline().rstrip()
+def resolve():
+    from math import factorial
+    n,m=map(int,input().split())
+    if abs(n-m)>1:
+        print(0)
+    elif abs(n-m)==1:
+        print(factorial(n)%MOD*factorial(m)%MOD)
+    else:
+        print(2*factorial(n)%MOD*factorial(m)%MOD)
+resolve()
