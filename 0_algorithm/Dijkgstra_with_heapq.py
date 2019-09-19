@@ -1,6 +1,5 @@
 # Dijkstra's algorithm with heap tree O(ElogV)
 # https://takeg.hatenadiary.jp/entry/2019/06/03/130418
-
 class Dijkstra(object):
     """
     construct: O(ElogV)
