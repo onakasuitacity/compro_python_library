@@ -6,7 +6,7 @@ class UnionFind(object):
     """
     def __init__(self,n):
         """
-        param n: number of nodes
+        n: int, number of nodes
         """
         self.__par=list(range(n))
         self.__rank=[0]*n
