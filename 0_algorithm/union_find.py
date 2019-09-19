@@ -6,7 +6,7 @@ class UnionFind(object):
     """
     def __init__(self,n):
         """
-        n: int, number of nodes
+        n: number of nodes
         """
         self.__par=list(range(n))
         self.__rank=[0]*n
@@ -36,7 +36,7 @@ class UnionFind(object):
     def size(self,k):
         return self.__size[self.__root(k)]
 
-#%%
+#%% input
 tree=UnionFind(6)
 tree.unite(0,2)
 tree.unite(1,3)
