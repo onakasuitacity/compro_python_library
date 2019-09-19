@@ -3,14 +3,13 @@ def bisect(l,r,f,left=True):
     """
     l,r: int (l<r)
     f: {l,...,r} to {False,True}
-    if left: f satisfies that there uniquely exists d such that f(i) is True iff i<=d
-    else: f(i) is True iff i>=d
+    if left: f satisfies that there uniquely exists d such that iff i<=d then f(i)
+    else: iff i>=d then f(i) is True
     return d such as those above
     """
-    if left and f(r): return r
-    elif left and (not f(l)): return l-1
-    elif (not left) and f(l): return l
-    elif (not left) and (not f(r)): return r+1
+    assert r>l
+    if (not left)^f(r): return r if left else r+1
+    elif left^f(l): return l-1 if left else l
     while(True):
         if r-l<=1: # terminate
             if (not left)^f(l): return l if left else l+1
