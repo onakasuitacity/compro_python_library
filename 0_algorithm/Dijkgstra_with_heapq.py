@@ -5,11 +5,10 @@ class Dijkstra(object):
     """
     construct: O(ElogV)
     """
-    
     def __init__(self,edges,start=0):
         """
-        :param list of list of list of int edges:
-        :param int start=0:
+        edges: list of list of list of int
+        start: int
         """
         self.__dist=[float("inf")]*len(edges)
         self.__dist[start]=0
