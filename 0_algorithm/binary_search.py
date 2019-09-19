@@ -3,8 +3,8 @@ def bisect(l,r,f,left=True):
     """
     l,r: int (l<r)
     f: {l,...,r} to {False,True}
-    if left: f satisfies that there uniquely exists d such that iff i<=d then f(i)
-    else: iff i>=d then f(i) is True
+    if left: f satisfies that there uniquely exists d such that f(i) is True iff i<=d
+    else: f(i) is True iff i>=d
     return d such as those above
     """
     if left and f(r): return r
