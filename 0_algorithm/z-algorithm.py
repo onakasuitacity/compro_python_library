@@ -1,8 +1,8 @@
-# Z-algorithm O(N)
+# Z-algorithm (O(N))
 # https://deve68.hatenadiary.org/entry/20120201/1328109890
 def Z(s):
     """
-    param s:str
+    s: str
     return list of int with length len(s)
     """
     # initialization
