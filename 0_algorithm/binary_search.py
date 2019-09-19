@@ -20,4 +20,4 @@ def bisect(l,r,f,left=True):
         else: r=h
 
 #%%
-print(bisect(-4,10,lambda x:x>-5,left=False))
+print(bisect(-4,10,lambda x:x>5,left=False))
