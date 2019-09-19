@@ -8,7 +8,7 @@ class SparseTable(object):
     """
     def __init__(self,A):
         """
-        param A: list of float
+        A: list of float
         """
         # initialize
         self.__A=A[:]
