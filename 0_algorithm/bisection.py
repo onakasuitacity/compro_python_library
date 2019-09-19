@@ -1,4 +1,4 @@
-# bisection method (O(r-l))
+# bisection (O(r-l))
 def bisect(l,r,f,discrete=True,left=True):
     """
     l,r: int (l<r)
