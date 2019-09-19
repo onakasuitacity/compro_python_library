@@ -18,6 +18,3 @@ def bisect(l,r,f,left=True):
 
 #%%
 print(bisect(-4,10,lambda x:x>5.7,left=False))
-
-#%%
-print(bisect(-4,10,lambda x:x>5,left=False))
