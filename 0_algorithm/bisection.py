@@ -16,7 +16,7 @@ def bisect(l,r,f,discrete=True,left=True):
         h=(l+r)//2 if discrete else (l+r)/2
         if (not left)^f(h): l=h
         else: r=h
-    return l if left else r
+    return h if not discrete else l if left else r
 
 #%%
 print(bisect(-4,10,lambda x:x>6,discrete=False,left=False))
