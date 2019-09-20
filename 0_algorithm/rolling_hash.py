@@ -3,7 +3,7 @@
 class RollingHash(object):
     """
     construct: O(N)
-    get_hash: O(1)
+    hash: O(1)
     LCP: O(logN)
     """
     def __init__(self,S,m1=10**9+9,b1=1007,m2=10**9+7,b2=1009):
