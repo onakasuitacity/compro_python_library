@@ -36,7 +36,8 @@ class RollingHash(object):
         """
         if r is None: r=self.len
         assert 0<=l<=r<=self.len
-        return ((self.__H1[r]-self.__P1[r-l]*self.__H1[l]%self.__m1)%self.__m1,(self.__H2[r]-self.__P2[r-l]*self.__H2[l]%self.__m2)%self.__m2)
+        return ((self.__H1[r]-self.__P1[r-l]*self.__H1[l]%self.__m1)%self.__m1,
+                (self.__H2[r]-self.__P2[r-l]*self.__H2[l]%self.__m2)%self.__m2)
 
     def LCP(self,l1,r1=None,rh2=None,l2=0,r2=None):
         if r1 is None: r1=self.len
