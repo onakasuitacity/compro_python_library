@@ -24,10 +24,6 @@ class RollingHash(object):
             self.__H2[i+1]=(self.__H2[i]*b2+ord(s))%m2
             self.__P1[i+1]=self.__P1[i]*b1%m1
             self.__P2[i+1]=self.__P2[i]*b2%m2
-        self.__d=0
-        while(m1):
-            m1//=10
-            self.__d+=1
 
     @property
     def len(self):
@@ -36,11 +32,11 @@ class RollingHash(object):
     def hash(self,l,r=None):
         """
         l,r: int (0<=l<=r<=n)
-        return hash of S[l:r]
+        return (hash1,hash2) of S[l:r]
         """
         if r is None: r=self.len
         assert 0<=l<=r<=self.len
-        return (self.__H1[r]-self.__P1[r-l]*self.__H1[l]%self.__m1)%self.__m1*(10**self.__d)+(self.__H2[r]-self.__P2[r-l]*self.__H2[l]%self.__m2)%self.__m2
+        return ((self.__H1[r]-self.__P1[r-l]*self.__H1[l]%self.__m1)%self.__m1,(self.__H2[r]-self.__P2[r-l]*self.__H2[l]%self.__m2)%self.__m2)
 
     def LCP(self,l1,r1=None,rh2=None,l2=0,r2=None):
         if r1 is None: r1=self.len
@@ -55,7 +51,6 @@ class RollingHash(object):
             if self.hash(l1,l1+H)==rh2.hash(l2,l2+H): L=H
             else: R=H
         return L
-        
 
 #%%
 S="abcdefgabchijk"
