@@ -2,8 +2,7 @@
 # https://tjkendev.github.io/procon-library/python/string/sa_manber_and_myers.html
 # https://lumakernel.github.io/ecasdqina/string/SA-with-Manber-Myers
 # https://lumakernel.github.io/ecasdqina/string/LCP-Array
-
-class SuffixArray:
+class SuffixArray(object):
     """
     construct:
         suffix array: O(N(logN)^2)
