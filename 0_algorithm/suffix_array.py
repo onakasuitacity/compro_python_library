@@ -1,4 +1,4 @@
-# Suffix Array (Mamber-Myers O(N(logN)^2))
+# Suffix Array (Manber-Myers O(N(logN)^2))
 # https://tjkendev.github.io/procon-library/python/string/sa_manber_and_myers.html
 # https://lumakernel.github.io/ecasdqina/string/SA-with-Manber-Myers
 # https://lumakernel.github.io/ecasdqina/string/LCP-Array
