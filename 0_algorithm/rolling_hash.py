@@ -1,5 +1,6 @@
 # RollingHash
 # https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
+# http://perogram.hateblo.jp/entry/rolling_hash
 class RollingHash(object):
     """
     construct: O(N)
@@ -80,7 +81,8 @@ class RollingHash(object):
             if text.hash(i,i+m)==pattern.hash(0,m):
                 res.append(i)
         return res
-#%%
+
+#%% example
 s="unvhusmjlvieloveuybouqvnqjygutqlovedkfsdfgheaiuloveaeiuvaygayfg"
 t="love"
 s=RollingHash(s)
