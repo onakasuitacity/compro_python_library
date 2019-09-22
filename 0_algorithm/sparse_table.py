@@ -26,18 +26,10 @@ class SparseTable(object):
             if k+(1<<(i-1))>=n:
                 maxtable[i][k]=maxtable[i-1][k]
                 mintable[i][k]=mintable[i-1][k]
-                continue
             # そうでないときは、2つの区間に分けたときの大きさで判断
-            # max
-            if maxtable[i-1][k]>=maxtable[i-1][k+(1<<(i-1))]:
-                maxtable[i][k]=maxtable[i-1][k]
             else:
-                maxtable[i][k]=maxtable[i-1][k+(1<<(i-1))]
-            # min
-            if mintable[i-1][k]<=mintable[i-1][k+(1<<(i-1))]:
-                mintable[i][k]=mintable[i-1][k]
-            else:
-                mintable[i][k]=mintable[i-1][k+(1<<(i-1))]
+                maxtable[i][k]=max(maxtable[i-1][k],maxtable[i-1][k+(1<<(i-1))])
+                mintable[i][k]=min(mintable[i-1][k],mintable[i-1][k+(1<<(i-1))])
         self.__n=n
         self.__maxtable=maxtable
         self.__mintable=mintable
