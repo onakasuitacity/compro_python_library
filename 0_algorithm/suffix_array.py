@@ -48,9 +48,9 @@ class SuffixArray(object):
         lcp=[0]*n
         h=0
         for i in range(n):
-            if rank[i]==0: continue
             j=sa[rank[i]-1]
             if h>0: h-=1
+            if rank[i]==0: continue
             while j+h<n and i+h<n and s[j+h]==s[i+h]: h+=1
             lcp[rank[i]]=h
         self.__lcp=lcp
