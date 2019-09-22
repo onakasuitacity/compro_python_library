@@ -9,9 +9,9 @@ class SuffixArray(object):
         lcp array: O(N)
         sparse table: O(NlogN)
     query:
-        get_lcp: O(1)
+        lcp: O(1)
     """
-    def __init__(self, s):
+    def __init__(self,s):
         """
         s: str
         """
@@ -43,36 +43,32 @@ class SuffixArray(object):
 
     # LCP array
     def __lcp_array(self):
-        n=self.__n; s=self.__s;
+        s=self.__s; n=self.__n
         sa=self.__sa; rank=self.__rank
         lcp=[0]*n
         h=0
         for i in range(n):
             j=sa[rank[i]-1]
-            if h > 0: h -= 1
+            if h>0: h-=1
             while j+h<n and i+h<n and s[j+h]==s[i+h]: h+=1
             lcp[rank[i]]=h
         self.__lcp=lcp
 
-    # sparse table (LCPのminをとるindexを持つ)
+    # sparse table
     def __sparse_table(self):
         n=self.__n
         logn=max(0,(n-1).bit_length())
         table=[[0]*n for _ in range(logn)]
-        table[0]=list(range(n))
+        table[0]=self.__lcp[:]
         # construct
-        for i in range(1,logn):
-            for k in range(n):
-                if k+(1<<(i-1))>=n:
-                    table[i][k]=table[i-1][k]
-                    continue
-                if self.__lcp[table[i-1][k]]<=self.__lcp[table[i-1][k+(1<<(i-1))]]:
-                    table[i][k]=table[i-1][k]
-                else:
-                    table[i][k]=table[i-1][k+(1<<(i-1))]
+        for i,k in product(range(1,logn),range(n)):
+            if k+(1<<(i-1))>=n:
+                table[i][k]=table[i-1][k]
+            else:
+                table[i][k]=min(table[i-1][k],table[i-1][k+(1<<(i-1))])
         self.__table=table
 
-    def get_lcp(self,a,b):
+    def lcp(self,a,b):
         """
         a,b: int 0<=a,b<n
         return LCP length between s[a:] and s[b:]
@@ -80,15 +76,12 @@ class SuffixArray(object):
         if a==b: return self.__n-a
         l,r=self.__rank[a],self.__rank[b]
         l,r=min(l,r)+1,max(l,r)+1
-        if r-l==1: return self.__lcp[l]
-        i=(r-l-1).bit_length()-1
-        if self.__lcp[self.__table[i][l]]<=self.__lcp[self.__table[i][r-(1<<i)]]:
-            return self.__lcp[self.__table[i][l]]
-        else:
-            return self.__lcp[self.__table[i][r-(1<<i)]]
+        i=max(0,(r-l-1).bit_length()-1)
+        table=self.__table
+        return min(table[i][l],table[i][r-(1<<i)])
 
-#%%
+#%% example
 s="strangeorange"
 n=len(s)
 sa=SuffixArray(s)
-print(sa.get_lcp(2,8)) 
+print(sa.lcp(2,8)) # 5
