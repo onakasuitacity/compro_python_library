@@ -1,4 +1,4 @@
-# RollingHash
+# Rolling Hash
 # https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
 # http://perogram.hateblo.jp/entry/rolling_hash
 class RollingHash(object):
