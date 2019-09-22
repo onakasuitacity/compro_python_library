@@ -48,6 +48,7 @@ class SuffixArray(object):
         lcp=[0]*n
         h=0
         for i in range(n):
+            if rank[i]==0: continue
             j=sa[rank[i]-1]
             if h>0: h-=1
             while j+h<n and i+h<n and s[j+h]==s[i+h]: h+=1
@@ -61,6 +62,7 @@ class SuffixArray(object):
         table=[[0]*n for _ in range(logn)]
         table[0]=self.__lcp[:]
         # construct
+        from itertools import product
         for i,k in product(range(1,logn),range(n)):
             if k+(1<<(i-1))>=n:
                 table[i][k]=table[i-1][k]
