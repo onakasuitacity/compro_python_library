@@ -6,28 +6,34 @@ class RollingHash(object):
     query:
         hash: O(1)
         lcp: O(logN)
+        search: O(N)
     """
     __base1=1007; __mod1=10**9
     __base2=1009; __mod2=10**7
 
-    def __init__(self,S):
+    def __init__(self,s):
         """
-        S: str
+        s: str
         """
-        n=len(S)
+        n=len(s)
+        self.__s=s
         self.__n=n
         b1=self.__base1; m1=self.__mod1
         b2=self.__base2; m2=self.__mod2
         H1,H2=[0]*(n+1),[0]*(n+1)
         P1,P2=[1]*(n+1),[1]*(n+1)
-        for i,s in enumerate(S):
-            H1[i+1]=(H1[i]*b1+ord(s))%m1
-            H2[i+1]=(H2[i]*b2+ord(s))%m2
+        for i in range(n):
+            H1[i+1]=(H1[i]*b1+ord(s[i]))%m1
+            H2[i+1]=(H2[i]*b2+ord(s[i]))%m2
             P1[i+1]=P1[i]*b1%m1
             P2[i+1]=P2[i]*b2%m2
         self.__H1=H1; self.__H2=H2
         self.__P1=P1; self.__P2=P2
 
+    @property
+    def str(self):
+        return self.__s
+    
     @property
     def len(self):
         return self.__n
@@ -62,8 +68,22 @@ class RollingHash(object):
             else: R=H
         return L
 
+    @classmethod
+    def search(cls,pattern,text):
+        """
+        pattern,text: RollingHash object
+        return list of index i's satisfying text[i:] starts with pattern
+        """
+        n=text.__n; m=pattern.__n
+        res=[]
+        for i in range(n-m+1):
+            if text.hash(i,i+m)==pattern.hash(0,m):
+                res.append(i)
+        return res
 #%%
-S="abcdefgabchijk"
-n=len(S)
-rh=RollingHash(S)
-print(RollingHash.lcp(rh,rh,0,7)) # 3
+s="unvhusmjlvieloveuybouqvnqjygutqlovedkfsdfgheaiuloveaeiuvaygayfg"
+t="love"
+s=RollingHash(s)
+t=RollingHash(t)
+print(RollingHash.search(t,s)) # [12,31,47]
+print(RollingHash.lcp(s,t,12,0)) # 4
