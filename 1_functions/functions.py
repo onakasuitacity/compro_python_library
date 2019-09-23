@@ -21,7 +21,7 @@ def prime(n,is_prime=True):
     if is_prime: return bool(S[n])
     else: return [p for p in range(n+1) if S[p]]
 
-# prime factorization
+# prime factorization (O(sqrt(N)))
 def trial_division(n):
     factor=[]
     sqrt=int(n**.5)+1 # sqrt=ceil(sqrt(n))
@@ -32,7 +32,7 @@ def trial_division(n):
     if n==1: return factor
     else: return factor+[n]
 
-# divisors
+# divisors (O(sqrt(N)))
 def divisors(n):
     S,T=[],[]
     for i in range(1,int(n**.5)+1):
