@@ -1,7 +1,7 @@
 # n進数
 def nsin(x, n):
-    if(int(x/n)):
-        return nsin(int(x/n),n)+str(x%n)
+    if(x//n):
+        return nsin(x//n,n)+str(x%n)
     return str(x)
 
 # Eratosthenes Sieve (O(nloglogn))
@@ -42,9 +42,13 @@ def divisors(n):
     T.reverse()
     return S+T if S[-1]!=T[0] else S+T[1:]
 
-# aのZ/mZでのinverse
+# mod inverse
 # https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
 def modinv(a,m):
+    """
+    a,m: coprime int
+    return a^-1 mod m
+    """
     b,u,v=m,1,0
     while(b):
         t=a//b
