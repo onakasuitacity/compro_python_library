@@ -1,14 +1,48 @@
-#%% DFS + Euler Tour
-# https://www.slideshare.net/yumainoue965/lca-and-rmq
-# http://hos.ac/slides/20110504_graph.pdf
+#%% Euler Tour
+# https://www.npca.jp/works/magazine/2015_5/
+class EulerTour(object):
+    def __init__(self,E,root=0):
+        """
+        E: list of int (adjacency list)
+        root: int
+        """
+        n=len(E)
+        self.__V=list(range(n))
+        self.__E=E 
+        self.__begin=[0]*n
+        self.__end=[0]*n
+        self.__tour=[0]*(2*n-1)
+        self.__k=0
+        self.__dfs(root,-1)
+        del self.__k
 
-# const
-INF=float("inf")
+    def __dfs(self,v,p):
+        self.__begin[v]=self.__k
+        self.__tour[self.__k]=v
+        self.__k+=1
+        for u in self.__E[v]:
+            if u==p: continue
+            self.__dfs(u,v)
+            self.__tour[self.__k]=v
+            self.__k+=1
+        self.__end[v]=self.__k
 
-# given data
+    @property
+    def begin(self):
+        return self.__begin
+
+    @property
+    def end(self):
+        return self.__end
+
+    @property
+    def tour(self):
+        return self.__tour
+
+#%% Example
 N=6
 V=list(range(N))
-E=[{1,2},{0},{0,3,4,5},{2},{3},{4}]
+E=[[1,2],[0],[0,3,4,5],[2],[2],[2]]
 
 ###
 #    0
@@ -17,22 +51,7 @@ E=[{1,2},{0},{0,3,4,5},{2},{3},{4}]
 #     /|\
 #    3 4 5
 
-# parameter
-root=0
-
-# build
-Tour=[]
-Dist=[INF if i!=root else 0 for i in V]
-
-# Euler Tour (recursive)
-def DFS(parent,child):
-    if parent is not None: Tour.append(parent)
-    for v in E[child]:
-        if Dist[v]==INF:
-            Dist[v]=Dist[child]+1
-            DFS(child,v)
-    Tour.append(child)
-
-DFS(None,root)
-print(Dist)
-print(Tour)
+tree=EulerTour(E)
+print(tree.tour) # [0,1,0,2,3,2,4,2,5,2,0]
+print(tree.begin) # [0,1,3,4,6,8]
+print(tree.end) # [11,2,10,5,7,9]
