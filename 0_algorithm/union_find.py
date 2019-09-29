@@ -1,4 +1,4 @@
-# Union Find (with Path compression)
+# Union Find (with path compression, ranking)
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
     """
