@@ -1,4 +1,4 @@
-# 
+# https://atcoder.jp/contests/agc039/tasks/agc039_a
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
