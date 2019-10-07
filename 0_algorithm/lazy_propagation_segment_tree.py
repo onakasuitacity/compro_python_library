@@ -26,27 +26,22 @@ class SegmentTree(object):
             self.__node[i]=dot(self.__node[2*i+1],self.__node[2*i+2])
 
     def __get_range(self,l,r):
-        if l>=r: return []
+        if l>=r: return [],[]
         Left,Right=[],[]
         n=self.__n
         l+=n-1; r+=n-2
-        while(r-l>1):
-            if l&1==0:
+        while(r-l>0):
+            if l%2==0:
                 Left.append(l)
-            if r&1==1:
+            if r%2==1:
                 Right.append(r)
                 r-=1
             l=l//2; r=(r-1)//2
         if l==r:
-            center=l
-        else:
-            if l%2==1:
-                center=(l-1)//2
-            else:
-                center=None
-                Left.append(l); Right.append(r)
+            if l%2==0: Left.append(l)
+            else: Right.append(l)
         Left.reverse(); Right.reverse()
-        return Left,center,Right
+        return Left,Right
 
     def __pointwise_update(self,i):
         node=self.__node
@@ -55,15 +50,23 @@ class SegmentTree(object):
             if i<=self.__n-2: # propagate to children
                 lazy[2*i+1]=self.__comp(lazy[2*i+1],lazy[i])
                 lazy[2*i+2]=self.__comp(lazy[2*i+2],lazy[i])
-            # action
-            node[i]=self.__act(lazy[i],node[i])
+            node[i]=self.__act(lazy[i],node[i]) # action
             lazy[i]=self.__id
 
     def __range_update(self,l,r):
-        Left,center,Right=self.__get_range(l,r)
+        Left,Right=self.__get_range(l,r)
+        for i in Left+Right: self.__pointwise_update(i)
+        if l!=0: self.__pointwise_update(Left[-1]-1)
+        if r!=self.__n: self.__pointwise_update(Right[-1]+1)
+        # 下から上がっていくところを書く
 
     def add(self,l,r,f):
-        pass
+        Left,Right=self.__get_range(l,r)
+        lazy=self.__lazy
+        for i in Left+Right:
+            lazy[i]=self.__comp(lazy[i],f)
+        self.__range_update(l,r)
+
 
     def sum(self,l,r):
         pass
@@ -77,4 +80,4 @@ INF=float("inf")
 A=[4,9,11,5,13,33,33,33,11,45,14,19,19,8,10,89]
 from operator import add
 tree=SegmentTree(A,min,INF,add,0,add)
-print(tree._SegmentTree__get_range(1,11))
+print(tree._SegmentTree__get_range(5,15))
