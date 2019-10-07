@@ -1,6 +1,5 @@
 # segment tree (without lazy-propagation)
 # cf. https://github.com/onakasuitacity/atcoder_py/blob/master/0_algorithm/lazy_propagation_segment_tree.py
-# 一番基本的なこれが通らないです… http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A
 class SegmentTree(object):
     def __init__(self,A,dot,e):
         n=2**((len(A)-1).bit_length())
