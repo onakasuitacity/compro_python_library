@@ -65,7 +65,7 @@ class SegmentTree(object):
         if Left: lowest.append(Left[0])
         if Right: lowest.append(Right[0])
         for i in lowest:
-            while(i!=-1):
+            while(i!=0):
                 i=(i-1)//2
                 node[i]=self.__dot(node[2*i+1],node[2*i+2])
 
