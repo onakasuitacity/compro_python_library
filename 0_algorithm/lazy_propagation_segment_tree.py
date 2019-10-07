@@ -25,6 +25,14 @@ class SegmentTree(object):
         for i in range(n-2,-1,-1):
             self.__node[i]=dot(self.__node[2*i+1],self.__node[2*i+2])
 
+    def __get_ancestors(self,i):
+        res=[]
+        while(i!=0):
+            i=(i-1)//2
+            res.append(i)
+        res.reverse()
+        return res
+
     def __get_range(self,l,r):
         if l>=r: return [],[]
         Left,Right=[],[]
@@ -54,6 +62,13 @@ class SegmentTree(object):
 
     def add(self,l,r,f):
         Left,Right=self.__get_range(l,r)
+        lowest=[]
+        if Left: lowest.append(Left[0])
+        if Right: lowest.append(Right[0])
+        for i in lowest:
+            ancestors=self.__get_ancestors(i)
+            for j in ancestors:
+                self.__propagate(j)
         lazy=self.__lazy
         for i in Left+Right:
             lazy[i]=self.__comp(lazy[i],f)
@@ -61,9 +76,6 @@ class SegmentTree(object):
         if l!=0 and Left: self.__propagate(Left[0]-1)
         if r!=self.__n and Right: self.__propagate(Right[0]+1)
         node=self.__node
-        lowest=[]
-        if Left: lowest.append(Left[0])
-        if Right: lowest.append(Right[0])
         for i in lowest:
             while(i!=0):
                 i=(i-1)//2
@@ -97,7 +109,6 @@ class SegmentTree(object):
             rv=self.bisect(l,r,x,increase,2*i+2,(a+b)//2,b)
             if rv!=-1: return rv
             return self.bisect(l,r,x,increase,2*i+1,a,(a+b)//2)
-
 
 # RmQ and range add
 INF=float("inf")
