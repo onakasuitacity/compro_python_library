@@ -21,19 +21,28 @@ class SegmentTree(object):
             i=(i-1)//2
             node[i]=self.__dot(node[2*i+1],node[2*i+2])
 
-    def sum(self,l,r):
-        if l>=r: return self.__e
+    def __get_range(self,l,r):
+        if l>=r: return [],[]
+        Left,Right=[],[]
         n=self.__n
         l+=n-1; r+=n-2
-        res=self.__e
         while(l<r):
             if l%2==0:
-                res=self.__dot(res,self.__node[l])
-            if r%1==1:
-                res=self.__dot(res,self.__node[r])
+                Left.append(l)
+            if r%2==1:
+                Right.append(r)
                 r-=1
             l=l//2; r=(r-1)//2
-        if l==r: res=self.__dot(res,self.__node[l])
+        if l==r:
+            if l%2==0: Left.append(l)
+            else: Right.append(l)
+        return Left,Right
+
+    def sum(self,l,r):
+        Left,Right=self.__get_range(l,r)
+        res=self.__e
+        for i in Left+Right[::-1]:
+            res=self.__dot(res,self.__node[i])
         return res
 
 #%% Example
