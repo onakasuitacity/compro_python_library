@@ -23,15 +23,29 @@ class SegmentTree(object):
         for i in range(len(A)):
             self.__node[n-1+i]=A[i]
         for i in range(n-2,-1,-1):
-            self.__node[i]=dot(self.__node[2*i+1],self.__node[2*i+2])
+            self.__node[i]=self.__dot(self.__node[2*i+1],self.__node[2*i+2])
 
-    def __get_ancestors(self,i):
-        res=[]
+    def __propagate(self,i):
+        if self.__lazy[i]==self.__id: return
+        node=self.__node
+        lazy=self.__lazy
+        if i<=self.__n-2: # propagate to children
+            lazy[2*i+1]=self.__comp(lazy[2*i+1],lazy[i])
+            lazy[2*i+2]=self.__comp(lazy[2*i+2],lazy[i])
+        node[i]=self.__act(lazy[i],node[i]) # action
+        lazy[i]=self.__id
+
+    def __ancestors_propagate(self,i):
+        if i==0: return
+        i=(i-1)//2
+        self.__ancestors_propagate(i)
+        self.__propagate(i)
+
+    def __update_ancestors(self,i):
         while(i!=0):
+            self.__propagate(i-1+2*(i%2)) # propagate the sibling of i
             i=(i-1)//2
-            res.append(i)
-        res.reverse()
-        return res
+            self.__node[i]=self.__dot(self.__node[2*i+1],self.__node[2*i+2])
 
     def __get_range(self,l,r):
         if l>=r: return [],[]
@@ -50,65 +64,31 @@ class SegmentTree(object):
             else: Right.append(l)
         return Left,Right
 
-    def __propagate(self,i):
-        if self.__lazy[i]==self.__id: return
-        node=self.__node
-        lazy=self.__lazy
-        if i<=self.__n-2: # propagate to children
-            lazy[2*i+1]=self.__comp(lazy[2*i+1],lazy[i])
-            lazy[2*i+2]=self.__comp(lazy[2*i+2],lazy[i])
-        node[i]=self.__act(lazy[i],node[i]) # action
-        lazy[i]=self.__id
+    def update(self,i,c):
+        i+=self.__n-1
+        self.__ancestors_propagate(i)
+        self.__node[i]=c
+        self.__update_ancestors(i)
 
     def add(self,l,r,f):
         Left,Right=self.__get_range(l,r)
         lowest=[]
         if Left: lowest.append(Left[0])
         if Right: lowest.append(Right[0])
-        for i in lowest:
-            ancestors=self.__get_ancestors(i)
-            for j in ancestors:
-                self.__propagate(j)
-        lazy=self.__lazy
+        for i in lowest: self.__ancestors_propagate(i)
         for i in Left+Right:
-            lazy[i]=self.__comp(lazy[i],f)
-            self.__propagate(i)
-        if l!=0 and Left: self.__propagate(Left[0]-1)
-        if r!=self.__n and Right: self.__propagate(Right[0]+1)
-        node=self.__node
+            self.__lazy[i]=self.__comp(self.__lazy[i],f)
         for i in lowest:
-            while(i!=0):
-                i=(i-1)//2
-                node[i]=self.__dot(node[2*i+1],node[2*i+2])
+            self.__propagate(i)
+            self.__update_ancestors(i)
 
     def sum(self,l,r):
         Left,Right=self.__get_range(l,r)
-        for i in Left+Right: self.__propagate(i)
         res=self.__e
         for i in Left+Right[::-1]:
+            self.__propagate(i)
             res=self.__dot(res,self.__node[i])
         return res
-
-    def bisect(self,l,r,x,increase=True,i=0,a=0,b=None):
-        """
-        if increase: return d such that S[i]<x iff i<=d (l<=i<l)
-        else: S[i]>x iff i<=d
-        where S is cummulative sum of A
-        """
-        self.__propagate(i)
-        if b is None: b=self.__n
-        if increase:
-            if self.__node[i]<=x or b<=l or r<=a: return -1
-            if i>=self.__n-1: return i-(self.__n-1)
-            lv=self.bisect(l,r,x,increase,2*i+1,a,(a+b)//2)
-            if lv!=-1: return lv
-            return self.bisect(l,r,x,increase,2*i+2,(a+b)//2,b)
-        else:
-            if self.__node[i]>=x or b<=l or r<=a: return -1
-            if i>=self.__n-1: return i-(self.__n-1)
-            rv=self.bisect(l,r,x,increase,2*i+2,(a+b)//2,b)
-            if rv!=-1: return rv
-            return self.bisect(l,r,x,increase,2*i+1,a,(a+b)//2)
 
 # RmQ and range add
 INF=float("inf")
