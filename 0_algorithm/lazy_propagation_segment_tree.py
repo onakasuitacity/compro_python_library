@@ -84,6 +84,10 @@ class SegmentTree(object):
 
     def sum(self,l,r):
         Left,Right=self.__get_range(l,r)
+        lowest=[]
+        if Left: lowest.append(Left[0])
+        if Right: lowest.append(Right[0])
+        for i in lowest: self.__ancestors_propagate(i)
         res=self.__e
         for i in Left+Right[::-1]:
             self.__propagate(i)
