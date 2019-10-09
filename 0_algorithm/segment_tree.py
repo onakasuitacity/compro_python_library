@@ -8,7 +8,7 @@ class SegmentTree(object):
         self.__e=e
         self.__node=[e]*(2*n-1)
         for i in range(len(A)):
-            self.__node[n-1+i]=A[i]
+            self.__node[i+n-1]=A[i]
         for i in range(n-2,-1,-1):
             self.__node[i]=dot(self.__node[2*i+1],self.__node[2*i+2])
 
