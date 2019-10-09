@@ -67,6 +67,7 @@ class SegmentTree(object):
     def update(self,i,c):
         i+=self.__n-1
         self.__ancestors_propagate(i)
+        self.__propagate(i)
         self.__node[i]=c
         self.__update_ancestors(i)
 
