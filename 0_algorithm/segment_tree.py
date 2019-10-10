@@ -6,67 +6,57 @@ class SegmentTree(object):
         self.__n=n
         self.__dot=dot
         self.__e=e
-        self.__node=[e]*(2*n-1)
+        self.__node=[e]*(2*n)
         for i in range(len(A)):
-            self.__node[i+n-1]=A[i]
-        for i in range(n-2,-1,-1):
-            self.__node[i]=dot(self.__node[2*i+1],self.__node[2*i+2])
+            self.__node[i+n]=A[i]
+        for i in range(n-1,-0,-1):
+            self.__node[i]=dot(self.__node[2*i],self.__node[2*i+1])
 
     def update(self,i,c):
-        i+=self.__n-1
+        i+=self.__n
         node=self.__node
         node[i]=c
-        while(i!=0):
-            i=(i-1)//2
-            node[i]=self.__dot(node[2*i+1],node[2*i+2])
-
-    def __get_range(self,l,r):
-        if l>=r: return [],[]
-        Left,Right=[],[]
-        n=self.__n
-        l+=n-1; r+=n-2
-        while(l<r):
-            if l%2==0:
-                Left.append(l)
-            if r%2==1:
-                Right.append(r)
-                r-=1
-            l=l//2; r=(r-1)//2
-        if l==r:
-            if l%2==0: Left.append(l)
-            else: Right.append(l)
-        return Left,Right
+        while(i!=1):
+            i//=2
+            node[i]=self.__dot(node[2*i],node[2*i+1])
 
     def sum(self,l,r):
-        Left,Right=self.__get_range(l,r)
-        res=self.__e
-        for i in Left+Right[::-1]:
-            res=self.__dot(res,self.__node[i])
-        return res
-    
-    def bisect(self,l,r,x,increase=True,i=0,a=0,b=None):
+        vl,vr=self.__e,self.__e
+        l+=self.__n; r+=self.__n
+        while(l<r):
+            if(l%2==1):
+                vl=self.__dot(vl,self.__node[l])
+                l+=1
+            l//=2
+            if(r%2==1):
+                r-=1
+                vr=self.__dot(self.__node[r],vr)
+            r//=2
+        return self.__dot(vl,vr)
+
+    def bisect(self,l,r,x,increase=True,i=1,a=0,b=-1):
         """
         if increase: return d such that S[i]<x iff i<=d (l<=i<l)
         else: S[i]>x iff i<=d
         where S is cummulative sum of A
         """
-        if b is None: b=self.__n
+        if b==-1: b=self.__n
         if increase:
             if self.__node[i]<=x or b<=l or r<=a: return -1
-            if i>=self.__n-1: return i-(self.__n-1)
-            lv=self.bisect(l,r,x,increase,2*i+1,a,(a+b)//2)
+            if i>=self.__n: return i-self.__n
+            lv=self.bisect(l,r,x,increase,2*i,a,(a+b)//2)
             if lv!=-1: return lv
-            return self.bisect(l,r,x,increase,2*i+2,(a+b)//2,b)
+            return self.bisect(l,r,x,increase,2*i+1,(a+b)//2,b)
         else:
             if self.__node[i]>=x or b<=l or r<=a: return -1
-            if i>=self.__n-1: return i-(self.__n-1)
-            rv=self.bisect(l,r,x,increase,2*i+2,(a+b)//2,b)
+            if i>=self.__n: return i-self.__n
+            rv=self.bisect(l,r,x,increase,2*i+1,(a+b)//2,b)
             if rv!=-1: return rv
-            return self.bisect(l,r,x,increase,2*i+1,a,(a+b)//2)
+            return self.bisect(l,r,x,increase,2*i,a,(a+b)//2)
 
-#%% Example
-from operator import add
-A=[5,3,7,9,6,4,1,2]
-N=len(A)
-tree=SegmentTree(A,add,0)
-print(tree._SegmentTree__node) # [37,24,13,8,16,10,3,5,3,7,9,6,4,1,2]
+# example
+A=[4,9,11,5,13,33,33,33,11,45,14,19,19,8,10,89]
+dot=min
+e=float("inf")
+tree=SegmentTree(A,dot,e)
+print(tree.bisect(3,13,12,increase=False))
