@@ -18,82 +18,86 @@ class SegmentTree(object):
         self.__comp=comp
         self.__id=id
         self.__act=act
-        self.__node=[e]*(2*n-1)
-        self.__lazy=[id]*(2*n-1)
+        self.__node=[e]*(2*n)
+        self.__lazy=[id]*(2*n)
         for i in range(len(A)):
-            self.__node[n-1+i]=A[i]
-        for i in range(n-2,-1,-1):
-            self.__node[i]=self.__dot(self.__node[2*i+1],self.__node[2*i+2])
+            self.__node[i+n]=A[i]
+        for i in range(n-1,0,-1):
+            self.__node[i]=self.__dot(self.__node[2*i],self.__node[2*i+1])
 
     def __propagate(self,i):
-        if self.__lazy[i]==self.__id: return
+        if(self.__lazy[i]==self.__id): return
         node=self.__node
         lazy=self.__lazy
-        if i<=self.__n-2: # propagate to children
+        if(i<self.__n): # propagate to children
+            lazy[2*i]=self.__comp(lazy[2*i],lazy[i])
             lazy[2*i+1]=self.__comp(lazy[2*i+1],lazy[i])
-            lazy[2*i+2]=self.__comp(lazy[2*i+2],lazy[i])
         node[i]=self.__act(lazy[i],node[i]) # action
         lazy[i]=self.__id
 
     def __ancestors_propagate(self,i):
-        if i==0: return
-        i=(i-1)//2
+        if(i==1): return
+        i//=2
         self.__ancestors_propagate(i)
         self.__propagate(i)
 
     def __update_ancestors(self,i):
-        while(i!=0):
-            self.__propagate(i-1+2*(i%2)) # propagate the sibling of i
-            i=(i-1)//2
-            self.__node[i]=self.__dot(self.__node[2*i+1],self.__node[2*i+2])
-
-    def __get_range(self,l,r):
-        if l>=r: return [],[]
-        Left,Right=[],[]
-        n=self.__n
-        l+=n-1; r+=n-2
-        while(l<r):
-            if l%2==0:
-                Left.append(l)
-            if r%2==1:
-                Right.append(r)
-                r-=1
-            l=l//2; r=(r-1)//2
-        if l==r:
-            if l%2==0: Left.append(l)
-            else: Right.append(l)
-        return Left,Right
+        while(i!=1):
+            self.__propagate(i+1-2*(i%2)) # propagate the sibling of i
+            i//=2
+            self.__node[i]=self.__dot(self.__node[2*i],self.__node[2*i+1])
 
     def update(self,i,c):
-        i+=self.__n-1
+        i+=self.__n
         self.__ancestors_propagate(i)
         self.__propagate(i)
         self.__node[i]=c
         self.__update_ancestors(i)
 
     def add(self,l,r,f):
-        Left,Right=self.__get_range(l,r)
-        lowest=[]
-        if Left: lowest.append(Left[0])
-        if Right: lowest.append(Right[0])
-        for i in lowest: self.__ancestors_propagate(i)
-        for i in Left+Right:
-            self.__lazy[i]=self.__comp(self.__lazy[i],f)
-        for i in lowest:
-            self.__propagate(i)
-            self.__update_ancestors(i)
+        range,low=[],[0]*2
+        l+=self.__n; r+=self.__n
+        while(l<r):
+            if(l%2==1):
+                if(low[0]==0): low[0]=l
+                range.append(l)
+                l+=1
+            l//=2
+            if(r%2==1):
+                r-=1
+                range.append(r)
+                if(low[1]==0): low[1]=r
+            r//=2
+        for i in low:
+            if(i): self.__ancestors_propagate(i)
+        for i in range: self.__lazy[i]=self.__comp(self.__lazy[i],f)
+        for i in low:
+            if(i):
+                self.__propagate(i)
+                self.__update_ancestors(i)
 
     def sum(self,l,r):
-        Left,Right=self.__get_range(l,r)
-        lowest=[]
-        if Left: lowest.append(Left[0])
-        if Right: lowest.append(Right[0])
-        for i in lowest: self.__ancestors_propagate(i)
-        res=self.__e
-        for i in Left+Right[::-1]:
-            self.__propagate(i)
-            res=self.__dot(res,self.__node[i])
-        return res
+        range,low=[],[0]*2
+        vl,vr=self.__e,self.__e
+        l+=self.__n; r+=self.__n
+        while(l<r):
+            if(l%2==1):
+                if(low[0]==0):
+                    self.__ancestors_propagate(l)
+                    low[0]=1
+                self.__propagate(l)
+                vl=self.__dot(vl,self.__node[l])
+                l+=1
+            l//=2
+            if(r%2==1):
+                r-=1
+                if(low[1]==0):
+                    self.__ancestors_propagate(r)
+                    low[1]=1
+                self.__propagate(r)
+                vr=self.__dot(self.__node[r],vr)
+            r//=2
+        return self.__dot(vl,vr)
 
 # RmQ and range add
 INF=float("inf")
