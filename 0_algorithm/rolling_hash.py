@@ -9,8 +9,8 @@ class RollingHash(object):
         lcp: O(logN)
         search: O(N)
     """
-    __base1=1007; __mod1=10**9+7
-    __base2=1009; __mod2=10**9+9
+    __base1=1007; __mod1=10**9+9
+    __base2=1009; __mod2=10**9+7
 
     def __init__(self,s):
         """
