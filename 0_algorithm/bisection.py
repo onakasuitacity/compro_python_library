@@ -1,5 +1,5 @@
 # bisection (O(r-l))
-def bisect(l,r,f,discrete=True,left=True):
+def bisection(l,r,f,discrete=True,left=True):
     """
     l,r: l<r int if discrete else float
     f: function defined on [l,...,r] to {False,True}
@@ -8,7 +8,7 @@ def bisect(l,r,f,discrete=True,left=True):
     else: iff i>=d then f(i) is True
     return d such as those above
     """
-    assert r>l
+    assert l<r
     if discrete: assert isinstance(l,int) and isinstance(r,int)
     eps=1 if discrete else 10**-12
     if (not left)^f(r): return r if left else r+1
