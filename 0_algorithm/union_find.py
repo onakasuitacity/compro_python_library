@@ -25,7 +25,7 @@ class UnionFind(object):
         else:
             self.__par[i]=j
             self.__size[j]+=self.__size[i]
-            if self.__rank[i]==self.__rank[j]: self.__rank[j]+=1
+            if(self.__rank[i]==self.__rank[j]): self.__rank[j]+=1
 
     def size(self,k):
         return self.__size[self.__root(k)]
