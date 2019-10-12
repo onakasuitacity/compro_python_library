@@ -1,4 +1,4 @@
-# bisection (O(r-l))
+# bisection (O(log(r-l)))
 def bisection(l,r,f,discrete=True,left=True):
     eps=1 if discrete else 10**-12
     if((not left)^f(r)): return r if left else r+1
