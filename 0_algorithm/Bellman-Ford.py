@@ -23,9 +23,9 @@ class BellmanFord(object):
                     if dist[u]>dist[v]+w:
                         dist[u]=dist[v]+w
                         update=True
-            if (update is False): # 更新されない＝終わり
+            if(update is False): # 更新されない＝終わり
                 return
-            elif (update is True) and (k==self.__n-1): # 負の閉路検出
+            elif((update is True) and (k==self.__n-1)): # 負の閉路検出
                 self.__dist=[-float("inf")]*self.__n
 
 # example
