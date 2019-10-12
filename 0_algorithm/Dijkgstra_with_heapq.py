@@ -1,34 +1,31 @@
-# Dijkstra's algorithm with heap tree O(ElogV)
+# Dijkstra's algorithm with heap tree (O(ElogV))
 # https://takeg.hatenadiary.jp/entry/2019/06/03/130418
 class Dijkstra(object):
-    """
-    construct: O(ElogV)
-    """
-    def __init__(self,edges,start=0):
+    def __init__(self,E,start=0):
         """
-        edges: list of list of list of int
-        start: int
+        E: adjacency list with weight
         """
-        self.__dist=[float("inf")]*len(edges)
+        self.__dist=[float("inf")]*len(E)
         self.__dist[start]=0
-        self.__calculate(edges,start)
+        self.__calculate(E,start)
 
     @property
     def dist(self):
         return self.__dist
     
-    def __calculate(self,edges,start):
+    def __calculate(self,E,start):
         import heapq
-        Q=[(0,start)] # (dist,vertex)
+        dist=self.__dist
+        Q=[(0,start)] # (dist,node)
         while(Q):
-            dist,v=heapq.heappop(Q)
-            if self.dist[v]<dist: continue # 候補として挙がったd,vだが、他に短いのがある
-            for u,cost in edges[v]:
-                if self.dist[u]>self.dist[v]+cost:
-                    self.__dist[u]=self.dist[v]+cost
-                    heapq.heappush(Q,(self.dist[u],u))
+            d,v=heapq.heappop(Q)
+            if dist[v]<d: continue # 候補として挙がったd,vだが、他に短いのがある
+            for u,w in E[v]:
+                if dist[u]>dist[v]+w:
+                    dist[u]=dist[v]+w
+                    heapq.heappush(Q,(dist[u],u))
 
-# input
+# example
 V=list(range(5))
 E=[
 [[1,50],[2,80]],
