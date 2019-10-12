@@ -1,3 +1,4 @@
+# LCA with segment tree (O(N),O(logN))
 class LCA(object):
     def __init__(self,E,root=0):
         """
