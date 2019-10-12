@@ -1,10 +1,9 @@
-#%% Euler Tour
+# Euler tour (O(V))
 # https://www.npca.jp/works/magazine/2015_5/
 class EulerTour(object):
     def __init__(self,E,root=0):
         """
-        E: list of int (adjacency list)
-        root: int
+        E: adjacency list
         """
         n=len(E)
         self.__V=list(range(n))
@@ -39,7 +38,7 @@ class EulerTour(object):
     def tour(self):
         return self.__tour
 
-#%% Example
+# example
 N=6
 V=list(range(N))
 E=[[1,2],[0],[0,3,4,5],[2],[2],[2]]
