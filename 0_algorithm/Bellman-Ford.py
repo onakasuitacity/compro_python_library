@@ -1,4 +1,4 @@
-# Bellman-Ford algorithm (O(MN))
+# Bellman-Ford algorithm (O(VE))
 # http://wakabame.hatenablog.com/entry/2017/09/06/221400
 class BellmanFord(object):
     def __init__(self,E,start=0):
