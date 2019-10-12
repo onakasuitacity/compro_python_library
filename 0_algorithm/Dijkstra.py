@@ -1,21 +1,15 @@
 # Dijkstra's algorithm O(V^2)
 # https://qiita.com/shizuma/items/e08a76ab26073b21c207
-
-class Dijkstra(object):
-    """
-    construct: O(V^2)
-    """
-    
-    def __init__(self,edges,start=0):
+class Dijkstra(object):    
+    def __init__(self,E,start=0):
         """
-        :param list of list of list of int edges:
-        :param int start=0:
+        E: adjacency list with weight
         """
-        self.__V=list(range(len(edges)))
-        self.__dist=[float("inf")]*len(edges)
+        self.__V=list(range(len(E)))
+        self.__dist=[float("inf")]*len(E)
         self.__dist[start]=0
-        self.__prev=[None]*len(edges)
-        self.__calculate(edges,start)
+        self.__prev=[None]*len(E)
+        self.__calculate(E,start)
 
     @property
     def dist(self):
@@ -25,19 +19,20 @@ class Dijkstra(object):
     def prev(self):
         return self.__prev
     
-    def __calculate(self,edges,start):
+    def __calculate(self,E,start):
+        dist=self.__dist
         Q=set(self.__V)
         while(Q):
             # Qの中で距離が最小のものを取得
-            v = min((self.dist[v],v) for v in Q)[1]
+            v=min((self.dist[v],v) for v in Q)[1]
             Q.remove(v)
             # iの出力辺の先を探索
-            for u,cost in edges[v]:
-                if self.dist[u]>self.dist[v]+cost:
-                    self.__dist[u]=self.dist[v]+cost
+            for u,w in E[v]:
+                if dist[u]>dist[v]+w:
+                    dist[u]=dist[v]+w
                     self.__prev[u]=v
                     
-# input
+# example
 V=list(range(5))
 E=[
 [[1,50],[2,80]],
@@ -48,10 +43,9 @@ E=[
 ]
 start=0
 
-# output
 dij=Dijkstra(E,start)
 for i in V:
-    print("FROM {} TO {}".format(s,i))
+    print("FROM {} TO {}".format(start,i))
     print("distance : {}".format(dij.dist[i]))
     p=i
     path=[i]
