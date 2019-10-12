@@ -1,19 +1,13 @@
-# Union Find (with path compression, ranking)
+# Union Find (amortized O(ack^-1(N)))
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
-    """
-    query: O(Ack^-1(n,n)) (amortize)
-    """
     def __init__(self,n):
-        """
-        n: number of nodes
-        """
         self.__par=list(range(n))
         self.__rank=[0]*n
         self.__size=[1]*n
 
     def __root(self,k):
-        if self.__par[k]==k: return k
+        if(self.__par[k]==k): return k
         else:
             self.__par[k]=self.__root(self.__par[k])
             return self.__par[k]
@@ -24,8 +18,8 @@ class UnionFind(object):
     def unite(self,i,j):
         i=self.__root(i)
         j=self.__root(j)
-        if i==j: return
-        if self.__rank[i]>self.__rank[j]:
+        if(i==j): return
+        if(self.__rank[i]>self.__rank[j]):
             self.__par[j]=i
             self.__size[i]+=self.__size[j]
         else:
@@ -36,7 +30,7 @@ class UnionFind(object):
     def size(self,k):
         return self.__size[self.__root(k)]
 
-#%% input
+# example
 tree=UnionFind(6)
 tree.unite(0,2)
 tree.unite(1,3)
