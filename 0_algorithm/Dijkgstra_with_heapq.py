@@ -19,9 +19,9 @@ class Dijkstra(object):
         Q=[(0,start)] # (dist,node)
         while(Q):
             d,v=heapq.heappop(Q)
-            if dist[v]<d: continue # 候補として挙がったd,vだが、他に短いのがある
+            if(dist[v]<d): continue # 候補として挙がったd,vだが、他に短いのがある
             for u,w in E[v]:
-                if dist[u]>dist[v]+w:
+                if(dist[u]>dist[v]+w):
                     dist[u]=dist[v]+w
                     heapq.heappush(Q,(dist[u],u))
 
