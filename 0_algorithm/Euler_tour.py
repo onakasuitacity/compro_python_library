@@ -20,7 +20,7 @@ class EulerTour(object):
         self.__tour[self.__k]=v
         self.__k+=1
         for u in self.__E[v]:
-            if u==p: continue
+            if(u==p): continue
             self.__dfs(u,v)
             self.__tour[self.__k]=v
             self.__k+=1
