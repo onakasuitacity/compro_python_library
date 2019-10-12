@@ -1,4 +1,4 @@
-# LCA (O(NlogN),O(logN))
+# LCA with doubling (O(NlogN),O(logN))
 # https://tjkendev.github.io/procon-library/python/graph/lca-doubling.html
 class LCA(object):
     def __init__(self,E,root=0):
