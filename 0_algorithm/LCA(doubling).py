@@ -26,6 +26,10 @@ class LCA(object):
             for v in range(self.__n):
                 if(self.__parents[i-1][v]==-1): continue
                 self.__parents[i][v]=self.__parents[i-1][self.__parents[i-1][v]]
+    
+    @property
+    def depth(self):
+        return self.__depth
 
     def get(self,u,v):
         dd=self.__depth[v]-self.__depth[u]
