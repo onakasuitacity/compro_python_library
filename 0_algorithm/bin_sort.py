@@ -6,8 +6,8 @@ def bin_sort(A,n_min=None,n_max=None):
     n_min: minimum of A
     n_max: maximum of A
     """
-    if n_min is None: n_min=min(A)
-    if n_max is None: n_max=max(A)
+    if(n_min is None): n_min=min(A)
+    if(n_max is None): n_max=max(A)
     bin=[0]*(n_max-n_min+1)
     for a in A: bin[a]+=1
     B=[]
