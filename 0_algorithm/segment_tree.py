@@ -40,18 +40,18 @@ class SegmentTree(object):
         else: S[i]>x iff i<=d
         where S is cummulative sum of A
         """
-        if b==-1: b=self.__n
-        if increase:
-            if self.__node[i]<=x or b<=l or r<=a: return -1
-            if i>=self.__n: return i-self.__n
+        if(b==-1): b=self.__n
+        if(increase):
+            if(self.__node[i]<=x or b<=l or r<=a): return -1
+            if(i>=self.__n): return i-self.__n
             lv=self.bisect(l,r,x,increase,2*i,a,(a+b)//2)
-            if lv!=-1: return lv
+            if(lv!=-1): return lv
             return self.bisect(l,r,x,increase,2*i+1,(a+b)//2,b)
         else:
-            if self.__node[i]>=x or b<=l or r<=a: return -1
-            if i>=self.__n: return i-self.__n
+            if(self.__node[i]>=x or b<=l or r<=a): return -1
+            if(i>=self.__n): return i-self.__n
             rv=self.bisect(l,r,x,increase,2*i+1,(a+b)//2,b)
-            if rv!=-1: return rv
+            if(rv!=-1): return rv
             return self.bisect(l,r,x,increase,2*i,a,(a+b)//2)
 
 # example
