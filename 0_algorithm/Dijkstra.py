@@ -23,12 +23,10 @@ class Dijkstra(object):
         dist=self.__dist
         Q=set(self.__V)
         while(Q):
-            # Qの中で距離が最小のものを取得
             v=min((self.dist[v],v) for v in Q)[1]
             Q.remove(v)
-            # iの出力辺の先を探索
             for u,w in E[v]:
-                if dist[u]>dist[v]+w:
+                if(dist[u]>dist[v]+w):
                     dist[u]=dist[v]+w
                     self.__prev[u]=v
                     
