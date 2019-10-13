@@ -2,11 +2,10 @@
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
     from operator import add
-    def __init__(self,n,size=None,add=add):
+    def __init__(self,n):
         self.__par=list(range(n))
         self.__rank=[0]*n
-        self.__size=size if size else [1]*n
-        self.__add=add
+        self.__size=[1]*n
 
     def root(self,k):
         if(self.__par[k]==k): return k
@@ -19,10 +18,10 @@ class UnionFind(object):
         if(i==j): return
         if(rank[i]>rank[j]):
             par[j]=i
-            size[i]=self.__add(size[i],size[j])
+            size[i]+=size[j]
         else:
             par[i]=j
-            size[j]=self.__add(size[i],size[j])
+            size[j]+=size[i]
             if(rank[i]==rank[j]): rank[j]+=1
 
     def size(self,k):
