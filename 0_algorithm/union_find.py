@@ -1,7 +1,6 @@
 # Union Find (amortized O(ack^-1(N)))
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
-    from operator import add
     def __init__(self,n):
         self.__par=list(range(n))
         self.__rank=[0]*n
