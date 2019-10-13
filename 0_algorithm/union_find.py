@@ -6,18 +6,15 @@ class UnionFind(object):
         self.__rank=[0]*n
         self.__size=[1]*n
 
-    def __root(self,k):
+    def root(self,k):
         if(self.__par[k]==k): return k
         else:
-            self.__par[k]=self.__root(self.__par[k])
+            self.__par[k]=self.root(self.__par[k])
             return self.__par[k]
 
-    def is_same(self,i,j):
-        return self.__root(i)==self.__root(j)
-
     def unite(self,i,j):
-        i=self.__root(i)
-        j=self.__root(j)
+        i=self.root(i)
+        j=self.root(j)
         if(i==j): return
         if(self.__rank[i]>self.__rank[j]):
             self.__par[j]=i
@@ -28,13 +25,11 @@ class UnionFind(object):
             if(self.__rank[i]==self.__rank[j]): self.__rank[j]+=1
 
     def size(self,k):
-        return self.__size[self.__root(k)]
+        return self.__size[self.root(k)]
 
 # example
 tree=UnionFind(6)
 tree.unite(0,2)
 tree.unite(1,3)
 tree.unite(1,5)
-print(tree.is_same(3,5)) # True
-print(tree.is_same(2,4)) # False
 print(tree.size(3)) # 3
