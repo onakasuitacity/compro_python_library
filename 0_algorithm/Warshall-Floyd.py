@@ -3,10 +3,10 @@
 INF=float("inf")
 n=5
 A=[
-[INF,50,80,INF,INF],
-[INF,INF,20,15,INF],
-[INF,INF,INF,10,15],
-[INF,INF,INF,INF,30],
+[INF, 50, 80,INF,INF],
+[INF,INF, 20, 15,INF],
+[INF,INF,INF, 10, 15],
+[INF,INF,INF,INF, 30],
 [INF,INF,INF,INF,INF]
 ]
 B=[a[:] for a in A] # deep copy
