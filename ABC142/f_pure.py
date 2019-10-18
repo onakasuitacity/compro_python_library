@@ -14,7 +14,6 @@ def resolve():
     # bfs
     def bfs(sv):
         prev=[-1]*n
-        flag=False
         from collections import deque
         Q=deque([sv])
         while(Q):
