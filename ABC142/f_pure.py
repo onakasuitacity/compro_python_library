@@ -11,7 +11,6 @@ def resolve():
     for _ in range(m):
         a,b=map(lambda x:int(x)-1,input().split())
         E[a].append(b)
-
     # bfs
     def bfs(sv):
         prev=[-1]*n
@@ -22,22 +21,21 @@ def resolve():
             v=Q.popleft()
             for nv in E[v]:
                 if(nv==sv):
-                    flag=True
-                    break
+                    break # for loop
                 elif(prev[nv]==-1):
                     prev[nv]=v
                     Q.append(nv)
-            if(flag): break
-        if(not flag):
-            return [0]*(n+1)
+            else:
+                continue
+            break # while loop
         else:
-            loop=[]
-            while(v!=-1):
-                loop.append(v)
-                v=prev[v]
-            loop.reverse()
-            return loop
-
+            return [0]*(n+1)
+        loop=[]
+        while(v!=-1):
+            loop.append(v)
+            v=prev[v]
+        loop.reverse()
+        return loop
     # calculate
     ans=[0]*(n+1)
     for i in range(n):
