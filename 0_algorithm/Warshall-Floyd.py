@@ -10,19 +10,17 @@ A=[
 [INF,INF,INF,INF,INF]
 ]
 B=[a[:] for a in A] # deep copy
+next=[list(range(n)) for _ in range(n)]
 from itertools import product
 for k,i,j in product(range(n),repeat=3):
-    B[i][j]=min(B[i][j],B[i][k]+B[k][j])
+    if(B[i][j]>B[i][k]+B[k][j]):
+        B[i][j]=B[i][k]+B[k][j]
+        next[i][j]=next[i][k]
 
-# route restoration (O(N^2))
-u=0
-v=4
+# root restoration
+u=0; v=4
 path=[u]
-while(B[u][v]!=A[u][v]):
-    for w in range(n):
-        if(B[u][v]==A[u][w]+B[w][v]):
-            u=w
-            path.append(w)
-            break
-path.append(v)
+while(u!=v):
+    u=next[u][v]
+    path.append(u)
 print(path) # [0,1,2,4]
