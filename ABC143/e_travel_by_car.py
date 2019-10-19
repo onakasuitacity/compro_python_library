@@ -1,4 +1,5 @@
 # https://atcoder.jp/contests/abc143/tasks/abc143_e
+# PyPyだと1946msなので非推奨。Warshall-Floyd、DijkstraはScipyを使うかC++で書くかしたほうが良い。
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
