@@ -9,12 +9,11 @@ A=[
 [INF,INF,INF,INF, 30],
 [INF,INF,INF,INF,INF]
 ]
-B=[a[:] for a in A] # deep copy
 next=[list(range(n)) for _ in range(n)]
 from itertools import product
 for k,i,j in product(range(n),repeat=3):
-    if(B[i][j]>B[i][k]+B[k][j]):
-        B[i][j]=B[i][k]+B[k][j]
+    if(A[i][j]>A[i][k]+A[k][j]):
+        A[i][j]=A[i][k]+A[k][j]
         next[i][j]=next[i][k]
 
 #  restoration
