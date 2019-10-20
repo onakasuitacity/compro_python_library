@@ -17,7 +17,7 @@ for k,i,j in product(range(n),repeat=3):
         B[i][j]=B[i][k]+B[k][j]
         next[i][j]=next[i][k]
 
-# root restoration
+#  restoration
 u=0; v=4
 path=[u]
 while(u!=v):
