@@ -23,16 +23,3 @@ for _ in range(n-1):
             prev[nv]=v
 print(dist) # [0,50,70,65,85]
 print(prev) # [-1,0,1,1,2]
-]
-start=0
-
-dij=Dijkstra(E,start)
-for i in V:
-    print("FROM {} TO {}".format(start,i))
-    print("distance : {}".format(dij.dist[i]))
-    p=i
-    path=[i]
-    while(dij.prev[p]):
-        p=dij.prev[p]
-        path.append(p)
-    print("path : {}".format(path[::-1]),end="\n\n")
