@@ -1,5 +1,5 @@
 # http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_H
-# http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=3943686
+# http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=3944327
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
@@ -79,7 +79,7 @@ class SegmentTree(object):
                 self.__update_ancestors(i)
 
     def sum(self,l,r):
-        range,low=[],[0]*2
+        low=[0]*2
         vl,vr=self.__e,self.__e
         l+=self.__n; r+=self.__n
         while(l<r):
