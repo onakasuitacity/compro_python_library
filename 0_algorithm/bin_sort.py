@@ -1,4 +1,4 @@
-# bin sort O(max(A)-min(A)+len(A))
+# bin sort O(range(A)+len(A))
 # https://engineeringnote.hateblo.jp/entry/python/algorithm-and-data-structures/bin_sort
 def bin_sort(A,n_min=None,n_max=None):
     """
