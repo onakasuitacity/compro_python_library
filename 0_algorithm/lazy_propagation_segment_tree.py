@@ -77,7 +77,7 @@ class SegmentTree(object):
                 self.__update_ancestors(i)
 
     def sum(self,l,r):
-        range,low=[],[0]*2
+        low=[0]*2
         vl,vr=self.__e,self.__e
         l+=self.__n; r+=self.__n
         while(l<r):
