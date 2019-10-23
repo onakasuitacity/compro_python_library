@@ -1,4 +1,5 @@
 # https://atcoder.jp/contests/abc061/tasks/abc061_d
+# これは嘘解法。詳しくはABC137 Eの解説放送。
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
