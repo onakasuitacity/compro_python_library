@@ -13,13 +13,13 @@ def resolve():
     S=[0]*(m+1) # cumulative distribution
     for i in range(m): S[i+1]=S[i]+A[i]
     # output
-    p=n
     from bisect import bisect_left
+    p=n
+    i=bisect_left(A,p) # pに応じてiが定まる
     for k in range(1,n+1):
-        while(1):
-            # pに対して先にi_pを求めておく
+        while(S[i]+p*(m-i)<k*p): # p>=0 and は書かなくてもよい
+            p-=1
             i=bisect_left(A,p)
-            if(S[i]+p*(m-i)>=k*p): break
-            p-=1 # pの条件が真になるまで減らし続ける
         print(p)
 resolve()
+
