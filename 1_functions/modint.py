@@ -4,7 +4,7 @@ class ModInt(object):
     MOD=998244353
 
     def __init__(self,x):
-        self.__x=x%self.__MOD
+        self.__x=x%self.MOD
 
     def __repr__(self):
         return str(self.__x)
@@ -19,10 +19,10 @@ class ModInt(object):
         return ModInt(self.__x*other.__x) if isinstance(other,ModInt) else ModInt(self.__x*other)
 
     def __truediv__(self,other):
-        return ModInt(self.__x*pow(other.__x,self.__MOD-2,self.__MOD)) if isinstance(other, ModInt) else ModInt(self.__x*pow(other, self.__MOD-2,self.__MOD))
+        return ModInt(self.__x*pow(other.__x,self.MOD-2,self.MOD)) if isinstance(other, ModInt) else ModInt(self.__x*pow(other, self.MOD-2,self.MOD))
 
     def __pow__(self,other):
-        return ModInt(pow(self.__x,other.__x,self.__MOD)) if isinstance(other,ModInt) else ModInt(pow(self.__x,other,self.__MOD))
+        return ModInt(pow(self.__x,other.__x,self.MOD)) if isinstance(other,ModInt) else ModInt(pow(self.__x,other,self.MOD))
 
     __radd__=__add__
 
@@ -32,7 +32,7 @@ class ModInt(object):
     __rmul__=__mul__
 
     def __rtruediv__(self,other):
-        return ModInt(other.__x*pow(self.__x,self.__MOD-2,self.__MOD)) if isinstance(other,ModInt) else ModInt(other*pow(self.__x,self.__MOD-2,self.__MOD))
+        return ModInt(other.__x*pow(self.__x,self.MOD-2,self.MOD)) if isinstance(other,ModInt) else ModInt(other*pow(self.__x,self.MOD-2,self.MOD))
 
     def __rpow__(self,other):
-        return ModInt(pow(other.__x,self.__x,self.__MOD)) if isinstance(other,ModInt) else ModInt(pow(other,self.__x,self.__MOD))
+        return ModInt(pow(other.__x,self.__x,self.MOD)) if isinstance(other,ModInt) else ModInt(pow(other,self.__x,self.MOD))
