@@ -1,7 +1,7 @@
 # modint
 # https://qiita.com/wotsushi/items/c936838df992b706084c
 class ModInt(object):
-    __MOD=998244353
+    MOD=998244353
 
     def __init__(self,x):
         self.__x=x%self.__MOD
