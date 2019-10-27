@@ -3,20 +3,23 @@ import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
 MOD=10**9+7
-input=lambda :sys.stdin.buffer.readline().rstrip()
+input=lambda :sys.stdin.readline().rstrip()
 def resolve():
+    from itertools import product
     n,k=map(int,input().split())
-    m=k.bit_length()
-    A=list(map(int,input().split()))
-    flag=False # x<=kが確定したかどうか
-    x=0
-    for d in range(m-1,-1,-1):
-        d_sum=sum((a>>d)&1 for a in A)
-        if(d_sum<=(n//2)): # xのd桁目を1にしたい
-            if(flag or ((k>>d)&1==1)):
-                x+=(1<<d)
-        else: # xのd桁目を0にする
-            if((k>>d)&1==1):
-                flag=True
-    print(sum(a^x for a in A))
+    cnt=[0]*40
+    for a in map(int,input().split()):
+        for d in range(40):
+            cnt[d]+=(a>>d)&1
+    dp=[0,-INF]
+    for d in range(39,-1,-1):
+        kb=(k>>d)&1
+        newdp=[0,-INF]
+        for lt,x in product(range(2),repeat=2):
+            nlt=lt
+            if(lt==0 and x>kb): continue
+            if(x<kb): nlt=1
+            newdp[nlt]=max(newdp[nlt],dp[lt]+(n-cnt[d] if(x) else cnt[d])*(1<<d))
+        dp=newdp
+    print(max(dp))
 resolve()
