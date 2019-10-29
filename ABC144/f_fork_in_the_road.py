@@ -31,12 +31,11 @@ def resolve():
         if(len(edges[v])<=1): continue
         # 各vに対して、辺vwのうちE[w]が最大のものを削除する
         w=max(*((E[w],w) for w in edges[v]))[1]
-        E_dash=0
+        dE=0
+        deg=len(edges[v])
         for nv in edges[v]:
-            if(nv==w): continue
-            E_dash+=E[nv]
-        E_dash=1+E_dash/(len(edges[v])-1)
-        dE=E_dash-E[v]
+            if(nv==w): dE-=E[nv]/deg
+            else: dE+=E[nv]/(deg-1)/deg
         ans=min(ans,E[0]+p[v]*dE)
 
     print(ans)
