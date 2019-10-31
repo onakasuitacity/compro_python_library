@@ -8,11 +8,10 @@ class RollingHash(object):
 
     def __init__(self,s:str):
         n=len(s)
-        b=self.__base
         H=[0]*(n+1); P=[1]*(n+1)
         for i in range(n):
-            H[i+1]=self.__modulo(self.__multiple(H[i],b)+ord(s[i]))
-            P[i+1]=self.__multiple(P[i],b)
+            H[i+1]=self.__modulo(self.__multiple(H[i],self.__base)+ord(s[i]))
+            P[i+1]=self.__modulo(self.__multiple(P[i],self.__base))
         self.__H=H; self.__P=P
 
     def __multiple(self,a,b):
@@ -23,7 +22,7 @@ class RollingHash(object):
         m=ad*bu+au*bd
         mu=m>>30
         md=m&self.__MASK30
-        return self.__modulo(2*au*bu+mu+(md<<31)+ad*bd)
+        return 2*au*bu+mu+(md<<31)+ad*bd
 
     def __modulo(self,x):
         x=(x&self.__MOD)+(x>>61)
@@ -32,4 +31,6 @@ class RollingHash(object):
 
     def hash(self,l,r):
         H=self.__H; P=self.__P
-        return self.__modulo(H[r]+self.__MOD*3-self.__multiple(H[l],P[r-l]))
+        res=H[r]+self.__MOD*3-self.__multiple(H[l],P[r-l])
+        if(res<0): return res+self.__MOD
+        else: return self.__modulo(res)
