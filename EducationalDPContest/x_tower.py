@@ -23,6 +23,6 @@ def resolve():
         for total in range(maxS+1):
             if(total<=s and total+s<=maxS):
                 ndp[total+w]=max(ndp[total+w],dp[total]+v)
-        dp=ndp[:]
+        dp=ndp
     print(max(dp))
 resolve()
