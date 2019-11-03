@@ -14,7 +14,7 @@ class UnionFind(object):
     def unite(self,i,j):
         i=self.root(i); j=self.root(j)
         par=self.__par; rank=self.__rank; size=self.__size
-        if(i==j): return
+        if(i==j): return False
         if(rank[i]>rank[j]):
             par[j]=i
             size[i]+=size[j]
@@ -22,6 +22,7 @@ class UnionFind(object):
             par[i]=j
             size[j]+=size[i]
             if(rank[i]==rank[j]): rank[j]+=1
+        return True
 
     def size(self,k):
         return self.__size[self.root(k)]
