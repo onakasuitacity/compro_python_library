@@ -16,7 +16,7 @@ def resolve():
     s,t=map(int,input().split())
     s-=1; t-=1
 
-    # BFS (startは0、goalは3n-3)
+    # BFS
     from collections import deque
     d=[-1]*(3*n)
     d[3*s]=0
