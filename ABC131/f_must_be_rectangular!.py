@@ -1,4 +1,5 @@
 # https://atcoder.jp/contests/abc131/tasks/abc131_f
+# PyPyだとTLE
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
