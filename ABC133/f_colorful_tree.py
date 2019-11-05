@@ -1,4 +1,5 @@
 # https://atcoder.jp/contests/abc133/tasks/abc133_f
+# PyPyだとTLE
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
@@ -18,7 +19,7 @@ class LCA(object):
         self.__doubling()
 
     def __dfs(self,v):
-        for u,c,d in self.__E[v]:
+        for u,c,d in self.__E[v]: # この問題用にライブラリを変形している
             if(self.__depth[u]!=-1): continue
             self.__parents[0][u]=v
             self.__depth[u]=self.__depth[v]+1
