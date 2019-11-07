@@ -31,14 +31,18 @@ class BIT(object):
         return self.__inv(self.sum(r-1),self.sum(l-1))
 
     def bisect_left(self,w,increase=True):
-        if(w>self.sum(self.__n-1)): return self.__n
-        n=2**((self.__n-1).bit_length())
+        n=self.__n
+        k=2**((self.__n-1).bit_length())
         res=0
-        while(n>0):
-            if(res+n<=self.__n and ((w>self.__node[res+n])^(not increase))):
-                w-=self.__node[res+n]
-                res+=n
-            n//=2
+        now=self.__e
+        while(k):
+            if(res+k<=n and self.__dot(now,self.__node[res+k])<w and increase):
+                now=self.__dot(now,self.__node[res+k])
+                res+=k
+            elif(res+k<=n and self.__dot(now,self.__node[res+k])>w and (not increase)):
+                now=self.__dot(now,self.__node[res+k])
+                res+=k
+            k//=2
         return res
 
 # example
@@ -49,5 +53,5 @@ bit=BIT(A,add,0,sub)
 print(bit._BIT__node) # ['$',5,8,7,24,6,10,1,37]
 print([bit.sum(i) for i in range(N)]) # [5,8,15,24,30,34,35,37]
 print(bit.range_sum(3,5)) # 15=sum(A[3:5])
-k=36
+k=37
 print(bit.bisect_left(k)) # 7
