@@ -28,7 +28,7 @@ class BIT(object):
 
     def range_sum(self,l,r):
         assert(self.__inv)
-        return self.__inv(self.sum(r),self.sum(l))
+        return self.__inv(self.sum(r-1),self.sum(l-1))
 
     def bisect_left(self,w,increase=True):
         if(w>self.sum(self.__n-1)): return self.__n
