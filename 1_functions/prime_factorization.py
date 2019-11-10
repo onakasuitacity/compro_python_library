@@ -1,5 +1,6 @@
 # prime factorization (O(sqrt(N)))
 def prime_factorization(n):
+    assert(n>1)
     factor=[]
     sqrt=int(n**.5)
     for d in range(2,sqrt+1):
