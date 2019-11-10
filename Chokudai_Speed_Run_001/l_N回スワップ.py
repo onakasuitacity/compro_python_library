@@ -19,7 +19,7 @@ def resolve():
             if(visited[nv]): break
             visited[nv]=1
             Q.append(nv)
-        return Tru
+        return True
 
     cnt=sum(dfs(v) for v in range(n))
     print("YES" if(cnt%2==0) else "NO")
