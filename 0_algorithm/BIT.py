@@ -1,5 +1,10 @@
 # binary indexed tree (O(N),O(logN))
 # http://hos.ac/slides/20140319_bit.pdf
+import sys
+sys.setrecursionlimit(2147483647)
+INF=float("inf")
+MOD=10**9+7
+input=lambda :sys.stdin.readline().rstrip()
 class BIT(object):
     def __init__(self,A,dot,e,inv=None):
         n=len(A)
@@ -19,7 +24,6 @@ class BIT(object):
             i+=i&-i
 
     def sum(self,i):
-        i+=1
         res=self.__e
         while(i>0):
             res=self.__dot(res,self.__node[i])
@@ -28,7 +32,7 @@ class BIT(object):
 
     def range_sum(self,l,r):
         assert(self.__inv)
-        return self.__inv(self.sum(r-1),self.sum(l-1))
+        return self.__inv(self.sum(r),self.sum(l))
 
     def bisect_left(self,w,increase=True):
         n=self.__n
