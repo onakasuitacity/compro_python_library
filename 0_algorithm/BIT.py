@@ -55,7 +55,7 @@ A=[5,3,7,9,6,4,1,2]
 N=len(A)
 bit=BIT(A,add,0,sub)
 print(bit._BIT__node) # ['$',5,8,7,24,6,10,1,37]
-print([bit.sum(i) for i in range(N)]) # [5,8,15,24,30,34,35,37]
+print([bit.sum(i+1) for i in range(N)]) # [5,8,15,24,30,34,35,37]
 print(bit.range_sum(3,5)) # 15=sum(A[3:5])
 k=37
 print(bit.bisect_left(k)) # 7
