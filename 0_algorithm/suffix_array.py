@@ -42,7 +42,7 @@ class SuffixArray(object):
 
     def __sparse_table(self):
         n=self.__n
-        logn=max(0,(n-1).bit_length())
+        logn=max(1,(n-1).bit_length())
         table=[[0]*n for _ in range(logn)]
         table[0]=self.__lcp[:]
         from itertools import product
@@ -50,6 +50,10 @@ class SuffixArray(object):
             if(k+(1<<(i-1))>=n): table[i][k]=table[i-1][k]
             else: table[i][k]=min(table[i-1][k],table[i-1][k+(1<<(i-1))])
         self.__table=table
+
+    @property
+    def suffix(self):
+        return self.__sa
 
     def lcp(self,a,b):
         if(a==b): return self.__n-a
