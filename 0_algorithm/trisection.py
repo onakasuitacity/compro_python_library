@@ -5,12 +5,9 @@ def trisection(l,r,f,convex=True,discrete=True):
         h1=l+d; h2=r-d
         if((f(h1)>=f(h2))^convex): r=h2
         else: l=h1
-    if(discrete):
-        if(convex): return min([(f(l),l),(f(l+1),l+1),(f(r),r)])[1]
-        else: return max([(f(l),l),(f(l+1),l+1),(f(r),r)])[1]
-    else:
-        if(convex): return min([(f(l),l),(f(r),r)])[1]
-        else: return max([(f(l),l),(f(r),r)])[1]
+    if(not discrete): return (l+r)/2
+    elif(convex): return min([(f(l),l),(f(l+1),l+1),(f(r),r)])[1]
+    else: return max([(f(l),l),(f(l+1),l+1),(f(r),r)])[1]
 
 #%% example
 f=lambda x:-(x-3)**2+4
