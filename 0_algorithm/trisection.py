@@ -12,5 +12,6 @@ def trisection(l,r,f,convex=True,discrete=True):
         if(convex): return min([(f(l),l),(f(r),r)])[1]
         else: return max([(f(l),l),(f(r),r)])[1]
 
+#%% example
 f=lambda x:-(x-3)**2+4
 print(trisection(-100,100,f,convex=False,discrete=True))
