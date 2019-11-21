@@ -8,7 +8,7 @@ class cumsum2(object):
     def add(self,i,j,w):
         self.__S[i+1][j+1]+=w
 
-    def cumurate(self):
+    def cumulate(self):
         S=self.__S
         for i in range(self.__m):
             for j in range(self.__n):
@@ -26,5 +26,5 @@ C.add(0,2,3)
 C.add(1,0,4)
 C.add(1,1,5)
 C.add(1,2,6)
-C.cumurate()
+C.cumulate()
 print(C.sum(0,2,1,3))
