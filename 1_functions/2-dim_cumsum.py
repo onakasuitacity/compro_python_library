@@ -18,6 +18,7 @@ class cumsum2(object):
         S=self.__S
         return S[i1][j1]-S[i0][j1]-S[i1][j0]+S[i0][j0]
 
+# example
 C=cumsum2(2,3)
 C.add(0,0,1)
 C.add(0,1,2)
