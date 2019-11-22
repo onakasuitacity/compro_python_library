@@ -24,6 +24,9 @@ class UnionFind(object):
             if(rank[i]==rank[j]): rank[j]+=1
         return True
 
+    def is_same(self,i,j):
+        return self.root(i)==self.root(j)
+
     def size(self,k):
         return self.__size[self.root(k)]
 
