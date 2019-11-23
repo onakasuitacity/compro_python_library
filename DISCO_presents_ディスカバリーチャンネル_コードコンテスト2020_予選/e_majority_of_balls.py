@@ -19,20 +19,16 @@ def ask(A): # A:list-like
             cnt+=ANS[a-1]=='R'
         return "Red" if(cnt>(N-cnt)) else "Blue"
 
-def resolve():
-    def make_list(i):
-        assert 1<=i<=n+1
-        return list(range(i,i+n))
-        
+def resolve():        
     n=int(input()) if(prod) else N
 
     # 二分法でRとBの境目を一つ見つける
     l=1; r=n+1
-    lcol=ask(make_list(1))
+    lcol=ask(range(1,1+n))
     rcol="Red" if(lcol=="Blue") else "Blue"
     while(r-l>1):
         h=(l+r)//2
-        hcol=ask(make_list(h))
+        hcol=ask(range(h,h+n))
         if(lcol==hcol): l=h
         else: r=h
 
