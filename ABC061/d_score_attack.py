@@ -1,27 +1,51 @@
 # https://atcoder.jp/contests/abc061/tasks/abc061_d
-# これは嘘解法。詳しくはABC137 Eの解説放送。
 import sys
 sys.setrecursionlimit(2147483647)
 INF=float("inf")
 MOD=10**9+7
-input=sys.stdin.readline
+input=lambda :sys.stdin.readline().rstrip()
 def resolve():
     n,m=map(int,input().split())
-    dist=[float("inf")]*n
-    dist[0]=0
-    edges=[0]*m
-    for i in range(m):
+    E=[[] for _ in range(n)]
+    R=[[] for _ in range(n)]
+    for _ in range(m):
         a,b,c=map(int,input().split())
-        edges[i]=[a-1,b-1,-c]
+        a-=1; b-=1
+        E[a].append((b,-c))
+        R[b].append((a,-c))
 
-    # Bellman-Ford
-    for k in range(1,2*n): # 2n-1回やって、n-1と2n-1のscoreを見る
-        for u,v,cost in edges:
-            if dist[v]>dist[u]+cost:
-                dist[v]=dist[u]+cost
-        if k==n-1:
-            ans=dist[n-1]
+    from collections import deque
+    state=[0]*n
+    state[0]=1
+    state[n-1]=2
 
-    print(-ans if ans==dist[n-1] else "inf")
+    Q=deque([0])
+    while(Q):
+        v=Q.popleft()
+        for nv,w in E[v]:
+            if(state[nv]&1): continue
+            state[nv]+=1
+            Q.append(nv)
 
+    Q=deque([n-1])
+    while(Q):
+        v=Q.popleft()
+        for nv,w in R[v]:
+            if(state[nv]&2): continue
+            state[nv]+=2
+            Q.append(nv)
+
+    dist=[INF]*n
+    dist[0]=0
+    for k in range(n):
+        for v in range(n):
+            if(state[v]!=3): continue
+            for nv,w in E[v]:
+                if(state[nv]!=3): continue
+                if(dist[nv]>dist[v]+w):
+                    dist[nv]=dist[v]+w
+                    if(k==n-1):
+                        print("inf")
+                        return
+    print(-dist[-1])
 resolve()
