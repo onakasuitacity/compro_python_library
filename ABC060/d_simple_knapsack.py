@@ -12,8 +12,9 @@ def resolve():
 
     weight=set()
     for i in range(n+1):
+        if(WV[0][0]*i>W): break
         for j in range(3*i+1):
-            if(WV[0][0]*i+j>W): continue
+            if(WV[0][0]*i+j>W): break
             weight.add(WV[0][0]*i+j)
     weight=sorted(weight)
 
@@ -26,8 +27,5 @@ def resolve():
             if(key+w<=W): ndp[key+w]=max(ndp[key+w],dp[key]+v)
         dp=ndp
 
-    ans=0
-    for key in weight:
-        ans=max(ans,dp[key])
-    print(ans)
+    print(max(dp.values()))
 resolve()
