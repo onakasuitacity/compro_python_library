@@ -1,5 +1,4 @@
 # https://scrapbox.io/data-structures/Sliding_Window_Aggregation
-
 class SWAG(object):
     def __init__(self,dot):
         self.__front=[]
