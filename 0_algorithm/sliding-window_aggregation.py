@@ -11,13 +11,6 @@ class SWAG(object):
     def __len__(self):
         return len(self.__front)+len(self.__back)
 
-    def sum(self):
-        assert(self)
-        front=self.__front; back=self.__back
-        if(not front): return back[-1][1]
-        elif(not back): return front[-1][1]
-        else: return self.__dot(front[-1][1],back[-1][1])
-
     def append(self,x):
         back=self.__back
         if(not back): back.append((x,x))
@@ -33,6 +26,13 @@ class SWAG(object):
                 front.append((back[-1][0],self.__dot(back[-1][0],front[-1][1])))
                 back.pop()
         front.pop()
+    
+    def sum(self):
+        assert(self)
+        front=self.__front; back=self.__back
+        if(not front): return back[-1][1]
+        elif(not back): return front[-1][1]
+        else: return self.__dot(front[-1][1],back[-1][1])
 
 # example
 from operator import add
