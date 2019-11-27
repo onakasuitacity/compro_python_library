@@ -6,8 +6,8 @@ class SWAG(object):
         self.__dot=dot
 
     def __bool__(self):
-        return True if(self.__front or self.__back) else False
-
+        return bool(self.__front or self.__back)
+    
     def __len__(self):
         return len(self.__front)+len(self.__back)
 
