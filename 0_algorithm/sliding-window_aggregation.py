@@ -1,13 +1,11 @@
 # https://scrapbox.io/data-structures/Sliding_Window_Aggregation
 class SWAG(object):
     def __init__(self,dot):
-        self.__front=[]
-        self.__back=[]
-        self.__dot=dot
+        self.__front=[]; self.__back=[]; self.__dot=dot
 
     def __bool__(self):
         return bool(self.__front or self.__back)
-    
+
     def __len__(self):
         return len(self.__front)+len(self.__back)
 
@@ -25,8 +23,8 @@ class SWAG(object):
             while(back):
                 front.append((back[-1][0],self.__dot(back[-1][0],front[-1][1])))
                 back.pop()
-        front.pop()
-    
+        return front.pop()[0]
+
     def sum(self):
         assert(self)
         front=self.__front; back=self.__back
@@ -40,6 +38,6 @@ swag=SWAG(add)
 swag.append(1)
 swag.append(2)
 swag.append(3)
-swag.popleft()
+print(swag.popleft())
 print(swag.sum())
 print(len(swag))
