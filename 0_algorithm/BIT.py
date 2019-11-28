@@ -1,10 +1,5 @@
 # binary indexed tree (O(N),O(logN))
 # http://hos.ac/slides/20140319_bit.pdf
-import sys
-sys.setrecursionlimit(2147483647)
-INF=float("inf")
-MOD=10**9+7
-input=lambda :sys.stdin.readline().rstrip()
 class BIT(object):
     def __init__(self,A,dot=lambda x,y:x+y,e=0,inv=None):
         n=len(A)
