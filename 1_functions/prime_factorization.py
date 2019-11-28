@@ -2,8 +2,7 @@
 def prime_factorization(n):
     assert(n>1)
     factor=[]
-    sqrt=int(n**.5)
-    for d in range(2,sqrt+1):
+    for d in range(2,int(n**.5)+1):
         while(n%d==0):
             n//=d
             factor.append(d)
