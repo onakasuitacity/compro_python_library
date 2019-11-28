@@ -14,11 +14,9 @@ def resolve():
     dp[0][0]=0
 
     for a,b,c in ABC:
-        ndp=[a[:] for a in dp]
-        for x,y in product(range(M+1),repeat=2):
+        for x,y in product(range(M,-1,-1),repeat=2):
             if(x+a<=M and y+b<=M):
-                ndp[x+a][y+b]=min(ndp[x+a][y+b],dp[x][y]+c)
-        dp=ndp
+                dp[x+a][y+b]=min(dp[x+a][y+b],dp[x][y]+c)
 
     ans=INF
     for x,y in product(range(1,M+1),repeat=2):
