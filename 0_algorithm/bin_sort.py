@@ -1,8 +1,7 @@
 # bin sort O(range(A)+len(A))
 # https://engineeringnote.hateblo.jp/entry/python/algorithm-and-data-structures/bin_sort
-def bin_sort(A,n_min=None,n_max=None):
-    if(n_min is None): n_min=min(A)
-    if(n_max is None): n_max=max(A)
+def bin_sort(A):
+    n_min=min(A); n_max=max(A)
     bin=[0]*(n_max-n_min+1)
     for a in A: bin[a-n_min]+=1
     B=[]
