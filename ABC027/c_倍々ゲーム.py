@@ -4,7 +4,6 @@ sys.setrecursionlimit(2147483647)
 INF=float("inf")
 MOD=10**9+7
 input=lambda:sys.stdin.readline().rstrip()
-from collections import defaultdict
 def resolve():
     n=int(input())
     n-=1
