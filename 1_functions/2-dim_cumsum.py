@@ -5,6 +5,9 @@ class cumsum2d(object):
         self.__n=n
         self.__S=[[0]*(n+1) for _ in range(m+1)]
 
+    def __repr__(self):
+        return '\n'.join(' '.join(map(str,s)) for s in self.__S)
+
     def add(self,i,j,w):
         self.__S[i+1][j+1]+=w
 
@@ -27,4 +30,5 @@ C.add(1,0,4)
 C.add(1,1,5)
 C.add(1,2,6)
 C.cumulate()
+print(C)
 print(C.sum(0,2,1,3))
