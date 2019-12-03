@@ -1,5 +1,5 @@
 # 2-dim cumulative sum
-class cumsum2(object):
+class cumsum2d(object):
     def __init__(self,m,n):
         self.__m=m
         self.__n=n
@@ -19,7 +19,7 @@ class cumsum2(object):
         return S[i1][j1]-S[i0][j1]-S[i1][j0]+S[i0][j0]
 
 # example
-C=cumsum2(2,3)
+C=cumsum2d(2,3)
 C.add(0,0,1)
 C.add(0,1,2)
 C.add(0,2,3)
