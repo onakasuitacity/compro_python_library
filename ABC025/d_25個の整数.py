@@ -18,11 +18,11 @@ def resolve():
         if(1<=i<=3):
             u=(S>>(p-5))&1
             d=(S>>(p+5))&1
-            if u^d: return False
+            if(u^d): return False
         if(1<=j<=3):
             l=(S>>(p-1))&1
             r=(S>>(p+1))&1
-            if l^r: return False
+            if(l^r): return False
         return True
 
     @lru_cache(None)
