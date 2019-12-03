@@ -26,18 +26,19 @@ def resolve():
         return True
 
     @lru_cache(None)
-    def dfs(S,x)->int: # x=popcount(S)+1より不要だが、popcountの定数倍改善
-        if(x==26): return 1
-        d=idx[x]
+    def dfs(S)->int:
+        x=bin(S).count('1')
+        if(x==25): return 1
+        d=idx[x+1]
         # x が予約されている場合
         if(d is not None):
-            return dfs(S^(1<<d),x+1) if(check(S,d)) else 0
+            return dfs(S^(1<<d)) if(check(S,d)) else 0
         # x が予約されていない場合
         res=0
         for d in range(25):
             if(check(S,d) and (G[d]==0)):
-                res+=dfs(S^(1<<d),x+1)
+                res+=dfs(S^(1<<d))
         return res%MOD
 
-    print(dfs(0,1))
+    print(dfs(0))
 resolve()
