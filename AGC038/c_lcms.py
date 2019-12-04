@@ -45,7 +45,8 @@ def resolve():
     A=list(map(int,input().split()))
     V=max(A)
     C=[0]*(V+1)
-    for a in A: C[a]+=1
+    for a in A:
+        C[a]+=1
 
     P=prime(V)
     W=[1]*(V+1)
