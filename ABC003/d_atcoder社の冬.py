@@ -29,7 +29,7 @@ class modfact(object):
 
     def perm(self,n,k):
         if(k<0 or n<k): return 0
-        self.__fact[n]*self.__invfact[k]%MOD
+        return self.__fact[n]*self.__invfact[k]%MOD
 
 def resolve():
     r,c=map(int,input().split())
