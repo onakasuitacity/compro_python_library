@@ -2,31 +2,27 @@
 # https://tjkendev.github.io/procon-library/python/graph/lca-doubling.html
 class LCA(object):
     def __init__(self,E,root=0):
-        """
-        E: adjacency list
-        """
-        self.__n=len(E)
-        self.__E=E
-        self.__logn=(self.__n-1).bit_length()
-        self.__depth=[-1]*self.__n
-        self.__depth[root]=0
+        self.__n=len(E); self.__E=E; self.__logn=(self.__n-1).bit_length()
+        self.__depth=[-1]*self.__n; self.__depth[root]=0
         self.__parents=[[-1]*self.__n for _ in range(self.__logn)]
-        self.__dfs(root)
-        self.__doubling()
+        self.__dfs(root); self.__doubling()
 
     def __dfs(self,v):
-        for u in self.__E[v]:
-            if(self.__depth[u]!=-1): continue
-            self.__parents[0][u]=v
-            self.__depth[u]=self.__depth[v]+1
-            self.__dfs(u)
+        Q=[v]
+        while(Q):
+            v=Q.pop()
+            for nv in self.__E[v]:
+                if(self.__depth[nv]!=-1): continue
+                self.__parents[0][nv]=v
+                self.__depth[nv]=self.__depth[v]+1
+                Q.append(nv)
 
     def __doubling(self):
         for i in range(1,self.__logn):
             for v in range(self.__n):
                 if(self.__parents[i-1][v]==-1): continue
                 self.__parents[i][v]=self.__parents[i-1][self.__parents[i-1][v]]
-    
+
     @property
     def depth(self):
         return self.__depth
