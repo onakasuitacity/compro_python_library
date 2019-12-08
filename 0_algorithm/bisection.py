@@ -1,6 +1,6 @@
 # bisection (O(log(r-l)))
 def bisection(l,r,f,left=True,discrete=True):
-    eps=1 if discrete else 10**-12
+    eps=1 if discrete else 10**-8
     if((not left)^f(r)): return r if left else r+1
     elif(left^f(l)): return l-1 if left else l
     while(r-l>eps):
