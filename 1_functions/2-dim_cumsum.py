@@ -17,7 +17,7 @@ class cumsum2d(object):
             for j in range(self.__n):
                 S[i+1][j+1]+=S[i+1][j]+S[i][j+1]-S[i][j]
 
-    def sum(self,i0,i1,j0,j1):
+    def sum(self,i0,j0,i1,j1):
         S=self.__S
         return S[i1][j1]-S[i0][j1]-S[i1][j0]+S[i0][j0]
 
