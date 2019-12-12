@@ -1,35 +1,9 @@
 # Bellman-Ford algorithm (O(VE))
 # http://wakabame.hatenablog.com/entry/2017/09/06/221400
-class BellmanFord(object):
-    def __init__(self,E,start=0):
-        """
-        E: adjacency list with weight
-        """
-        self.__n=len(E)
-        self.__dist=[float("inf")]*self.__n
-        self.__dist[start]=0
-        self.__calculate(E,start)
-
-    @property
-    def dist(self):
-        return self.__dist
-
-    def __calculate(self,E,start): # relaxingという
-        dist=self.__dist
-        for k in range(self.__n): # n回更新する。n回目に更新が行われたら負経路あり。
-            update=False
-            for v in range(self.__n):
-                for u,w in E[v]:
-                    if dist[u]>dist[v]+w:
-                        dist[u]=dist[v]+w
-                        update=True
-            if(update is False): # 更新されない＝終わり
-                return
-            elif((update is True) and (k==self.__n-1)): # 負の閉路検出
-                self.__dist=[-float("inf")]*self.__n
-
+INF=float("inf")
 # example
-V=list(range(5))
+n=5
+V=list(range(n))
 E=[
 [[1,50],[2,80]],
 [[2,20],[3,15]],
@@ -37,5 +11,20 @@ E=[
 [[4,30]],
 []
 ]
-bel=BellmanFord(E,0)
-print(bel.dist) # [0,50,70,65,85]
+s=0
+dist=[INF]*n
+dist[s]=0
+
+for k in range(n):
+    update=False
+    for v in range(n):
+        for nv,w in E[v]:
+            if(dist[nv]>dist[v]+w):
+                dist[nv]=dist[v]+w
+                update=True
+    if(not update):
+        break
+    elif(k==n-1):
+        print("Found negative loop")
+
+print(dist) # [0,50,70,65,85]
