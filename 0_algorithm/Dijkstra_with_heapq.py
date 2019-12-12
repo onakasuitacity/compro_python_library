@@ -1,8 +1,9 @@
 # Dijkstra with heap tree (O(ElogV))
 # https://qiita.com/shizuma/items/e08a76ab26073b21c207
+from heapq import heappop,heappush
 INF=float("inf")
 n=5
-u=0
+s=0
 E=[
 [(1,50),(2,80)],
 [(2,20),(3,15)],
@@ -10,24 +11,19 @@ E=[
 [(4,30)],
 []
 ]
-import heapq
-Q=[(0,u)] # (d,v)
+
 dist=[INF]*n
-dist[u]=0
+dist[s]=0
 prev=[-1]*n
+Q=[(0,s)] # (d,v)
 while(Q):
-    d,v=heapq.heappop(Q)
+    d,v=heappop(Q)
     if(dist[v]<d): continue
     for nv,w in E[v]:
         if(dist[nv]>dist[v]+w):
             dist[nv]=dist[v]+w
             prev[nv]=v
-            heapq.heappush(Q,(dist[nv],nv))
+            heappush(Q,(dist[nv],nv))
 
-# path restoration (O(N))
-v=4
-path=[]
-while(v!=-1):
-    path.append(v)
-    v=prev[v]
-print(path[::-1])
+print(dist)
+print(prev)
