@@ -2,7 +2,7 @@
 # https://qiita.com/shizuma/items/e08a76ab26073b21c207
 n=5
 INF=float("inf")
-u=0 # start (パラメータで持つ必要はなく、distを0で初期化するだけ)
+s=0
 E=[
 [[1,50],[2,80]],
 [[2,20],[3,15]],
@@ -11,12 +11,14 @@ E=[
 []
 ]
 
-dist=[INF]*n; dist[u]=0
+dist=[INF]*n
+dist[s]=0
 prev=[-1]*n
-calculated=[False]*n
+used=[False]*n
+
 for _ in range(n-1):
-    v=min((dist[v],v) for v in range(n) if(not calculated[v]))[1]
-    calculated[v]=True
+    v=min((dist[v],v) for v in range(n) if(not used[v]))[1]
+    used[v]=1
     for nv,w in E[v]:
         if(dist[nv]>dist[v]+w):
             dist[nv]=dist[v]+w
