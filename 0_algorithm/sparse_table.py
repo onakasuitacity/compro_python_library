@@ -3,7 +3,7 @@
 class SparseTable(object):
     def __init__(self,A):
         n=len(A)
-        logn=max(0,(n-1).bit_length())
+        logn=max(1,(n-1).bit_length())
         maxtable=[[0]*n for _ in range(logn)]
         maxtable[0]=A[:]
         mintable=[[0]*n for _ in range(logn)]
