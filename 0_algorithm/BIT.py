@@ -3,11 +3,7 @@
 class BIT(object):
     def __init__(self,A,dot=lambda x,y:x+y,e=0,inv=None):
         n=len(A)
-        self.__n=n
-        self.__dot=dot
-        self.__e=e
-        self.__inv=inv
-        self.__node=['$']+A # 1-indexed
+        self.__n=n; self.__dot=dot; self.__e=e; self.__inv=inv; self.__node=['$']+A
         for i in range(1,n+1):
             j=i+(i&-i)
             if(j<=n): self.__node[j]=dot(self.__node[i],self.__node[j])
