@@ -51,11 +51,6 @@ def resolve():
     while(now is not None):
         path.append(S[now])
         now=prev[now]
-
     path.reverse()
-    print(first)
-    for i in range(1,len(path)-1):
-        if(path[i]!=path[i-1]):
-            print(path[i])
-    print(last)
+    print(*path,sep='\n')
 resolve()
