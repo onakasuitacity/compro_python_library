@@ -1,36 +1,31 @@
 # https://scrapbox.io/data-structures/Sliding_Window_Aggregation
 class SWAG(object):
-    def __init__(self,dot):
-        self.__front=[]; self.__back=[]; self.__dot=dot
+    def __init__(self, dot):
+        self.front, self.back, self.dot = [], [], dot
 
     def __bool__(self):
-        return bool(self.__front or self.__back)
+        return bool(self.front) or bool(self.back)
 
     def __len__(self):
-        return len(self.__front)+len(self.__back)
+        return len(self.front) + len(self.back)
 
-    def append(self,x):
-        back=self.__back
-        if(not back): back.append((x,x))
-        else: back.append((x,self.__dot(back[-1][1],x)))
+    def append(self, val):
+        if not self.back: self.back.append((val, val))
+        else: self.back.append((val, self.dot(self.back[-1][1], val)))
 
     def popleft(self):
-        assert(self)
-        front=self.__front; back=self.__back
-        if(not front):
-            front.append((back[-1][0],back[-1][0]))
-            back.pop()
-            while(back):
-                front.append((back[-1][0],self.__dot(back[-1][0],front[-1][1])))
-                back.pop()
-        return front.pop()[0]
+        if not self.front:
+            self.front.append((self.back[-1][0], self.back[-1][0]))
+            self.back.pop()
+            while self.back:
+                self.front.append((self.back[-1][0], self.dot(self.back[-1][0], self.front[-1][1])))
+                self.back.pop()
+        return self.front.pop()[0]
 
     def sum(self):
-        assert(self)
-        front=self.__front; back=self.__back
-        if(not front): return back[-1][1]
-        elif(not back): return front[-1][1]
-        else: return self.__dot(front[-1][1],back[-1][1])
+        if not self.front: return self.back[-1][1]
+        elif not self.back: return self.front[-1][1]
+        else: return self.dot(self.front[-1][1], self.back[-1][1])
 
 # example
 from operator import add
