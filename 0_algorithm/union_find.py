@@ -1,29 +1,36 @@
 # Union Find (amortized O(ack^-1(N)))
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
-    def __init__(self,n):
-        self.__par=list(range(n))
-        self.__size=[1]*n
- 
-    def root(self,i):
-        if(self.__par[i]==i): return i
-        self.__par[i]=self.root(self.__par[i])
-        return self.__par[i]
- 
-    def unite(self,i,j):
-        i=self.root(i); j=self.root(j)
-        if(i==j): return False
-        par=self.__par; size=self.__size
-        if(size[i]<size[j]): i,j=j,i
-        par[j]=i
-        size[i]+=size[j]
+    def __init__(self, n, recursion = False):
+        self.par = list(range(n))
+        self.size = [1] * n
+        self.recursion = recursion
+
+    def root(self, k):
+        if self.recursion:
+            if k == self.par[k]:
+                return k
+            self.par[k] = self.root(self.par[k])
+            return self.par[k]
+        else:
+            root = k
+            while root != self.par[root]: root = self.par[root]
+            while k != root: k, self.par[k] = self.par[k], root
+            return root
+
+    def unite(self, i, j):
+        i, j = self.root(i), self.root(j)
+        if i == j: return False
+        if self.size[i] < self.size[j]: i, j = j, i
+        self.par[j] = i
+        self.size[i] += self.size[j]
         return True
- 
-    def is_same(self,i,j):
-        return self.root(i)==self.root(j)
- 
-    def size(self,i):
-        return self.__size[self.root(i)]
+
+    def is_same(self, i, j):
+        return self.root(i) == self.root(j)
+
+    def size(self, k):
+        return self.size[self.root(k)]
 
 # example
 tree=UnionFind(6)
