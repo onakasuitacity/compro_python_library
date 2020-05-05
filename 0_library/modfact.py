@@ -8,7 +8,7 @@ class modfact(object):
         self._fact, self._invfact = fact, invfact
 
     def inv(self, n):
-        return self._fact[n-1] * self._invfact[n] % MOD
+        return self._fact[n - 1] * self._invfact[n] % MOD
 
     def fact(self, n):
         return self._fact[n]
