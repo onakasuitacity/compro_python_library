@@ -1,4 +1,4 @@
-MOD = 10 ** 9 + 7
+MOD = 10**9 + 7
 class modfact(object):
     def __init__(self, n):
         fact, invfact = [1] * (n + 1), [1] * (n + 1)
