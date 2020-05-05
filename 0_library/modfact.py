@@ -13,13 +13,13 @@ class modfact(object):
     def fact(self, n):
         return self.fact[n]
 
-    def invfact(self,n):
+    def invfact(self, n):
         return self.invfact[n]
 
-    def comb(self,n,k):
+    def comb(self, n, k):
         if k < 0 or n < k: return 0
         return self.fact[n] * self.invfact[k] % MOD * self.invfact[n - k] % MOD
 
-    def perm(self,n,k):
+    def perm(self, n, k):
         if k < 0 or n < k: return 0
         return self.fact[n] * self.invfact[n - k] % MOD
