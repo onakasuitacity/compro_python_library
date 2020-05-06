@@ -26,15 +26,15 @@ class UnionFind(object):
         self.size[i] += self.size[j]
         return True
 
-    def is_same(self, i, j):
+    def is_connected(self, i, j):
         return self.root(i) == self.root(j)
 
     def size(self, k):
         return self.size[self.root(k)]
 
 # example
-tree=UnionFind(6)
-tree.unite(0,2)
-tree.unite(1,3)
-tree.unite(1,5)
-print(tree.size(3)) # 3
+uf = UnionFind(6)
+uf.unite(0,2)
+uf.unite(1,3)
+uf.unite(1,5)
+print(uf.size(3)) # 3
