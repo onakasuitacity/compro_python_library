@@ -10,36 +10,38 @@ class SegmentTree(object):
             tree[i + n] = v
         for i in range(n - 1, 0, -1):
             tree[i] = dot(tree[2 * i], tree[2 * i + 1])
-        self.n = n
-        self.tree = tree
-        self.dot = dot
-        self.e = e
-    
+        self._n = n
+        self._tree = tree
+        self._dot = dot
+        self._e = e
+
     def __getitem__(self, i):
-        return self.tree[i + self.n]
-    
+        return self._tree[i + self._n]
+
     def update(self, i, v):
-        i += self.n
-        self.tree[i] = v
+        i += self._n
+        self._tree[i] = v
         while i != 1:
-            p = i // 2
-            self.tree[p] = self.dot(self.tree[2 * p], self.tree[2 * p + 1])
-            i = p
-    
+            i >>= 1
+            self._tree[i] = self._dot(self._tree[2 * i], self._tree[2 * i + 1])
+
+    def add(self, i, v):
+        self.update(i, self[i] + v)
+
     def sum(self, l, r):
-        l += self.n
-        r += self.n
-        l_val = r_val = self.e
+        l += self._n
+        r += self._n
+        l_val = r_val = self._e
         while l < r:
             if l & 1:
-                l_val = self.dot(l_val, self.tree[l])
+                l_val = self._dot(l_val, self._tree[l])
                 l += 1
             if r & 1:
                 r -= 1
-                r_val = self.dot(self.tree[r], r_val)
+                r_val = self._dot(self._tree[r], r_val)
             l >>= 1
             r >>= 1
-        return self.dot(l_val, r_val)
+        return self._dot(l_val, r_val)
 
 # example
 A=[4,9,11,5,13,33,33,33,11,45,14,19,19,8,10,89]
