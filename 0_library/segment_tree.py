@@ -9,7 +9,7 @@ class SegmentTree(object):
         for i, v in enumerate(arr):
             tree[i + n] = v
         for i in range(n - 1, 0, -1):
-            tree[i] = dot(tree[2 * i], tree[2 * i + 1])
+            tree[i] = dot(tree[2 * i], tree[2 * i | 1])
         self._n = n
         self._tree = tree
         self._dot = dot
@@ -23,7 +23,7 @@ class SegmentTree(object):
         self._tree[i] = v
         while i != 1:
             i >>= 1
-            self._tree[i] = self._dot(self._tree[2 * i], self._tree[2 * i + 1])
+            self._tree[i] = self._dot(self._tree[2 * i], self._tree[2 * i | 1])
 
     def add(self, i, v):
         self.update(i, self[i] + v)
