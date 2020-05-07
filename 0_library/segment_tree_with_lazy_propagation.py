@@ -7,7 +7,7 @@ class LazySegmentTree(object):
     def __init__(self, A, dot, unit, compose, identity, act):
         """
         A : array of monoid (M, dot, unit)
-        (S, compose, identitiy) : sub monoid of End(M)
+        (S, compose, identity) : sub monoid of End(M)
         compose : (f, g) -> fg (f, g in S)
         act : (f, x) -> f(x) (f in S, x in M)
         """
