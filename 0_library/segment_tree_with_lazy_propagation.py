@@ -5,12 +5,10 @@
 # https://onedrive.live.com/View.aspx?resid=CD510BE428DBA1E7!106&authkey=!AFD6EO1-AReoPBk
 class LazySegmentTree(object):
     def __init__(self, A, dot, unit, compose, identity, act):
-        """
-        A : array of monoid (M, dot, unit)
-        (S, compose, identity) : sub monoid of End(M)
-        compose : (f, g) -> fg (f, g in S)
-        act : (f, x) -> f(x) (f in S, x in M)
-        """
+        # A : array of monoid (M, dot, unit)
+        # (S, compose, identity) : sub monoid of End(M)
+        # compose : (f, g) -> fg (f, g in S)
+        # act : (f, x) -> f(x) (f in S, x in M)
         logn = (len(A) - 1).bit_length()
         n = 1 << logn
         tree = [unit] * (2 * n)
@@ -37,7 +35,7 @@ class LazySegmentTree(object):
             lazy[p] = identity
 
     def range_act(self, l, r, f):
-        "A[i] <- f(A[i]) for all i in [l, r)"
+        # A[i] <- f(A[i]) for all i in [l, r)
         l += self._n
         r += self._n
         # propagation isn't necessary if S is commutative
@@ -58,7 +56,7 @@ class LazySegmentTree(object):
         self._ascend(r0 - 1)
 
     def sum(self, l, r):
-        "calculate product of A[l:r]"
+        # calculate product of A[l:r]
         l += self._n
         r += self._n
         self._descend(l)
