@@ -29,13 +29,13 @@ class LazySegmentTree(object):
         self._identity = identity
         self._act = act
 
-    def _fix_ancestors(self, i):
+    def _ascend(self, i):
         tree, lazy, dot, act = self._tree, self._lazy, self._dot, self._act
         while i > 1:
             i >>= 1
             tree[i] = act(lazy[i], dot(tree[i << 1], tree[i << 1 | 1]))
 
-    def _propagate(self, i):
+    def _descend(self, i):
         tree, lazy, identity, compose, act = self._tree, self._lazy, self._identity, self._compose, self._act
         for k in range(self._logn, 0, -1):
             p = i >> k
@@ -49,8 +49,8 @@ class LazySegmentTree(object):
         l += self._n
         r += self._n
         # propagation isn't necessary if S is commutative
-        self._propagate(l)
-        self._propagate(r - 1)
+        self._descend(l)
+        self._descend(r - 1)
         l0, r0 = l, r
         tree, lazy, act, compose = self._tree, self._lazy, self._act, self._compose
         while l < r:
@@ -62,15 +62,15 @@ class LazySegmentTree(object):
                 tree[r], lazy[r] = act(f, tree[r]), compose(f, lazy[r])
             l >>= 1
             r >>= 1
-        self._fix_ancestors(l0)
-        self._fix_ancestors(r0 - 1)
+        self._ascend(l0)
+        self._ascend(r0 - 1)
 
     def sum(self, l, r):
         "calculate product of A[l:r]"
         l += self._n
         r += self._n
-        self._propagate(l)
-        self._propagate(r - 1)
+        self._descend(l)
+        self._descend(r - 1)
         l_val = r_val = self._unit
         tree, dot = self._tree, self._dot
         while l < r:
