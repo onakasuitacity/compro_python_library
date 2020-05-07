@@ -1,9 +1,9 @@
 # segment tree (without lazy-propagation)
 # cf. https://github.com/onakasuitacity/atcoder_py/blob/master/0_algorithm/lazy_propagation_segment_tree.py
 class SegmentTree(object):
-    def __init__(self, A, dot, e):
+    def __init__(self, A, dot, unit):
         n = 1 << (len(A) - 1).bit_length()
-        tree = [e] * (2 * n)
+        tree = [unit] * (2 * n)
         for i, v in enumerate(A):
             tree[i + n] = v
         for i in range(n - 1, 0, -1):
@@ -11,7 +11,7 @@ class SegmentTree(object):
         self._n = n
         self._tree = tree
         self._dot = dot
-        self._e = e
+        self._unit = unit
 
     def __getitem__(self, i):
         return self._tree[i + self._n]
@@ -29,7 +29,7 @@ class SegmentTree(object):
     def sum(self, l, r):
         l += self._n
         r += self._n
-        l_val = r_val = self._e
+        l_val = r_val = self._unit
         while l < r:
             if l & 1:
                 l_val = self._dot(l_val, self._tree[l])
@@ -44,5 +44,5 @@ class SegmentTree(object):
 # example
 A = [4, 9, 11, 5, 13, 33, 33, 33, 11, 45, 14, 19, 19, 8, 10, 89]
 dot = min
-e = float("inf")
-tree = SegmentTree(A, dot, e)
+unit = float("inf")
+tree = SegmentTree(A, dot, unit)
