@@ -1,10 +1,10 @@
 # segment tree (without lazy-propagation)
 # cf. https://github.com/onakasuitacity/atcoder_py/blob/master/0_algorithm/lazy_propagation_segment_tree.py
 class SegmentTree(object):
-    def __init__(self, arr, dot, e):
-        n = 1 << (len(arr) - 1).bit_length()
+    def __init__(self, A, dot, e):
+        n = 1 << (len(A) - 1).bit_length()
         tree = [e] * (2 * n)
-        for i, v in enumerate(arr):
+        for i, v in enumerate(A):
             tree[i + n] = v
         for i in range(n - 1, 0, -1):
             tree[i] = dot(tree[i << 1], tree[i << 1 | 1])
