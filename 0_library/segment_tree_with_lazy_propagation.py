@@ -48,7 +48,7 @@ class LazySegmentTree(object):
         "A[i] = f(A[i]) for all i in [l, r)"
         l += self._n
         r += self._n
-        # propagation isn't necessary if S is commutative
+        # propagation isn't needed if S is commutative
         self._propagate(l)
         self._propagate(r - 1)
         l0, r0 = l, r
@@ -70,7 +70,7 @@ class LazySegmentTree(object):
         l += self._n
         r += self._n
         self._propagate(l)
-        self._propagate(r)
+        self._propagate(r - 1)
         l_val = r_val = self._unit
         tree, dot = self._tree, self._dot
         while l < r:
