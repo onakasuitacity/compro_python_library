@@ -42,7 +42,7 @@ class SegmentTree(object):
         return self._dot(l_val, r_val)
 
 # example
-A=[4,9,11,5,13,33,33,33,11,45,14,19,19,8,10,89]
-dot=min
-e=float("inf")
-tree=SegmentTree(A,dot,e)
+A = [4, 9, 11, 5, 13, 33, 33, 33, 11, 45, 14, 19, 19, 8, 10, 89]
+dot = min
+e = float("inf")
+tree = SegmentTree(A, dot, e)
