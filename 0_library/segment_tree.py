@@ -2,9 +2,7 @@
 # cf. https://github.com/onakasuitacity/atcoder_py/blob/master/0_algorithm/lazy_propagation_segment_tree.py
 class SegmentTree(object):
     def __init__(self, arr, dot, e):
-        n = 1
-        while n < len(arr):
-            n <<= 1
+        n = 1 << (len(arr).bit_length() - 1)
         tree = [e] * (2 * n)
         for i, v in enumerate(arr):
             tree[i + n] = v
