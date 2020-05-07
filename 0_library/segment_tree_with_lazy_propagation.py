@@ -6,9 +6,8 @@
 class LazySegmentTree(object):
     def __init__(self, A, dot, unit, compose, identity, act):
         """
-        (M, dot, unit) : monoid
+        A : array of monoid (M, dot, unit)
         (S, compose, identitiy) : sub monoid of End(M)
-        A : array of M
         compose : (f, g) -> fg (f, g in S)
         act : (f, x) -> f(x) (f in S, x in M)
         """
@@ -19,15 +18,8 @@ class LazySegmentTree(object):
             tree[i + n] = v
         for i in range(n - 1, 0, -1):
             tree[i] = dot(tree[i << 1], tree[i << 1 | 1])
-        self._n = n
-        self._logn = logn
-        self._tree = tree
-        self._lazy = [identity] * (2 * n)
-        self._dot = dot
-        self._unit = unit
-        self._compose = compose
-        self._identity = identity
-        self._act = act
+        self._n, self._logn, self._tree, self._lazy = n, logn, tree, [identity] * (2 * n)
+        self._dot, self._unit, self._compose, self._identity, self._act = dot, unit, compose, identity, act
 
     def _ascend(self, i):
         tree, lazy, dot, act = self._tree, self._lazy, self._dot, self._act
@@ -45,7 +37,7 @@ class LazySegmentTree(object):
             lazy[p] = identity
 
     def range_act(self, l, r, f):
-        "A[i] = f(A[i]) for all i in [l, r)"
+        "A[i] <- f(A[i]) for all i in [l, r)"
         l += self._n
         r += self._n
         # propagation isn't necessary if S is commutative
