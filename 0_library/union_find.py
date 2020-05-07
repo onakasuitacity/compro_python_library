@@ -2,35 +2,35 @@
 # https://www.slideshare.net/chokudai/union-find-49066733
 class UnionFind(object):
     def __init__(self, n, recursion = False):
-        self.par = list(range(n))
-        self.size = [1] * n
-        self.recursion = recursion
+        self._par = list(range(n))
+        self._size = [1] * n
+        self._recursion = recursion
 
     def root(self, k):
-        if self.recursion:
-            if k == self.par[k]:
+        if self._recursion:
+            if k == self._par[k]:
                 return k
-            self.par[k] = self.root(self.par[k])
-            return self.par[k]
+            self._par[k] = self.root(self._par[k])
+            return self._par[k]
         else:
             root = k
-            while root != self.par[root]: root = self.par[root]
-            while k != root: k, self.par[k] = self.par[k], root
+            while root != self._par[root]: root = self._par[root]
+            while k != root: k, self._par[k] = self._par[k], root
             return root
 
     def unite(self, i, j):
         i, j = self.root(i), self.root(j)
         if i == j: return False
-        if self.size[i] < self.size[j]: i, j = j, i
-        self.par[j] = i
-        self.size[i] += self.size[j]
+        if self._size[i] < self._size[j]: i, j = j, i
+        self._par[j] = i
+        self._size[i] += self._size[j]
         return True
 
     def is_connected(self, i, j):
         return self.root(i) == self.root(j)
 
     def size(self, k):
-        return self.size[self.root(k)]
+        return self._size[self.root(k)]
 
 # example
 uf = UnionFind(6)
