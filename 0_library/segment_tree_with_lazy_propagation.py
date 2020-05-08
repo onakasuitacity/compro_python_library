@@ -20,7 +20,7 @@ class LazySegmentTree(object):
 
     def _ascend(self, i):
         tree, lazy, dot, act = self._tree, self._lazy, self._dot, self._act
-        while i > 1:
+        for _ in range(self._logn):
             i >>= 1
             tree[i] = act(lazy[i], dot(tree[i << 1], tree[i << 1 | 1]))
 
