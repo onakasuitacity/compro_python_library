@@ -1,7 +1,7 @@
 # prime factorization (O(sqrt(N)))
 def prime_factorization(n):
     assert n > 1
-    factor=[]
+    factor = []
     for d in range(2, int(n ** .5) + 1):
         while n % d == 0:
             n //= d
