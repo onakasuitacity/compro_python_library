@@ -1,5 +1,5 @@
 # Eratosthenes Sieve (O(nloglogn))
-def prime(n):
+def primes(n):
     if n <= 1: return []
     S = [1] * (n + 1)
     S[0] = S[1] = 0
