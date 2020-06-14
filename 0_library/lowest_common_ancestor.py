@@ -28,7 +28,7 @@ class LCA(object):
         for k in range(1, self._logn):
             next_parent = [-1] * self._n
             for v in range(self._n):
-                if parent[parent[v]] == -1:
+                if parent[v] == -1:
                     continue
                 next_parent[v] = parent[parent[v]]
             self._parent[k] = next_parent
