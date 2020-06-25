@@ -7,9 +7,6 @@ class modfact(object):
         for i in range(n - 1, -1, -1): invfact[i] = invfact[i + 1] * (i + 1) % MOD
         self._fact, self._invfact = fact, invfact
 
-    def inv(self, n):
-        return self._fact[n - 1] * self._invfact[n] % MOD
-
     def fact(self, n):
         return self._fact[n]
 
@@ -17,9 +14,7 @@ class modfact(object):
         return self._invfact[n]
 
     def comb(self, n, k):
-        if k < 0 or n < k: return 0
-        return self._fact[n] * self._invfact[k] % MOD * self._invfact[n - k] % MOD
+        return self._fact[n] * self._invfact[k] % MOD * self._invfact[n - k] % MOD if 0 <= k <= n else 0
 
     def perm(self, n, k):
-        if k < 0 or n < k: return 0
-        return self._fact[n] * self._invfact[n - k] % MOD
+        return self._fact[n] * self._invfact[n - k] % MOD if 0 <= k <= n else 0
