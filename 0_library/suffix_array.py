@@ -2,6 +2,7 @@
 # http://web.stanford.edu/class/archive/cs/cs166/cs166.1196/lectures/04/Slides04.pdf
 # https://niuez.hatenablog.com/entry/2019/12/16/203739
 # https://judge.yosupo.jp/submission/1069
+# https://atcoder.jp/contests/practice2/submissions/16583981
 class SuffixArray(object):
     def __init__(self, S):
         self.S = S
