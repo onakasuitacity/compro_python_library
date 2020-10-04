@@ -8,7 +8,7 @@ class SuffixArray(object):
         self.S = S
         self.sa = self._sa_is(list(map(ord, S + '$')))
         self.lcp, self.rank = self._lcp_array(S + '$', self.sa)
-        self.table = self._sparce_table(self.lcp)
+        self.table = self._sparse_table(self.lcp)
 
     def _sa_is(self, S):
         n = len(S)
@@ -102,7 +102,7 @@ class SuffixArray(object):
             lcp[rank[i] - 1] = h
         return lcp, rank
 
-    def _sparce_table(self, A):
+    def _sparse_table(self, A):
         n = len(A)
         logn = max(1, (n - 1).bit_length())
         table = [[0] * n for _ in range(logn)]
