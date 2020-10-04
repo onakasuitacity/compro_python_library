@@ -1,70 +1,122 @@
-# Suffix Array (Manber-Myers O(N(logN)^2),O(1))
-# https://tjkendev.github.io/procon-library/python/string/sa_manber_and_myers.html
-# https://lumakernel.github.io/ecasdqina/string/SA-with-Manber-Myers
-# https://lumakernel.github.io/ecasdqina/string/LCP-Array
+# https://mametter.hatenablog.com/entry/20180130/p1
+# http://web.stanford.edu/class/archive/cs/cs166/cs166.1196/lectures/04/Slides04.pdf
+# https://niuez.hatenablog.com/entry/2019/12/16/203739
+# https://judge.yosupo.jp/submission/1069
 class SuffixArray(object):
-    def __init__(self,s):
-        self.__s=s
-        self.__n=len(s)
-        self.__suffix_array()
-        self.__lcp_array()
-        self.__sparse_table()
+    def __init__(self, S):
+        self.S = S
+        self.sa = self._sa_is(list(map(ord, S + '$')))
+        self.lcp = self._lcp_array(S + '$', self.sa)
+        self.table = self._sparce_table(self.lcp)
 
-    def __suffix_array(self):
-        s=self.__s; n=self.__n
-        sa=list(range(n))
-        rank=[ord(s[i]) for i in range(n)]
-        tmp=[0]*n
-        k=1
-        cmp_key=lambda i:(rank[i],rank[i+k] if i+k<n else -1)
-        while(k<=n):
-            sa.sort(key=cmp_key)
-            tmp[sa[0]]=0
-            for i in range(1,n):
-                tmp[sa[i]]=tmp[sa[i-1]]+(cmp_key(sa[i-1])<cmp_key(sa[i]))
-            rank=tmp[:]
-            k<<=1
-        self.__sa=sa
-        self.__rank=rank
+    def _sa_is(self, S):
+        n = len(S)
+        stype = [True] * n
+        for i in range(n - 2, -1, -1):
+            if S[i] == S[i + 1]:
+                stype[i] = stype[i + 1]
+            else:
+                stype[i] = S[i] < S[i + 1]
 
-    def __lcp_array(self):
-        s=self.__s; n=self.__n
-        sa=self.__sa; rank=self.__rank
-        lcp=[0]*n
-        h=0
+        lms = []
+        lms_map = [-1] * n
+        for i in range(1, n):
+            if not stype[i - 1] and stype[i]:
+                lms_map[i] = len(lms)
+                lms.append(i)
+
+        k = max(S) + 1
+        bucket = [0] * k
+        for v in S:
+            bucket[v] += 1
+        cum = [0] * (k + 1)
+        for i in range(k):
+            cum[i + 1] = cum[i] + bucket[i]
+
+        def induced_sort():
+            buf = cum[:]
+            for i in lms[::-1]:
+                v = S[i]
+                buf[v + 1] -= 1
+                sa[buf[v + 1]] = i
+            buf = cum[:]
+            for i in range(n):
+                if sa[i] != -1 and not stype[sa[i] - 1]:
+                    v = S[sa[i] - 1]
+                    sa[buf[v]] = sa[i] - 1
+                    buf[v] += 1
+            buf = cum[:]
+            for i in range(n - 1, -1, -1):
+                if stype[sa[i] - 1]:
+                    v = S[sa[i] - 1]
+                    buf[v + 1] -= 1
+                    sa[buf[v + 1]] = sa[i] - 1
+
+        sa = [-1] * n
+        induced_sort()
+
+        if len(lms) <= 2:
+            return sa
+
+        _lms = lms
+        lms = [s for s in sa if lms_map[s] != -1]
+        lms_substr = list(range(len(lms)))
+        for i in range(2, len(lms)):
+            l, r = lms[i - 1], lms[i]
+            if S[l] != S[r]:
+                lms_substr[i] = lms_substr[i - 1] + 1
+                continue
+            while True:
+                l += 1
+                r += 1
+                if S[l] != S[r] or lms_map[l] * lms_map[r] < 0:
+                    lms_substr[i] = lms_substr[i - 1] + 1
+                    break
+                if lms_map[l] >= 0 and lms_map[r] >= 0:
+                    lms_substr[i] = lms_substr[i - 1]
+                    break
+
+        sub_s = [0] * len(lms)
+        for i, v in zip(lms, lms_substr):
+            sub_s[lms_map[i]] = v
+        lms = [_lms[s] for s in self._sa_is(sub_s)]
+
+        sa = [-1] * n
+        induced_sort()
+        return sa
+
+    def _lcp_array(self, S, sa):
+        n = len(S)
+        rank = [0] * n
         for i in range(n):
-            j=sa[rank[i]-1]
-            if(h>0): h-=1
-            if(rank[i]==0): continue
-            while(j+h<n and i+h<n and s[j+h]==s[i+h]): h+=1
-            lcp[rank[i]]=h
-        self.__lcp=lcp
+            rank[sa[i]] = i
+        lcp = [0] * (n - 1)
+        h = 0
+        for i in range(n - 1):
+            j = sa[rank[i] - 1]
+            if h:
+                h -= 1
+            while j + h < n and i + h < n and S[j + h] == S[i + h]:
+                h += 1
+            lcp[rank[i] - 1] = h
+        self._rank = rank
+        return lcp
 
-    def __sparse_table(self):
-        n=self.__n
-        logn=max(1,(n-1).bit_length())
-        table=[[0]*n for _ in range(logn)]
-        table[0]=self.__lcp[:]
-        from itertools import product
-        for i,k in product(range(1,logn),range(n)):
-            if(k+(1<<(i-1))>=n): table[i][k]=table[i-1][k]
-            else: table[i][k]=min(table[i-1][k],table[i-1][k+(1<<(i-1))])
-        self.__table=table
+    def _sparce_table(self, A):
+        n = len(A)
+        logn = max(1, (n - 1).bit_length())
+        table = [[0] * n for _ in range(logn)]
+        table[0] = A[:]
+        for i in range(1, logn):
+            for k in range(n):
+                if k + (1 << (i - 1)) >= n:
+                    table[i][k] = table[i - 1][k]
+                else:
+                    table[i][k] = min(table[i - 1][k], table[i - 1][k + (1 << (i - 1))])
+        return table
 
-    @property
-    def suffix(self):
-        return self.__sa
-
-    def lcp(self,a,b):
-        if(a==b): return self.__n-a
-        l,r=self.__rank[a],self.__rank[b]
-        l,r=min(l,r)+1,max(l,r)+1
-        i=max(0,(r-l-1).bit_length()-1)
-        table=self.__table
-        return min(table[i][l],table[i][r-(1<<i)])
-
-# example
-s="strangeorange"
-n=len(s)
-sa=SuffixArray(s)
-print(sa.lcp(2,8)) # 5
+    def get_lcp(self, i, j):
+        l, r = self._rank[i], self._rank[j]
+        l, r = min(l, r), max(l, r)
+        d = max(0, (r - l - 1).bit_length() - 1)
+        return min(self.table[d][l], self.table[d][r - (1 << d)])
