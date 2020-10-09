@@ -28,7 +28,7 @@ class MaxFlow(object):
         return level[t] != -1
  
     def _dfs(self, s, t):
-        E, level, it = self.E,  self._level, self._iter
+        E, level, it = self.E, self._level, self._iter
         stack = [s]
         while stack:
             v = stack[-1]
