@@ -33,9 +33,8 @@ class MaxFlow(object):
         while stack:
             v = stack[-1]
             if v == t:
-                stack.pop()
-                f = min(E[v][it[v]][1] for v in stack)
-                for v in stack:
+                f = min(E[v][it[v]][1] for v in stack[:-1])
+                for v in stack[:-1]:
                     E[v][it[v]][1] -= f
                     E[v][it[v]][2][1] += f
                 return f
