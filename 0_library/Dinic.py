@@ -17,10 +17,9 @@ class MaxFlow(object):
     def _bfs(self, s, t):
         self._level = level = [-1] * self.n
         level[s] = 0
-        E = self.E
         queue = [s]
         for v in queue:
-            for nv, cap, _ in E[v]:
+            for nv, cap, _ in self.E[v]:
                 if cap and level[nv] == -1:
                     level[nv] = level[v] + 1
                     queue.append(nv)
