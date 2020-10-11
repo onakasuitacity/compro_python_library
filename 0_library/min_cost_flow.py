@@ -9,8 +9,8 @@ class MinCostFlow(object):
         self._b = [0] * (n + 1)
         self._u = 1
 
-    def add_supply(self, v, b):
-        self.add_edge(self.n, v, b, b, 0, False)
+    def add_supply(self, v, amount):
+        self.add_edge(self.n, v, amount, amount, 0, False)
 
     def add_edge(self, u, v, lower, upper, cost, append = True):
         e = [v, upper, cost, 0]
@@ -52,9 +52,17 @@ class MinCostFlow(object):
             if dist[v] != d:
                 continue
             if self._b[v] <= -delta:
+                t = v
+                f = -self._b[t]
                 while prev[v]:
                     e = prev[v]
-                    self._push(e, delta)
+                    f = min(f, e[1])
+                    v = e[-1][0]
+                f = min(f, self._b[v])
+                v = t
+                while prev[v]:
+                    e = prev[v]
+                    self._push(e, f)
                     v = e[-1][0]
                 for v in range(n):
                     self.p[v] += min(d, dist[v])
