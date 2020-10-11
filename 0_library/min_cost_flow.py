@@ -18,11 +18,11 @@ class MinCostFlow(object):
         e[-1] = rev
         self.E[u].append(e)
         self.E[v].append(rev)
-        if append:
-            self.edges.append((e, upper))
+        self._u = max(self._u, upper - lower)
         if not lower <= 0 <= upper:
             self._push(e, lower)
-        self._u = max(self._u, upper - lower)
+        if append:
+            self.edges.append((e, upper))
 
     def _push(self, e, f):
         rev = e[-1]
