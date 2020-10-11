@@ -4,8 +4,8 @@ from heapq import heappop, heappush
 class MinCostFlow(object):
     def __init__(self, n):
         self.n = n
-        self.E = [[] for _ in range(n + 1)]
         self.edges = []
+        self._E = [[] for _ in range(n + 1)]
         self._b = [0] * (n + 1)
         self._u = 1
 
@@ -16,8 +16,8 @@ class MinCostFlow(object):
         e = [v, upper, cost, 0]
         rev = [u, -lower, -cost, e]
         e[-1] = rev
-        self.E[u].append(e)
-        self.E[v].append(rev)
+        self._E[u].append(e)
+        self._E[v].append(rev)
         self._u = max(self._u, upper - lower)
         if not lower <= 0 <= upper:
             self._push(e, lower)
@@ -33,7 +33,7 @@ class MinCostFlow(object):
 
     def _saturate(self, delta):
         for v in range(self.n + 1):
-            for e in self.E[v]:
+            for e in self._E[v]:
                 nv, cap, cost, _ = e
                 if cap >= delta and cost + self.p[v] - self.p[nv] < 0:
                     self._push(e, cap)
@@ -45,10 +45,13 @@ class MinCostFlow(object):
         for v, b in enumerate(self._b):
             if b >= delta:
                 dist[v] = 0
-                heap.append((0, v))
+                heap.append(v)
         prev = [None] * n
+        ward = n.bit_length()
+        mask = (1 << ward) - 1
         while heap:
-            d, v = heappop(heap)
+            v = heappop(heap)
+            d, v = v >> ward, v & mask
             if dist[v] != d:
                 continue
             if self._b[v] <= -delta:
@@ -67,14 +70,14 @@ class MinCostFlow(object):
                 for v in range(n):
                     self.p[v] += min(d, dist[v])
                 return True
-            for e in self.E[v]:
+            for e in self._E[v]:
                 nv, cap, cost, _ = e
                 if cap < delta:
                     continue
                 if dist[nv] > d + cost + self.p[v] - self.p[nv]:
                     prev[nv] = e
                     dist[nv] = d + cost + self.p[v] - self.p[nv]
-                    heappush(heap, (dist[nv], nv))
+                    heappush(heap, dist[nv] << ward | nv)
         return False
 
     def solve(self):
