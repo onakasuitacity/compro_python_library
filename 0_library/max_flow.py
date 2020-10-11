@@ -8,8 +8,11 @@ class MaxFlow(object):
         self.E = [[] for _ in range(n)]
 
     def add_edge(self, u, v, cap):
-        self.E[u].append([v, cap, len(self.E[v])])
-        self.E[v].append([u, 0, len(self.E[u]) - 1])
+        e = [v, cap, 0]
+        rev = [u, 0, e]
+        e[-1] = rev
+        self.E[u].append(e)
+        self.E[v].append(rev)
 
     def _bfs(self, s, t):
         self._level = level = [-1] * self.n
@@ -32,7 +35,7 @@ class MaxFlow(object):
             if v == t:
                 for v, _ in stack[:-1]:
                     E[v][it[v]][1] -= f
-                    E[E[v][it[v]][0]][E[v][it[v]][2]][1] += f
+                    E[v][it[v]][-1][1] += f
                 return f
             while it[v] < len(E[v]):
                 nv, cap, _ = E[v][it[v]]
