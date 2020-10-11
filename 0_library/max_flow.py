@@ -22,6 +22,8 @@ class MaxFlow(object):
             for nv, cap, _ in self.E[v]:
                 if cap and level[nv] == -1:
                     level[nv] = level[v] + 1
+                    if nv == t:
+                        return True
                     queue.append(nv)
         return level[t] != -1
 
