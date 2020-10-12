@@ -56,7 +56,7 @@ class MinCostFlow(object):
                 continue
             if self._b[v] <= -delta:
                 t = v
-                f = -self._b[t]
+                f = -self._b[v]
                 while prev[v]:
                     f = min(f, prev[v][1])
                     v = prev[v][-1][0]
