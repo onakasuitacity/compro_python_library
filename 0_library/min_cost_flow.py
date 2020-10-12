@@ -35,7 +35,7 @@ class MinCostFlow(object):
         for v in range(self.n + 1):
             for e in self._E[v]:
                 nv, cap, cost, _ = e
-                if cap >= delta and cost + self.p[v] - self.p[nv] < 0:
+                if cap >= delta and cost + self._p[v] - self._p[nv] < 0:
                     self._push(e, cap)
 
     def _shortest_path(self, delta):
@@ -65,25 +65,24 @@ class MinCostFlow(object):
                     self._push(prev[t], f)
                     t = prev[t][-1][0]
                 for v in range(n):
-                    self.p[v] += min(d, dist[v])
+                    self._p[v] += min(d, dist[v])
                 return True
             for e in self._E[v]:
                 nv, cap, cost, _ = e
                 if cap < delta:
                     continue
-                if dist[nv] > d + cost + self.p[v] - self.p[nv]:
+                if dist[nv] > d + cost + self._p[v] - self._p[nv]:
                     prev[nv] = e
-                    dist[nv] = d + cost + self.p[v] - self.p[nv]
+                    dist[nv] = d + cost + self._p[v] - self._p[nv]
                     heappush(heap, dist[nv] << ward | nv)
         return False
 
     def solve(self):
-        self.p = [0] * (self.n + 1)
+        self._p = [0] * (self.n + 1)
         delta = 1 << (self._u - 1).bit_length()
         while delta:
             self._saturate(delta)
             while self._shortest_path(delta):
                 pass
             delta >>= 1
-        self.p.pop()
         return not any(self._b)
