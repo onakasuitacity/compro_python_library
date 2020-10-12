@@ -58,15 +58,12 @@ class MinCostFlow(object):
                 t = v
                 f = -self._b[t]
                 while prev[v]:
-                    e = prev[v]
-                    f = min(f, e[1])
-                    v = e[-1][0]
+                    f = min(f, prev[v][1])
+                    v = prev[v][-1][0]
                 f = min(f, self._b[v])
-                v = t
-                while prev[v]:
-                    e = prev[v]
-                    self._push(e, f)
-                    v = e[-1][0]
+                while prev[t]:
+                    self._push(prev[t], f)
+                    t = prev[t][-1][0]
                 for v in range(n):
                     self.p[v] += min(d, dist[v])
                 return True
@@ -89,4 +86,4 @@ class MinCostFlow(object):
                 pass
             delta >>= 1
         self.p.pop()
-        return all(b == 0 for b in self._b)
+        return not any(self._b)
