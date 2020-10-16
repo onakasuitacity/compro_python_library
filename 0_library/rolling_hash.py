@@ -2,25 +2,26 @@
 # https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
 # http://perogram.hateblo.jp/entry/rolling_hash
 class RollingHash(object):
-    _base1, _base2 = 1007, 1009
-    _mod1, _mod2 = 10**9 + 9, 10**9 + 7
+    _b, _p = 1007, (1 << 61) - 1
+    N = 100000
+    power = [1] * (N + 1)
+    for i in range(N):
+        power[i + 1] = power[i] * _b % _p
 
-    def __init__(self,s):
-        self._n=len(s)
-        H1, H2 = [0] * (self._n + 1), [0] * (self._n + 1)
-        P1, P2 = [1] * (self._n + 1), [1] * (self._n + 1)
-        for i in range(self._n):
-            H1[i + 1] = (H1[i] * self._base1 + ord(s[i])) % self._mod1
-            H2[i + 1] = (H2[i] * self._base2 + ord(s[i])) % self._mod2
-            P1[i + 1] = P1[i] * self._base1 % self._mod1
-            P2[i + 1] = P2[i] * self._base2 % self._mod2
-        self._H1, self._H2 = H1, H2
-        self._P1, self._P2 = P1, P2
+    def __init__(self, S):
+        self._n = n = len(S)
+        b, p = self._b, self._p
+        hash = [0] * (n + 1)
+        for i, s in enumerate(S):
+            hash[i + 1] = hash[i] * b % p + ord(s)
+        self._hash = hash
 
-    def __len__(self):
-        return self._n
+    def __getitem__(self, x):
+        l, r = x.start, x.stop
+        return (self._hash[r] - self._hash[l] * self.power[r - l]) % self._p, r - l
 
-    def __getitem__(self,x):
-        l, r = x.start, x.stop;
-        return ((self._H1[r] - self._P1[r - l] * self._H1[l] % self._mod1) % self._mod1,
-                (self._H2[r] - self._P2[r - l] * self._H2[l] % self._mod2) % self._mod2)
+    @classmethod
+    def add(cls, hash1, hash2):
+        h1, l1 = hash1
+        h2, l2 = hash2
+        return (h1 * cls.power[l2] + h2) % cls._p, l1 + l2
