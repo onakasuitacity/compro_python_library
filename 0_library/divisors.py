@@ -1,4 +1,3 @@
-# divisors (O(sqrt(N)))
 def divisors(n):
     S, T = [], []
     i = 1
