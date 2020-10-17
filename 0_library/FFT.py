@@ -1,5 +1,7 @@
 from cmath import pi, rect
 def _fft(A, inverse = False):
+    N = len(A)
+    logN = (N - 1).bit_length()
     step = N
     for k in range(logN):
         step >>= 1
@@ -14,8 +16,9 @@ def _fft(A, inverse = False):
             wj *= w
         A = nA
     return A
- 
+
 def convolution(f, g):
+    N = 1 << (len(f) + len(g) - 2).bit_length()
     Ff, Fg = _fft(f + [0] * (N - len(f))), _fft(g + [0] * (N - len(g)))
     fg = _fft([a * b / N for a, b in zip(Ff, Fg)], inverse = True)
     del fg[len(f) + len(g) - 1:]
