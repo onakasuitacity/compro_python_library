@@ -25,7 +25,7 @@ def convolution(f, g, MOD):
     fgs = [_fmt([a * b % p * N_inv % p for a, b in zip(Ff, Fg)], p, inverse = True) for Ff, Fg, p, N_inv in zip(Ffs, Fgs, primes, N_invs)]
     fg = []
     primes.append(MOD)
-    for k, R in enumerate(zip(*fgs)):
+    for R in zip(*fgs):
         coeffs, consts = [1] * 4, [0] * 4
         for i in range(3):
             a, b, u, v = coeffs[i], primes[i], 1, 0
@@ -36,6 +36,5 @@ def convolution(f, g, MOD):
                 consts[j] = (consts[j] + t * coeffs[j]) % primes[j]
                 coeffs[j] = coeffs[j] * primes[i] % primes[j]
         fg.append(consts[-1])
-        if k == len(f) + len(g) - 2:
-            break
-    return fg
+        if len(fg) == len(f) + len(g) - 1:
+            return fg
