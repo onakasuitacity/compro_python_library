@@ -1,21 +1,21 @@
 from cmath import pi, rect
-def _fft(A, inverse = False):
-    N = len(A)
+def _fft(f, inverse = False):
+    N = len(f)
     logN = (N - 1).bit_length()
     step = N
     for k in range(logN):
         step >>= 1
         w = rect(1, pi / (1 << k) * (1 - 2 * inverse))
         wj = 1
-        nA = [0] * N
+        nf = [0] * N
         for j in range(1 << k):
             for i in range(1 << logN - k - 1):
-                s, t = i + j * step, i + j * step + (N >> 1)
-                ps, pt = i + j * step * 2, i + j * step * 2 + step
-                nA[s], nA[t] = A[ps] + A[pt] * wj, A[ps] - A[pt] * wj
+                s, t = i + 2 * j * step, i + (2 * j + 1) * step
+                ns, nt = i + j * step, i + j * step + (N >> 1)
+                nf[ns], nf[nt] = f[s] + f[t] * wj, f[s] - f[t] * wj
             wj *= w
-        A = nA
-    return A
+        f = nf
+    return f
 
 def convolution(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
