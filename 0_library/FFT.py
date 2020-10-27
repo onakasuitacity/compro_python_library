@@ -15,11 +15,13 @@ def _fft(f, inverse = False):
                 nf[ns], nf[nt] = f[s] + f[t] * wj, f[s] - f[t] * wj
             wj *= w
         f = nf
+    if inverse:
+        f = [a / N for a in f]
     return f
 
 def convolution(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     Ff, Fg = _fft(f + [0] * (N - len(f))), _fft(g + [0] * (N - len(g)))
-    fg = _fft([a * b / N for a, b in zip(Ff, Fg)], inverse = True)
+    fg = _fft([a * b for a, b in zip(Ff, Fg)], inverse = True)
     del fg[len(f) + len(g) - 1:]
     return fg
