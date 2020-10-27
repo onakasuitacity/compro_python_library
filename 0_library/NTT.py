@@ -1,4 +1,6 @@
-def _fmt(f, prime, root = 3, inverse = False):
+prime = 998244353
+root = 3
+def _fmt(f, inverse = False):
     N = len(f)
     logN = (N - 1).bit_length()
     base = pow(root, (prime - 1) // N * (1 - 2 * inverse) % (prime - 1), prime)
@@ -16,28 +18,13 @@ def _fmt(f, prime, root = 3, inverse = False):
             wj = (wj * w) % prime
         f = nf
     if inverse:
-        N_inv = pow(1 << (len(f) - 1).bit_length(), prime - 2, prime)
+        N_inv = pow(N, prime - 2, prime)
         f = [a * N_inv % prime for a in f]
     return f
 
-def convolution(f, g, MOD):
+def convolution(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
-    primes = [167772161, 469762049, 1224736769]
-    N_invs = (pow(N, p - 2, p) for p in primes)
-    Ffs, Fgs = [_fmt(f + [0] * (N - len(f)), p) for p in primes], [_fmt(g + [0] * (N - len(g)), p) for p in primes]
-    fgs = [_fmt([a * b % p * N_inv % p for a, b in zip(Ff, Fg)], p, inverse = True) for Ff, Fg, p, N_inv in zip(Ffs, Fgs, primes, N_invs)]
-    fg = []
-    primes.append(MOD)
-    for R in zip(*fgs):
-        coeffs, consts = [1] * 4, [0] * 4
-        for i in range(3):
-            a, b, u, v = coeffs[i], primes[i], 1, 0
-            while b:
-                a, b, u, v = b, a - a // b * b, v, u - a // b * v
-            t = (R[i] - consts[i]) * (u % primes[i]) % primes[i]
-            for j in range(i + 1, 4):
-                consts[j] = (consts[j] + t * coeffs[j]) % primes[j]
-                coeffs[j] = coeffs[j] * primes[i] % primes[j]
-        fg.append(consts[-1])
-        if len(fg) == len(f) + len(g) - 1:
-            return fg
+    Ff, Fg = _fmt(f + [0] * (N - len(f))), _fmt(g + [0] * (N - len(g)))
+    fg = _fmt([a * b % prime for a, b in zip(Ff, Fg)], inverse = True)
+    del fg[len(f) + len(g) - 1:]
+    return fg
