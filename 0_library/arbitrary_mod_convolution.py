@@ -15,14 +15,16 @@ def _fmt(f, prime, root = 3, inverse = False):
                 nf[ns], nf[nt] = (f[s] + f[t] * wj) % prime, (f[s] - f[t] * wj) % prime
             wj = (wj * w) % prime
         f = nf
+    if inverse:
+        N_inv = pow(N, prime - 2, prime)
+        f = [a * N_inv % prime for a in f]
     return f
 
 def convolution(f, g, MOD):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     primes = [167772161, 469762049, 1224736769]
-    N_invs = (pow(N, p - 2, p) for p in primes)
     Ffs, Fgs = [_fmt(f + [0] * (N - len(f)), p) for p in primes], [_fmt(g + [0] * (N - len(g)), p) for p in primes]
-    fgs = [_fmt([a * b % p * N_inv % p for a, b in zip(Ff, Fg)], p, inverse = True) for Ff, Fg, p, N_inv in zip(Ffs, Fgs, primes, N_invs)]
+    fgs = [_fmt([a * b % p for a, b in zip(Ff, Fg)], p, inverse = True) for Ff, Fg, p in zip(Ffs, Fgs, primes)]
     fg = []
     primes.append(MOD)
     for R in zip(*fgs):
