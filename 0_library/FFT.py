@@ -19,7 +19,7 @@ def _fft(f, inverse = False):
         f = [a / N for a in f]
     return f
 
-def convolution(f, g):
+def convolve(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     Ff, Fg = _fft(f + [0] * (N - len(f))), _fft(g + [0] * (N - len(g)))
     fg = _fft([a * b for a, b in zip(Ff, Fg)], inverse = True)
