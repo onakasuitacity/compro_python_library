@@ -22,7 +22,7 @@ def _fmt(f, inverse = False):
         f = [a * N_inv % prime for a in f]
     return f
 
-def convolution(f, g):
+def convolve(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     Ff, Fg = _fmt(f + [0] * (N - len(f))), _fmt(g + [0] * (N - len(g)))
     fg = _fmt([a * b % prime for a, b in zip(Ff, Fg)], inverse = True)
