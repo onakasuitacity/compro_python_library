@@ -20,7 +20,7 @@ def _fmt(f, prime, root = 3, inverse = False):
         f = [a * N_inv % prime for a in f]
     return f
 
-def convolution(f, g, MOD):
+def convolve(f, g, MOD):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     primes = [167772161, 469762049, 1224736769]
     Ffs, Fgs = [_fmt([a % MOD for a in f] + [0] * (N - len(f)), p) for p in primes], [_fmt([b % MOD for b in g] + [0] * (N - len(g)), p) for p in primes]
