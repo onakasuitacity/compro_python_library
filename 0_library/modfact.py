@@ -7,10 +7,7 @@ class modfact(object):
         self._fact, self._invfact = fact, invfact
 
     def inv(self, n):
-        if n < len(self._fact):
-            return self._fact[n - 1] * self._invfact[n] % MOD
-        else:
-            return pow(n, MOD - 2, MOD)
+        return self._fact[n - 1] * self._invfact[n] % MOD if n < len(self._fact) else pow(n, MOD - 2, MOD)
 
     def fact(self, n):
         return self._fact[n]
