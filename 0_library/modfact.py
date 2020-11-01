@@ -1,4 +1,3 @@
-MOD = 10**9 + 7
 class modfact(object):
     def __init__(self, n):
         fact, invfact = [1] * (n + 1), [1] * (n + 1)
@@ -6,6 +5,12 @@ class modfact(object):
         invfact[n] = pow(fact[n], MOD - 2, MOD)
         for i in range(n - 1, -1, -1): invfact[i] = invfact[i + 1] * (i + 1) % MOD
         self._fact, self._invfact = fact, invfact
+
+    def inv(self, n):
+        if n < len(self._fact):
+            return self._fact[n - 1] * self._invfact[n] % MOD
+        else:
+            return pow(n, MOD - 2, MOD)
 
     def fact(self, n):
         return self._fact[n]
