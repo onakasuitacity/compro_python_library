@@ -13,7 +13,7 @@ def _primality_test(n):
             return False
     return True
 
-N = 1_000_000
+N = 65
 primes = []
 sieve = list(range(N + 1))
 for i in range(2, N + 1):
@@ -36,13 +36,17 @@ def prime_factorization(n):
                 res[sieve[n]] += 1
                 n //= sieve[n]
             continue
-        if _primality_test(n):
-            res[n] += 1
-            continue
         if n in memo:
             g = memo[n]
-            queue.append(g)
-            queue.append(n // g)
+            if g != n:
+                queue.append(g)
+                queue.append(n // g)
+            else:
+                res[n] += 1
+            continue
+        if _primality_test(n):
+            res[n] += 1
+            memo[n] = n
             continue
         c, m = 0, 1 << n.bit_length() - 3
         while True:
