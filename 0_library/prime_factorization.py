@@ -60,7 +60,7 @@ def prime_factorization(n):
                     ys = y
                     for i in range(min(m, r - k)):
                         y = (y * y + c) % n
-                        q = (q * abs(x - y)) % n
+                        q = q * abs(x - y) % n
                     g = gcd(q, n)
                     k += m
                 r <<= 1
