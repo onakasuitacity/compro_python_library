@@ -13,7 +13,7 @@ def _primality_test(n):
             return False
     return True
 
-N = 65
+N = 1_000_000
 primes = []
 sieve = list(range(N + 1))
 for i in range(2, N + 1):
