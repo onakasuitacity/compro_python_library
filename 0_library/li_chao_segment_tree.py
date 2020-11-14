@@ -7,20 +7,19 @@ class LiChaoTree(object):
         self._N, self._X = N, X + [INF] * (N - len(X))
         self._X_inv = {x : i for i, x in enumerate(X)}
 
-    def add_line(self, a, b):
-        tree, X = self._tree, self._X
-        i, l, r = 1, 0, self._N
-        while r - l:
+    def add_line(self, a, b, i = 1):
+        N, tree, X = self._N, self._tree, self._X
+        k = i.bit_length() - 1
+        l, r = (i - (1 << k)) * (N >> k), (i - (1 << k) + 1) * (N >> k)
+        while l < r:
             if tree[i] is None:
                 tree[i] = (a, b)
                 return
             m = (l + r) >> 1
-            xl, xm, xr = X[l], X[m], X[r-1]
             ai, bi = tree[i]
-            left = a * xl + b < ai * xl + bi
-            mid = a * xm + b < ai * xm + bi
-            right = a * xr + b < ai * xr + bi
-
+            left = a * X[l] + b < ai * X[l] + bi
+            mid = a * X[m] + b < ai * X[m] + bi
+            right = a * X[r-1] + b < ai * X[r-1] + bi
             if left is right:
                 if left:
                     tree[i] = (a, b)
@@ -31,6 +30,18 @@ class LiChaoTree(object):
                 i, r = i << 1, m
             else:
                 i, l = i << 1 | 1, m
+
+    def add_segment(self, l, r, a, b):
+        l, r = self._X_inv[l] + self._N, self._X_inv[r] + self._N
+        while l < r:
+            if l & 1:
+                self.add_line(a, b, l)
+                l += 1
+            if r & 1:
+                r -= 1
+                self.add_line(a, b, r)
+            l >>= 1
+            r >>= 1
 
     def get_min(self, x):
         i = self._X_inv[x]
