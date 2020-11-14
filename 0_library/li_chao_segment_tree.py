@@ -45,8 +45,8 @@ class LiChaoTree(object):
 
     def get_min(self, x):
         i = self._X_inv[x] + self._N
-        res = INF
         tree = self._tree
+        res = INF
         while i:
             if tree[i] is not None:
                 a, b = tree[i]
