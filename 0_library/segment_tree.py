@@ -15,15 +15,12 @@ class SegmentTree(object):
     def __getitem__(self, i):
         return self._tree[i + self._n]
 
-    def update(self, i, v):
+    def __setitem__(self, i, v):
         i += self._n
         self._tree[i] = v
         while i != 1:
             i >>= 1
             self._tree[i] = self._dot(self._tree[i << 1], self._tree[i << 1 | 1])
-
-    def add(self, i, v):
-        self.update(i, self[i] + v)
 
     def sum(self, l, r):
         l += self._n
