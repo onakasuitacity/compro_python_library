@@ -4,7 +4,7 @@
 # https://judge.yosupo.jp/submission/1069
 # https://atcoder.jp/contests/practice2/submissions/16583981
 def suffix_array(S):
-    assert S[-1] == '$'
+    # assert S[-1] == '$'
     return _sa_is(list(map(ord, S)))
 
 def _sa_is(S):
@@ -80,7 +80,7 @@ def _sa_is(S):
     return induced_sort()
 
 def lcp_array(S, sa):
-    assert S[-1] == '$'
+    # assert S[-1] == '$'
     n = len(S)
     rank = [0] * n
     for i in range(n):
