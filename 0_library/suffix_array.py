@@ -8,28 +8,6 @@ def suffix_array(S):
     return _sa_is(list(map(ord, S)))
 
 def _sa_is(S):
-    n = len(S)
-    stype = [True] * n
-    for i in range(n - 2, -1, -1):
-        if S[i] == S[i + 1]:
-            stype[i] = stype[i + 1]
-        else:
-            stype[i] = S[i] < S[i + 1]
-
-    lms = []
-    lms_map = [-1] * n
-    for i in range(1, n):
-        if not stype[i - 1] and stype[i]:
-            lms_map[i] = len(lms)
-            lms.append(i)
-
-    k = max(S) + 1
-    cum = [0] * (k + 1)
-    for v in S:
-        cum[v + 1] += 1
-    for i in range(k):
-        cum[i + 1] += cum[i]
-
     def induced_sort():
         sa = [-1] * n
         buf = cum[:]
@@ -51,15 +29,33 @@ def _sa_is(S):
                 sa[buf[v + 1]] = sa[i] - 1
         return sa
 
+    n = len(S)
+    k = max(S) + 1
+    cum = [0] * (k + 1)
+    for v in S:
+        cum[v + 1] += 1
+    for i in range(k):
+        cum[i + 1] += cum[i]
+
+    stype = [True] * n
+    for i in range(n - 2, -1, -1):
+        stype[i] = stype[i + 1] if S[i] == S[i + 1] else S[i] < S[i + 1]
+
+    lms = []
+    lms_map = [-1] * n
+    for i in range(1, n):
+        if not stype[i - 1] and stype[i]:
+            lms_map[i] = len(lms)
+            lms.append(i)
+
     sa = induced_sort()
     if len(lms) <= 2:
         return sa
 
-    _lms = lms
-    lms = [s for s in sa if lms_map[s] != -1]
-    lms_substr = list(range(len(lms)))
-    for i in range(2, len(lms)):
-        l, r = lms[i - 1], lms[i]
+    _lms = [s for s in sa if lms_map[s] != -1]
+    lms_substr = list(range(len(_lms)))
+    for i in range(2, len(_lms)):
+        l, r = _lms[i - 1], _lms[i]
         if S[l] != S[r]:
             lms_substr[i] = lms_substr[i - 1] + 1
             continue
@@ -73,14 +69,13 @@ def _sa_is(S):
                 lms_substr[i] = lms_substr[i - 1]
                 break
 
-    sub_s = [0] * len(lms)
-    for i, v in zip(lms, lms_substr):
+    sub_s = [0] * len(_lms)
+    for i, v in zip(_lms, lms_substr):
         sub_s[lms_map[i]] = v
-    lms = [_lms[s] for s in _sa_is(sub_s)]
+    lms = [lms[s] for s in _sa_is(sub_s)]
     return induced_sort()
 
 def lcp_array(S, sa):
-    # assert S[-1] == '$'
     n = len(S)
     rank = [0] * n
     for i in range(n):
