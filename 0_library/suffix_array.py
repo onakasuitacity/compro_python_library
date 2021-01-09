@@ -68,10 +68,10 @@ def _sa_is(S):
                 lms_substr[i] = lms_substr[i - 1]
                 break
 
-    sub_s = [0] * len(_lms)
+    nS = [0] * len(_lms)
     for i, v in zip(_lms, lms_substr):
-        sub_s[lms_map[i]] = v
-    lms = [lms[s] for s in _sa_is(sub_s)]
+        nS[lms_map[i]] = v
+    lms = [lms[s] for s in _sa_is(nS)]
     return induced_sort()
 
 def lcp_array(S, sa):
