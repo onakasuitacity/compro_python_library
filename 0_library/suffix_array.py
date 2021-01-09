@@ -25,7 +25,7 @@ def suffix_array(S):
                 sa[buf[v + 1]] = sa[i] - 1
         return sa
 
-    
+    # assert S[-1] == '$'
     S = list(map(ord, S))
     stack = []
     while True:
