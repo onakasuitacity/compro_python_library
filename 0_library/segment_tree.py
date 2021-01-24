@@ -9,7 +9,15 @@ class SegmentTree(object):
         self._n, self._tree, self._dot, self._unit = n, tree, dot, unit
 
     def __getitem__(self, i):
-        return self._tree[i + self._n]
+        if isinstance(i, int):
+            return self._tree[i + self._n]
+        elif isinstance(i, slice):
+            s = self._n if i.start is None else i.start + self._n
+            t = self._n if i.stop is None else i.stop + self._n
+            w = i.step
+            return self._tree[s:t:w]
+        else:
+            raise TypeError("SegmentTree indices must be integers or slices")
 
     def __setitem__(self, i, v):
         i += self._n
