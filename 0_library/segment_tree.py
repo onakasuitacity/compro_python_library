@@ -16,8 +16,6 @@ class SegmentTree(object):
             t = self._n if i.stop is None else i.stop + self._n
             w = i.step
             return self._tree[s:t:w]
-        else:
-            raise TypeError("SegmentTree indices must be integers or slices")
 
     def __setitem__(self, i, v):
         i += self._n
