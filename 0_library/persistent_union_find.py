@@ -14,26 +14,26 @@ class PersistentArray(object):
             self.root = A
 
     def __getitem__(self, i):
-        root = self.root
+        node = self.root
         path = []
         while i:
             i, r = divmod(i - 1, k)
             path.append(r)
         for i in path[::-1]:
-            root = root[1][i]
-        return root[0]
+            node = node[1][i]
+        return node[0]
 
     def set(self, i, v):
-        root = self.root
+        node = self.root
         path = []
         while i:
             i, r = divmod(i - 1, k)
             path.append(r)
         stack = []
         for i in path[::-1]:
-            stack.append((root[0], root[1][:]))
-            root = root[1][i]
-        node = (v, root[1])
+            stack.append((node[0], node[1][:]))
+            node = node[1][i]
+        node = (v, node[1])
         for i in path:
             stack[-1][1][i] = node
             node = stack.pop()
