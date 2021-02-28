@@ -75,11 +75,11 @@ def modinv(a, m):
 def garner(B, M):
     T = []
     for b, m in zip(B, M):
-        x, c = 0, 1
-        for t, _m in zip(T[::-1], M[len(T)-1::-1]):
-            x = (x * _m + t) % m
+        c = 1
+        for t, _m in zip(T, M):
+            b -= c * t
             c = c * _m  % m
-        T.append((b - x) * modinv(c, m) % m)
+        T.append(b * modinv(c, m) % m)
     return T
 
 def crt(B, M):
