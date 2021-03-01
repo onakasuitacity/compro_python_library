@@ -95,8 +95,7 @@ def crt(R, M, MOD=0):
     for p, v in X.items():
         R.append(v[1])
         M.append(p**v[0])
-    res, c = 0, 1
-    for t, m in zip(garner(R, M), M):
-        res += c * t
-        c = c * m % MOD if MOD else c * m
-    return res % MOD if MOD else res
+    res = 0
+    for t, m in zip(garner(R, M)[::-1], M[::-1]):
+        res = (res * m + t) % MOD if MOD else res * m + t
+    return res
