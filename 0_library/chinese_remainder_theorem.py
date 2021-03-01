@@ -78,7 +78,7 @@ def garner(R, M):
         c = 1
         for t, _m in zip(T, M):
             r -= c * t
-            c = c * _m  % m
+            c = c * _m % m
         T.append(r * modinv(c, m) % m)
     return T
 
