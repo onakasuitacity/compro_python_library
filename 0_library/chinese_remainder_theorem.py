@@ -72,27 +72,31 @@ def modinv(a, m):
         a, b, u, v = b, a - a // b * b, v, u - a // b * v
     return u % m
 
-def garner(B, M):
+def garner(R, M):
     T = []
-    for b, m in zip(B, M):
+    for r, m in zip(R, M):
         c = 1
         for t, _m in zip(T, M):
-            b -= c * t
-            c = c * _m % m
-        T.append(b * modinv(c, m) % m)
+            r -= c * t
+            c = c * _m  % m
+        T.append(r * modinv(c, m) % m)
     return T
 
-def crt(B, M):
+def crt(R, M, MOD=0):
     X = defaultdict(lambda:(0, 0))
-    for b, m in zip(B, M):
+    for r, m in zip(R, M):
         for p, e in prime_factorization(m).items():
-            _e, _b = X[p]
-            if (b - _b) % p**min(e, _e):
-                return [], []
+            _e, _r = X[p]
+            if (r - _r) % p**min(e, _e):
+                return -1
             if e > _e:
-                X[p] = (e, b)
-    B, M = [], []
+                X[p] = (e, r)
+    R, M = [], []
     for p, v in X.items():
-        B.append(v[1])
+        R.append(v[1])
         M.append(p**v[0])
-    return garner(B, M), M
+    res, c = 0, 1
+    for t, m in zip(garner(R, M), M):
+        res += c * t
+        c = c * m % MOD if MOD else c * m
+    return res % MOD if MOD else res
