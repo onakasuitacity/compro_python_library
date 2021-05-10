@@ -10,14 +10,14 @@ class LCA(object):
 
     def _bfs(self, G, root):
         parent = [-1] * (self._n + 1)
-        queue = [(root, -1)]
-        for v, p in queue:
+        queue = [root]
+        for v in queue:
             for nv in G[v]:
-                if nv == p:
+                if parent[nv] != -1 or nv == root:
                     continue
                 self.depth[nv] = self.depth[v] + 1
                 parent[nv] = v
-                queue.append((nv, v))
+                queue.append(nv)
         self.parents.append(parent)
 
     def _doubling(self):
