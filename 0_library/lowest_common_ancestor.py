@@ -5,10 +5,10 @@ class LCA(object):
         self._n = len(G)
         self.depth = [0] * self._n
         self.parents = []
-        self._dfs(G, root)
+        self._bfs(G, root)
         self._doubling()
 
-    def _dfs(self, G, root):
+    def _bfs(self, G, root):
         parent = [-1] * (self._n + 1)
         queue = [(root, -1)]
         for v, p in queue:
