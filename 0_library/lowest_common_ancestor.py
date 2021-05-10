@@ -1,4 +1,3 @@
-# LCA with doubling (O(NlogN),O(logN))
 # https://tjkendev.github.io/procon-library/python/graph/lca-doubling.html
 class LCA(object):
     def __init__(self, G, root=0):
@@ -10,14 +9,14 @@ class LCA(object):
 
     def _bfs(self, G, root):
         parent = [-1] * (self._n + 1)
-        queue = [root]
-        for v in queue:
+        queue = [(root, -1)]
+        for v, p in queue:
             for nv in G[v]:
-                if parent[nv] != -1 or nv == root:
+                if nv == p:
                     continue
                 self.depth[nv] = self.depth[v] + 1
                 parent[nv] = v
-                queue.append(nv)
+                queue.append((nv, v))
         self.parents.append(parent)
 
     def _doubling(self):
