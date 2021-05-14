@@ -5,21 +5,23 @@
 class MaxFlow(object):
     def __init__(self, n):
         self.n = n
-        self.E = [[] for _ in range(n)]
+        self.G = [[] for _ in range(n)]
+        self.E = []
 
     def add_edge(self, u, v, cap):
         e = [v, cap, 0]
         rev = [u, 0, e]
         e[-1] = rev
-        self.E[u].append(e)
-        self.E[v].append(rev)
+        self.G[u].append(e)
+        self.G[v].append(rev)
+        self.E.append(e)
 
     def _bfs(self, s, t):
         self._level = level = [-1] * self.n
         level[s] = 0
         queue = [s]
         for v in queue:
-            for nv, cap, _ in self.E[v]:
+            for nv, cap, _ in self.G[v]:
                 if cap and level[nv] == -1:
                     level[nv] = level[v] + 1
                     if nv == t:
@@ -28,17 +30,17 @@ class MaxFlow(object):
         return level[t] != -1
 
     def _dfs(self, s, t):
-        E, level, it = self.E, self._level, self._iter
+        G, level, it = self.G, self._level, self._iter
         stack = [(s, INF)]
         while stack:
             v, f = stack[-1]
             if v == t:
                 for v, _ in stack[:-1]:
-                    E[v][it[v]][1] -= f
-                    E[v][it[v]][-1][1] += f
+                    G[v][it[v]][1] -= f
+                    G[v][it[v]][-1][1] += f
                 return f
-            while it[v] < len(E[v]):
-                nv, cap, _ = E[v][it[v]]
+            while it[v] < len(G[v]):
+                nv, cap, _ = G[v][it[v]]
                 if cap and level[v] < level[nv]:
                     stack.append((nv, min(f, cap)))
                     break
@@ -52,8 +54,9 @@ class MaxFlow(object):
         res = 0
         while self._bfs(s, t):
             self._iter = [0] * self.n
-            f = 1
-            while f:
+            while True:
                 f = self._dfs(s, t)
                 res += f
+                if not f:
+                    break
         return res
