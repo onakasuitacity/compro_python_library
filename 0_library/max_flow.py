@@ -6,7 +6,6 @@ class MaxFlow(object):
     def __init__(self, n):
         self.n = n
         self.G = [[] for _ in range(n)]
-        self.E = []
 
     def add_edge(self, u, v, cap):
         e = [v, cap, 0]
@@ -14,7 +13,6 @@ class MaxFlow(object):
         e[-1] = rev
         self.G[u].append(e)
         self.G[v].append(rev)
-        self.E.append(e)
 
     def _bfs(self, s, t):
         self._level = level = [-1] * self.n
