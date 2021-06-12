@@ -1,6 +1,6 @@
-prime = 998244353
+prime = 119 << 23 | 1
 root = 3
-def _fmt(f, inverse = False):
+def _fmt(f, inverse=False):
     N = len(f)
     logN = (N - 1).bit_length()
     base = pow(root, (prime - 1) // N * (1 - 2 * inverse) % (prime - 1), prime)
@@ -25,6 +25,6 @@ def _fmt(f, inverse = False):
 def convolve(f, g):
     N = 1 << (len(f) + len(g) - 2).bit_length()
     Ff, Fg = _fmt(f + [0] * (N - len(f))), _fmt(g + [0] * (N - len(g)))
-    fg = _fmt([a * b % prime for a, b in zip(Ff, Fg)], inverse = True)
+    fg = _fmt([a * b % prime for a, b in zip(Ff, Fg)], True)
     del fg[len(f) + len(g) - 1:]
     return fg
