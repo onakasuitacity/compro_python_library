@@ -24,9 +24,9 @@ class SegmentTree(object):
         while l < r:
             if l & 1:
                 lv = self._dot(lv, self._tree[l])
-                l += 1
+                l ^= 1
             if r & 1:
-                r -= 1
+                r ^= 1
                 rv = self._dot(self._tree[r], rv)
             l >>= 1
             r >>= 1
