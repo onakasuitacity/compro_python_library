@@ -1,3 +1,4 @@
+# https://ei1333.github.io/library/structure/others/disjoint-sparse-table.hpp
 class DisjointSparseTable(object):
     def __init__(self, A, dot):
         N = len(A)
