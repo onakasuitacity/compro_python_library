@@ -12,7 +12,7 @@ class DisjointSparseTable(object):
                 for j in range(m - 2, l - 1, -1):
                     nA[j] = dot(nA[j], nA[j + 1])
                 for j in range(m + 1, r):
-                    nA[j] = dot(nA[j], nA[j - 1])
+                    nA[j] = dot(nA[j - 1], nA[j])
             data.append(nA)
         self._data, self._dot = data, dot
     
