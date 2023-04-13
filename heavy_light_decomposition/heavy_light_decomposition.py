@@ -59,25 +59,24 @@ class HeavyLightDecomposition(object):
             if head[u] == head[v]:
                 return u
             v = par[head[v]]
-    
+
     def _ascend(self, u, v):
         par, head, order = self._par, self._head, self._order
-        assert order[u] >= order[v]
         res = []
-        while True:
-            if head[u] == head[v]:
-                if u != v:
-                    res.append((order[u], order[v]))
-                return res
-            else:
-                res.append((order[u], order[head[u]]))
-                u = par[head[u]]
+        while head[u] != head[v]:
+            res.append((order[u], order[head[u]]))
+            u = par[head[u]]
+        if u != v:
+            res.append((order[u], order[v] + 1))
+        return res
     
     def _descend(self, u, v):
         return [(j, i) for i, j in self._ascend(v, u)[::-1]]
     
-    def for_each(self, u, v):
-        if u == v:
-            return [(self._order[u], self._order[v])]
+    def path(self, u, v, edge=False):
         l = self.lca(u, v)
-        return self._ascend(u, l) + self._descend(l, v)
+        return self._ascend(u, l) + ([] if edge else [(self._order[l], self._order[l])]) + self._descend(l, v)
+    
+    def edge_to_index(self, E):
+        par, order = self._par, self._index
+        return [order[u] if par[u] == v else order[v] for u, v in E]
