@@ -78,5 +78,5 @@ class HeavyLightDecomposition(object):
         return self._ascend(u, l) + ([] if edge else [(self._order[l], self._order[l])]) + self._descend(l, v)
     
     def edge_to_index(self, E):
-        par, order = self._par, self._index
+        par, order = self._par, self._order
         return [order[u] if par[u] == v else order[v] for u, v in E]
