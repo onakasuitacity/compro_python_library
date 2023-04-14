@@ -41,10 +41,7 @@ class HeavyLightDecomposition(object):
             v = stack.pop()
             order[v] = count
             count += 1
-            if order[par[v]] == order[v] - 1:
-                head[v] = head[par[v]]
-            else:
-                head[v] = v
+            head[v] = head[par[v]] if order[par[v]] == order[v] - 1 else v
             for nv in G[v]:
                 if nv != par[v] and nv != heavy_child[v]:
                     stack.append(nv)
