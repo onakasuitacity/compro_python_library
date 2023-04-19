@@ -12,16 +12,13 @@ class Node(object):
 class Array(object):
     def __init__(self, A, f=None):
         self._f = f
-        if isinstance(A, Node) or A is None:
-            self._root = A
-        else:
-            node = None
-            for a in A:
-                parent = Node(a)
-                parent.left = node
-                node = parent
-                self._update(node)
-            self._root = node
+        node = None
+        for a in A:
+            parent = Node(a)
+            parent.left = node
+            node = parent
+            self._update(node)
+        self._root = node
 
     def __bool__(self):
         return bool(self._root)
@@ -98,36 +95,41 @@ class Array(object):
         self._root.value = v
         self._update(self._root)
     
-    def merge(self, other):
-        if not self:
-            self._root = other._root
-        else:
-            self[-1]
-            self._root.right = other._root
-            self._update(self._root)
-    
-    def split(self, i):
+    def _split(self, i):
         assert 0 <= i <= len(self)
         if i == len(self):
-            return Array(self._root, self._f), Array(None, self._f)
+            return None
         self[i]
-        left, self._root.left = self._root.left, None
-        self._update(self._root)
-        return Array(left, self._f), Array(self._root, self._f)
+        self._root, right = self._root.left, self._root
+        right.left = None
+        self._update(right)
+        return right
+    
+    def _merge(self, node):
+        if not self:
+            self._root = node
+        else:
+            self[-1]
+            self._root.right = node
+            self._update(self._root)
     
     def insert(self, i, v):
-        left, right = self.split(i)
-        self._root = Node(v)
-        self._root.left = left._root
-        self._root.right = right._root
+        right = self._split(i)
+        node = Node(v)
+        node.left, node.right = self._root, right
+        self._root = node
         self._update(self._root)
     
     def pop(self, i=-1):
         res = self[i]
         self._root, right = self._root.left, self._root.right
-        self._update(self._root)
-        self.merge(Array(right, self._f))
+        self._merge(right)
         return res
     
-    def get_data(self):
-        return self._root.data
+    def sum(self, l, r):
+        right = self._split(r)
+        mid = self._split(l)
+        res = mid.data
+        self._merge(mid)
+        self._merge(right)
+        return res
