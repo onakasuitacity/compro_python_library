@@ -10,8 +10,8 @@ class Node(object):
 
 
 class Array(object):
-    def __init__(self, A, f=None):
-        self._f = f
+    def __init__(self, A, dot=None):
+        self._dot = dot
         node = None
         for a in A:
             parent = Node(a)
@@ -38,10 +38,16 @@ class Array(object):
     
     def _update(self, node):
         node.size = 1 
-        node.size += node.left.size if node.left else 0
-        node.size += node.right.size if node.right else 0
-        if self._f:
-            self._f(node)
+        if node.left:
+            node.size += node.left.size
+        if node.right:
+            node.size += node.right.size
+        if self._dot:
+            node.data = node.value
+            if node.left:
+                node.data = self._dot(node.left.data, node.data)
+            if node.right:
+                node.data = self._dot(node.data, node.right.data)
     
     def _rotate(self, v, p, d):
         if d == 0:
