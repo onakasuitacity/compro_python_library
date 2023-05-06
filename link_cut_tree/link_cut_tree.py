@@ -2,10 +2,10 @@
 class LinkCutTree(object):
     def __init__(self, A, dot, e, compose, id, act):
         n = len(A)
-        self._value = A[:]
         self._left = [-1] * n
         self._right = [-1] * n
         self._parent = [-1] * n
+        self._value = A[:]
         self._size = [1] * n
         self._sum = A[:]
         self._reverse = [False] * n
