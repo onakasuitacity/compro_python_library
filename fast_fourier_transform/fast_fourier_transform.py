@@ -1,5 +1,5 @@
 from cmath import pi, rect
-def _fft(f, inverse = False):
+def _fft(f, inverse=False):
     N = len(f)
     logN = (N - 1).bit_length()
     step = N
