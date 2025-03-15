@@ -16,6 +16,9 @@ class SegmentTree(object):
         while i != 1:
             i >>= 1
             self._tree[i] = self._dot(self._tree[i << 1], self._tree[i << 1 | 1])
+    
+    def __repr__(self):
+        return str(self._tree[self._n:])
 
     def sum(self, l, r):
         l += self._n
@@ -31,3 +34,27 @@ class SegmentTree(object):
             l >>= 1
             r >>= 1
         return self._dot(lv, rv)
+
+    def bisect_left(self, l, v):
+        l += self._n
+        r = 0
+        w = 1
+        l_val = self._e
+        while r + w <= self._n:
+            if l & 1:
+                if self._dot(l_val, self._tree[l]) < v:
+                    l_val = self._dot(l_val, self._tree[l])
+                    l += 1
+                    r += w
+                else:
+                    break
+            l >>= 1
+            w <<= 1
+        while w:
+            if r + w <= self._n and self._dot(l_val, self._tree[l]) < v:
+                l_val = self._dot(l_val, self._tree[l])
+                l += 1
+                r += w
+            l <<= 1
+            w >>= 1
+        return r
