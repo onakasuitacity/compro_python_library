@@ -29,7 +29,7 @@ class LazySegmentTree(object):
     def act(self, l, r, f):
         l += self._n
         r += self._n
-        self._descend(l), self._descend(r - 1)  # unnecessary when compose is commutative
+        # self._descend(l), self._descend(r - 1)  # unnecessary when compose is commutative
         _l, _r = l, r
         tree, lazy, act, compose = self._tree, self._lazy, self._act, self._compose
         while l < r:
