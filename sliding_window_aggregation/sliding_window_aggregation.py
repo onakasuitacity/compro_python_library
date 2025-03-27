@@ -2,7 +2,9 @@
 # https://qiita.com/Shirotsume/items/4a2837b5895ef9a7aeb1
 class SWAG(object):
     def __init__(self, dot):
-        self._front, self._back, self._dot = [], [], dot
+        self._front = []
+        self._back = []
+        self._dot = dot
 
     def __bool__(self):
         return bool(self._front) or bool(self._back)
@@ -11,6 +13,8 @@ class SWAG(object):
         return len(self._front) + len(self._back)
 
     def __getitem__(self, i):
+        if i < 0:
+            i += len(self)
         return self._front[~i][0] if i < len(self._front) else self._back[i - len(self._front)][0]
 
     def __repr__(self):
@@ -30,12 +34,12 @@ class SWAG(object):
         prod = self._front[N2][0]
         self._back.append((prod, prod))
         for val, _ in self._front[:N2][::-1]:
-            prod = dot(prod, val)
+            prod = self._dot(prod, val)
             self._back.append((val, prod))
         prod = self._front[N2 + 1][0]
         front = [(prod, prod)]
         for val, _ in self._front[N2 + 2:]:
-            prod = dot(val, prod)
+            prod = self._dot(val, prod)
             front.append((val, prod))
         self._front = front
 
